@@ -3,7 +3,7 @@ Retrofit框架
 
 1.添加方法
 
-  allprojects{
+   allprojects{
   
       repositroies{
       
@@ -13,11 +13,11 @@ Retrofit框架
         
       }
 
-}
+  }
 
-dependencies {
+  dependencies {
 
-　　implementation 'com.github.AgnoiY:RrtrofitFrame:Tag'
+　　  implementation 'com.github.AgnoiY:RrtrofitFrame:Tag'
   
-}
+  }
 

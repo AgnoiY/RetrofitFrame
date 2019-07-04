@@ -137,9 +137,22 @@
 #反射相关的类和方法
 -keep class com.cjy.retrofitlibrary.model.**{*;}
 -keep class com.cjy.retrofitlibrary.CallBack{*;}
--keep class com.cjy.retrofitlibrary.BaseHttpObserver{*;}
--keep class com.cjy.retrofitlibrary.HttpObserver{*;}
--keep class com.cjy.retrofitlibrary.RetrofitLibrary{*;}
+-keep class com.cjy.retrofitlibrary.RetrofitLibrary{
+    public *** init(***);
+    public void onDestory();
+    public *** getRetrofitHttp();
+}
+-keep class com.cjy.retrofitlibrary.BaseHttpObserver{
+    public BaseHttpObserver ();
+    public BaseHttpObserver (***);
+    public void onCancel();
+}
+-keep class com.cjy.retrofitlibrary.HttpObserver{
+    public HttpObserver ();
+    public HttpObserver (***);
+    public void onError(***);
+    public void isLoginToken();
+}
 -keep class com.cjy.retrofitlibrary.RetrofitHttp{
     public void request(***);
     public void upload(***);

@@ -1,8 +1,6 @@
 package com.cjy.retrofitlibrary;
 
 
-import com.cjy.retrofitlibrary.interfaces.UploadProgressCallback;
-
 import java.io.File;
 import java.io.IOException;
 

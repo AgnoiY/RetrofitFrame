@@ -2,7 +2,6 @@ package com.cjy.retrofitlibrary;
 
 import android.content.Context;
 
-import com.cjy.retrofitlibrary.interfaces.CallBack;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.ThreadUtils;
 import com.google.gson.Gson;

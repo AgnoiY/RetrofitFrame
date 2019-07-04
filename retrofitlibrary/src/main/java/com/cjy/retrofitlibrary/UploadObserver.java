@@ -3,7 +3,6 @@ package com.cjy.retrofitlibrary;
 import android.content.Context;
 
 import com.cjy.retrofitlibrary.dialog.UITipDialog;
-import com.cjy.retrofitlibrary.interfaces.UploadProgressCallback;
 
 import java.io.File;
 

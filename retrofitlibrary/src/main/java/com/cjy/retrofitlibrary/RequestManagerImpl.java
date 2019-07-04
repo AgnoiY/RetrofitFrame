@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.util.ArrayMap;
 
-import com.cjy.retrofitlibrary.interfaces.RequestManager;
-
 import java.util.Set;
 
 import io.reactivex.disposables.Disposable;

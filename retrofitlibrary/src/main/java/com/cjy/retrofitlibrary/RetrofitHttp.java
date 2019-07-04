@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cjy.retrofitlibrary.interfaces.Api;
 import com.cjy.retrofitlibrary.utils.Method;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
 import com.trello.rxlifecycle2.LifecycleProvider;

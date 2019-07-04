@@ -3,10 +3,7 @@ package com.cjy.retrofitlibrary;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.cjy.retrofitlibrary.interfaces.RequestCancel;
-import com.cjy.retrofitlibrary.RequestManagerImpl;
 import com.cjy.retrofitlibrary.dialog.LoadingDialog;
-import com.cjy.retrofitlibrary.interfaces.ProgressDialogObserver;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

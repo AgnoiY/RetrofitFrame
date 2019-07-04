@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.cjy.retrofitlibrary.R;
 import com.cjy.retrofitlibrary.Constants;
-import com.cjy.retrofitlibrary.interfaces.ProgressDialogObserver;
+import com.cjy.retrofitlibrary.ProgressDialogObserver;
 
 /**
  * <请求加载弹窗>

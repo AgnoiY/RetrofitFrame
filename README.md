@@ -39,23 +39,27 @@ Retrofit框架
    
    　　RetrofitLibrary.getRetrofitHttp()
      
-     　　　　.post()　//请求方式
+     　　　.post()　//请求方式
          
-         　　.apiUrl(url地址)
+         　.apiUrl(url地址)
            
-             .addParameter(map)　// 参数类型
+           .addParameter(map)　// 参数类型
              
-             .build()
+           .build()
              
-             .request(new HttpObserver<实力类>(this, true, true) { //(Context, 是否加载弹窗, 点击返回键是否取消加载弹窗)　多个重载方法
+           .request(new HttpObserver<Ｔ(实体类)>(this, true, true) { //(Context, 是否加载弹窗, 点击返回键是否取消加载弹窗)多个重载方法
              
                     @Override
                     
-                    public void onSuccess(String action, 实力类 value) {
+                    public void onSuccess(String action, T value) {
                    
                     }
                     
                 });
+                
+    实力类要继承BaseResponseModel<Ｔ>或BaseResponseListModel<T>
+      
+           public class Name extends BaseResponseModel<Name> {}
           
 ３．重写业务逻辑解析方式继承BaseHttpObserver
 

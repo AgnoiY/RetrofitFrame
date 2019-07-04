@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cjy.retrofitlibrary.R;
-import com.cjy.retrofitlibrary.utils.DensityUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 
 import java.lang.annotation.Retention;
@@ -209,7 +208,7 @@ public class UITipDialog extends Dialog {
         public UITipDialog create() {
             UITipDialog dialog = new UITipDialog(mContext);
             dialog.setContentView(R.layout.dialog_ui_tip);
-            ViewGroup contentWrap = (ViewGroup) dialog.findViewById(R.id.contentWrap);
+            ViewGroup contentWrap = dialog.findViewById(R.id.contentWrap);
 
             if (mCurrentIconType == ICON_TYPE_LOADING) {
                 LoadingView loadingView = new LoadingView(mContext);

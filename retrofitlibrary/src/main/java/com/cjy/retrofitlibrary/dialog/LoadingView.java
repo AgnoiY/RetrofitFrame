@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.cjy.retrofitlibrary.R;
-import com.cjy.retrofitlibrary.utils.DensityUtils;
 
 /**
  * 用于显示 Loading 的 {@link View}，支持颜色和大小的设置。

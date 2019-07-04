@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.cjy.retrofitlibrary.application.RetrofitLibrary;
-import com.cjy.retrofitlibrary.observ.HttpObserver;
+import com.cjy.retrofitlibrary.RetrofitLibrary;
+import com.cjy.retrofitlibrary.HttpObserver;
 import com.cjy.rrtrofitframe.databinding.ActivityMainBinding;
 
 import java.util.HashMap;

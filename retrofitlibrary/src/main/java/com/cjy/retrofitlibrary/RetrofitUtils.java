@@ -1,7 +1,5 @@
 package com.cjy.retrofitlibrary;
 
-import com.cjy.retrofitlibrary.interceptor.HttpLoggingInterceptor;
-import com.cjy.retrofitlibrary.observ.RetrofitHttp;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
 
@@ -24,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * @author yong
  */
-public class RetrofitUtils {
+class RetrofitUtils {
 
     private static RetrofitUtils instance = null;
 

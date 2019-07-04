@@ -2,7 +2,7 @@ package com.cjy.rrtrofitframe;
 
 import android.app.Application;
 
-import com.cjy.retrofitlibrary.application.RetrofitLibrary;
+import com.cjy.retrofitlibrary.RetrofitLibrary;
 
 /**
  * <应用初始化> <功能详细描述>

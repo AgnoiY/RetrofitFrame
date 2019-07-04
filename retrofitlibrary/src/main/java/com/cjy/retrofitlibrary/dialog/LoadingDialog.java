@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 
 import com.cjy.retrofitlibrary.R;
-import com.cjy.retrofitlibrary.constant.Constants;
+import com.cjy.retrofitlibrary.Constants;
 import com.cjy.retrofitlibrary.interfaces.ProgressDialogObserver;
 
 /**

@@ -138,18 +138,18 @@
 -keep class com.cjy.retrofitlibrary.model.**{*;}
 -keep class com.cjy.retrofitlibrary.CallBack{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitLibrary{
-    public *** init(***);
-    public void onDestory();
-    public *** getRetrofitHttp();
+    public static *** init(***, ***);
+    public static void onDestory();
+    public static *** getRetrofitHttp();
 }
 -keep class com.cjy.retrofitlibrary.BaseHttpObserver{
-    public BaseHttpObserver ();
-    public BaseHttpObserver (***);
+    public *** ();
+    public *** (***);
     public void onCancel();
 }
 -keep class com.cjy.retrofitlibrary.HttpObserver{
-    public HttpObserver ();
-    public HttpObserver (***);
+    public *** ();
+    public *** (***);
     public void onError(***);
     public void isLoginToken();
 }

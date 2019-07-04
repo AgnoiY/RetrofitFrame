@@ -103,6 +103,9 @@ public class RetrofitHttp {
     /*执行请求*/
     private void doRequest() {
 
+        /*加载失败提示弹出窗*/
+        httpObserver.setNotTipDialog(Configure.get().isNotTipDialog);
+
         /*设置请求唯一标识*/
         httpObserver.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
 
@@ -130,6 +133,9 @@ public class RetrofitHttp {
 
     /*执行文件上传*/
     private void doUpload() {
+
+        /*加载失败提示弹出窗*/
+        uploadCallback.setNotTipDialog(Configure.get().isNotTipDialog);
 
         /*设置请求唯一标识*/
         uploadCallback.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
@@ -267,22 +273,23 @@ public class RetrofitHttp {
     public static final class Configure {
 
         /*请求基础路径*/
-        String baseUrl;
+        private String baseUrl;
         /*超时时长*/
-        long timeout;
+        private long timeout;
         /*时间单位*/
-        TimeUnit timeUnit;
+        private TimeUnit timeUnit;
         /*全局上下文*/
-        Context context;
+        private Context context;
         /*全局Handler*/
-        Handler handler;
+        private Handler handler;
         /*请求参数*/
-        Map<String, Object> parameter;
+        private Map<String, Object> parameter;
         /*header*/
-        Map<String, Object> header;
+        private Map<String, Object> header;
         /*是否显示Log*/
-        boolean showLog;
-
+        private boolean showLog;
+        /*加载失败提示弹出窗*/
+        private boolean isNotTipDialog;
 
         public static Configure get() {
             return Configure.Holder.holders;
@@ -299,7 +306,7 @@ public class RetrofitHttp {
         }
 
         /*请求基础路径*/
-        public RetrofitHttp.Configure baseUrl(String baseUrl) {
+        public RetrofitHttp.Configure setBaseUrl(String baseUrl) {
             this.baseUrl = baseUrl;
             return this;
         }
@@ -309,7 +316,7 @@ public class RetrofitHttp {
         }
 
         /*基础参数*/
-        public RetrofitHttp.Configure baseParameter(Map<String, Object> parameter) {
+        public RetrofitHttp.Configure setBaseParameter(Map<String, Object> parameter) {
             this.parameter = parameter;
             return this;
         }
@@ -319,7 +326,7 @@ public class RetrofitHttp {
         }
 
         /*基础Header*/
-        public RetrofitHttp.Configure baseHeader(Map<String, Object> header) {
+        public RetrofitHttp.Configure setBaseHeader(Map<String, Object> header) {
             this.header = header;
             return this;
         }
@@ -336,7 +343,7 @@ public class RetrofitHttp {
         }
 
         /*超时时长*/
-        public RetrofitHttp.Configure timeout(long timeout) {
+        public RetrofitHttp.Configure setTimeout(long timeout) {
             this.timeout = timeout;
             return this;
         }
@@ -356,7 +363,7 @@ public class RetrofitHttp {
         }
 
         /*时间单位*/
-        public RetrofitHttp.Configure timeUnit(TimeUnit timeUnit) {
+        public RetrofitHttp.Configure setTimeUnit(TimeUnit timeUnit) {
             this.timeUnit = timeUnit;
             return this;
         }
@@ -375,6 +382,16 @@ public class RetrofitHttp {
             return context;
         }
 
+        /*TipDialog*/
+        public boolean isNotTipDialog() {
+            return isNotTipDialog;
+        }
+
+        public Configure setNotTipDialog(boolean notTipDialog) {
+            isNotTipDialog = notTipDialog;
+            return this;
+        }
+
         /*初始化全局上下文*/
         public RetrofitHttp.Configure init(Application app) {
             this.context = app.getApplicationContext();
@@ -390,29 +407,29 @@ public class RetrofitHttp {
      */
     public static class Builder {
         /*请求方式*/
-        Method method;
+        private Method method;
         /*请求参数*/
-        Map<String, Object> parameter;
+        private Map<String, Object> parameter;
         /*header*/
-        Map<String, Object> header;
+        private Map<String, Object> header;
         /*LifecycleProvider*/
-        LifecycleProvider lifecycle;
+        private LifecycleProvider lifecycle;
         /*ActivityEvent*/
-        ActivityEvent activityEvent;
+        private ActivityEvent activityEvent;
         /*FragmentEvent*/
-        FragmentEvent fragmentEvent;
+        private FragmentEvent fragmentEvent;
         /*标识请求的TAG*/
-        String tag;
+        private String tag;
         /*文件map*/
-        Map<String, File> fileMap;
+        private Map<String, File> fileMap;
         /*基础URL*/
-        String baseUrl;
+        private String baseUrl;
         /*apiUrl*/
-        String apiUrl;
+        private String apiUrl;
         /*String参数*/
-        String bodyString;
+        private String bodyString;
         /*是否强制JSON格式*/
-        boolean isJson;
+        private boolean isJson;
 
         private volatile Builder instance;
 

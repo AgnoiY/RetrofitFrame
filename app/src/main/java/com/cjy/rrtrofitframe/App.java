@@ -16,6 +16,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        RetrofitLibrary.getHttpConfigure().setNotTipDialog(true);
         RetrofitLibrary.init(this, UrlConstans.BASESERVER);
     }
 

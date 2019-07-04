@@ -30,7 +30,7 @@ public class RetrofitLibrary {
         try {
             if (application != null) {
                 mApplication = application;
-                RetrofitHttp.Configure.get().baseUrl(baseUrl).init(application);
+                getHttpConfigure().setBaseUrl(baseUrl).init(application);
                 mHttpBuilder = new RetrofitHttp.Builder().getInstance();
             }
         } catch (NullPointerException e) {
@@ -58,6 +58,13 @@ public class RetrofitLibrary {
             mHttpBuilder = new RetrofitHttp.Builder().getInstance();
         mHttpBuilder.clear();
         return mHttpBuilder;
+    }
+
+    /**
+     * 获取网络请求基础配置类，设置基础配置
+     */
+    public static RetrofitHttp.Configure getHttpConfigure() {
+        return RetrofitHttp.Configure.get();
     }
 
     public static String getAppString(@StringRes int resId) {

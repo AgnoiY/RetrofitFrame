@@ -23,7 +23,7 @@ import io.reactivex.annotations.NonNull;
 public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements CallBack<T> {
 
     /**
-     * 使用提示弹出窗 :默认弹窗－false
+     * 加载失败提示弹出窗 :默认弹窗－false
      */
     protected boolean isNotTipDialog;
 
@@ -143,12 +143,12 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     }
 
     /**
-     * 使用提示弹出窗
+     * 加载失败提示弹出窗
      *
      * @param notTipDialog 默认弹窗－false
      * @return
      */
-    public BaseHttpObserver<T> setNotTipDialog(boolean notTipDialog) {
+    protected BaseHttpObserver<T> setNotTipDialog(boolean notTipDialog) {
         isNotTipDialog = notTipDialog;
         return this;
     }

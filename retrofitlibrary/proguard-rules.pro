@@ -143,6 +143,8 @@
 -keep class com.cjy.retrofitlibrary.RetrofitHttp$*{
     public <fields>;
     public <methods>;
+    public void request(***);
+    public void upload(***);
 }
 
 # 避免Log打印输出

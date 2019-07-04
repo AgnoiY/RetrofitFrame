@@ -27,6 +27,8 @@ Retrofit框架
  
     　 onCreate()方法里进行注册：
  
+ 　　　　　　RetrofitLibrary.getHttpConfigure().setNotTipDialog(true);　// 网络请求基础配置类,　可选
+       
  　　　　　　RetrofitLibrary.init(this, BaseUrl);
   
      　onTerminate()方法里进行注销：

@@ -47,7 +47,8 @@ public abstract class UploadObserver<T> extends BaseHttpObserver<T> implements U
      * @param desc
      */
     public void onError(String action, int code, String desc) {
-        UITipDialog.showFall(RetrofitLibrary.getApplication(), desc);
+        if (!isNotTipDialog)
+            UITipDialog.showFall(RetrofitLibrary.getApplication(), desc);
     }
 
 }

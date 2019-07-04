@@ -139,7 +139,7 @@
 -keep class com.cjy.retrofitlibrary.model.**{*;}
 -keep class com.cjy.retrofitlibrary.CallBack{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitLibrary{
-    public static *** init(android.app.Application, String);
+    public static *** init(***, String);
     public static void onDestory();
     public static *** getRetrofitHttp();
 }
@@ -147,6 +147,7 @@
     public <init> ();
     public <init> (android.content.Context, boolean, boolean);
     public void onCancel();
+    public *** setNotTipDialog(boolean);
 }
 -keep class com.cjy.retrofitlibrary.HttpObserver{
     public <init> ();
@@ -154,6 +155,7 @@
     public <init> (android.content.Context, boolean, boolean);
     public void onError(***);
     public void isLoginToken();
+    public *** onConvert(***);
 }
 -keep class com.cjy.retrofitlibrary.RetrofitHttp{
     public void request(***);

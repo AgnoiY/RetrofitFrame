@@ -110,6 +110,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      * @param desc   错误信息
      */
     public void onError(String action, int code, String desc) {
+        if (!isNotTipDialog)
         UITipDialog.showFall(mContext, desc);
     }
 

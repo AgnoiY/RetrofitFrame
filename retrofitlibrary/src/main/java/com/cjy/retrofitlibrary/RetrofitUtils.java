@@ -125,7 +125,7 @@ class RetrofitUtils {
      * @return
      */
     public OkHttpClient getOkHttpClientDownload(Interceptor... interceptorArray) {
-        final long timeout = 60;//超时时长
+        final long timeout = Constants.TIME_OUT;//超时时长
         final TimeUnit timeUnit = TimeUnit.SECONDS;//单位秒
         return getOkHttpClient(true, timeout, timeUnit, interceptorArray);
     }

@@ -76,14 +76,6 @@
     native <methods>;
 }
 
-
-#这个主要是在layout 中写的onclick方法android:onclick="onClick"，不进行混淆
-#表示不混淆Activity中参数是View的方法，因为有这样一种用法，在XML中配置android:onClick=”buttonClick”属性，
-#当用户点击该按钮时就会调用Activity中的buttonClick(View view)方法，如果这个方法被混淆的话就找不到了
--keepclassmembers class * extends android.app.Activity{
-    public void *(android.view.View);
-}
-
 #表示不混淆枚举中的values()和valueOf()方法，枚举我用的非常少，这个就不评论了
 -keepclassmembers enum * {
     public static **[] values();
@@ -143,27 +135,7 @@
 }
 
 #反射相关的类和方法
--keep class com.mvpframe.bean.**{*;}
-
-#
-#----------------------------- WebView -----------------------------
-#
-#webView需要进行特殊处理
--keepclassmembers class fqcn.of.javascript.interface.for.Webview {
-   public *;
-}
--keepclassmembers class * extends android.webkit.WebViewClient {
-    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
-    public boolean *(android.webkit.WebView, java.lang.String);
-}
--keepclassmembers class * extends android.webkit.WebViewClient {
-    public void *(android.webkit.WebView, jav.lang.String);
-}
-#在app中与HTML5的JavaScript的交互进行特殊处理
-#我们需要确保这些js要调用的原生方法不能够被混淆，于是我们需要做如下处理：
--keepclassmembers class com.ljd.example.JSInterface {
-    <methods>;
-}
+-keep class com.cjy.retrofitlibrary.model.**{*;}
 
 # 避免Log打印输出
 -assumenosideeffects class android.util.Log {
@@ -172,17 +144,6 @@
    public static *** i(...);
    public static *** w(...);
  }
-
-# eventbus 事件总线
--keepattributes *Annotation*
--keepclassmembers class * {
-    @org.greenrobot.eventbus.Subscribe <methods>;
-}
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
-# Only required if you use AsyncExecutor
--keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
-    <init>(java.lang.Throwable);
-}
 
 # okhttp3 网络请求
 -dontwarn okhttp3.logging.**
@@ -202,24 +163,6 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 -keep class com.google.gson.** { *;}
-
-# RecyclerView 适配器 BaseRecyclerViewAdapterHelper
--keep class com.chad.library.adapter.** {
-*;
-}
--keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
--keep public class * extends com.chad.library.adapter.base.BaseViewHolder
--keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
-     <init>(...);
-}
-
-# glide 图片加载
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
 
 # Rxjava RxAndroid 异步
 -dontwarn rx.*

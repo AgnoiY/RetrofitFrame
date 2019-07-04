@@ -57,11 +57,11 @@ Retrofit框架
                     
                 });
                 
-    实力类要继承BaseResponseModel<Ｔ>或BaseResponseListModel<T>
+    实体类要继承BaseResponseModel<Ｔ>或BaseResponseListModel<T>
       
            public class Name extends BaseResponseModel<Name> {}
           
-３．重写业务逻辑解析方式继承BaseHttpObserver
+３．重写业务逻辑解析方式继承BaseHttpObserver，实体类无需继承上述两个，根据需要自定义
 
 　　　
 　　

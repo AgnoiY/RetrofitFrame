@@ -136,7 +136,7 @@
 
 #反射相关的类和方法
 -keep class com.cjy.retrofitlibrary.model.**{*;}
--keep class com.cjy.retrofitlibrary.BaseHttpObsever{*;}
+-keep class com.cjy.retrofitlibrary.BaseHttpObserver{*;}
 -keep class com.cjy.retrofitlibrary.HttpObserver{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitHttp{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitHttp.Builder{*;}

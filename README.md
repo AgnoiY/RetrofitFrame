@@ -20,4 +20,15 @@ Retrofit框架
 　　  implementation 'com.github.AgnoiY:RrtrofitFrame:Tag'
   
   }
+  
+2.使用方法
 
+　在Application中
+ 
+     onCreate()方法里进行注册：
+ 
+ 　　　　　RetrofitLibrary.init(this, BaseUrl);
+  
+     onTerminate()方法里进行注销：
+     
+     　　　RetrofitLibrary.onDestory();

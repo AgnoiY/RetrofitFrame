@@ -140,9 +140,9 @@
 -keep class com.cjy.retrofitlibrary.BaseHttpObserver{*;}
 -keep class com.cjy.retrofitlibrary.HttpObserver{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitLibrary{*;}
--keep class com.cjy.retrofitlibrary.RetrofitHttp{
-    public static class Builder;
-    *;
+-keep class com.cjy.retrofitlibrary.RetrofitHttp$*{
+    public <fields>;
+    public <methods>;
 }
 
 # 避免Log打印输出

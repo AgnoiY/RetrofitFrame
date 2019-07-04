@@ -17,7 +17,7 @@ Retrofit框架
 
   dependencies {
 
-　　  implementation 'com.github.AgnoiY:RrtrofitFrame:Tag'
+　　  implementation 'com.github.AgnoiY:RrtrofitFrame:1.0.17'
   
   }
   

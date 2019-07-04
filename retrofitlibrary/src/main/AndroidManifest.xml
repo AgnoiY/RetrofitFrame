@@ -1,2 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cjy.retrofitlibrary" />
+    package="com.cjy.retrofitlibrary">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

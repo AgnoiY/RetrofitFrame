@@ -1,8 +1,7 @@
 # RrtrofitFrame
 Retrofit框架
 
-1.添加方法
-　	allprojects {
+1.添加方法　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }

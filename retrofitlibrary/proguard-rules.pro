@@ -139,8 +139,9 @@
 -keep class com.cjy.retrofitlibrary.BaseHttpObserver{*;}
 -keep class com.cjy.retrofitlibrary.HttpObserver{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitHttp{*;}
--keep class com.cjy.retrofitlibrary.RetrofitHttp.Builder{*;}
+-keep class com.cjy.retrofitlibrary.RetrofitHttp.**{*;}
 -keep class com.cjy.retrofitlibrary.RetrofitLibrary{*;}
+-keep class com.cjy.retrofitlibrary.CallBack{*;}
 
 # 避免Log打印输出
 -assumenosideeffects class android.util.Log {

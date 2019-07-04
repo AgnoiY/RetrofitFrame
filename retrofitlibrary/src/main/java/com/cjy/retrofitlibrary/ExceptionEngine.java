@@ -22,7 +22,7 @@ import retrofit2.HttpException;
  *
  * @author yong
  */
-class ExceptionEngine {
+public class ExceptionEngine {
 
     ExceptionEngine() {
         throw new IllegalStateException("ExceptionEngine class");

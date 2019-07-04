@@ -54,3 +54,8 @@ Retrofit框架
                     }
                     
                 });
+          
+３．重写业务逻辑解析方式继承BaseHttpObserver
+
+　　　
+　　

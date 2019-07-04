@@ -65,16 +65,10 @@
 #----------------------------------------------------
 # 保持类不被混淆
 -keep public class * extends android.view.View
--keep class android.support.** {*;}## 保留support下的所有类及其内部类
 
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 #----------------------------------------------------
-
-# 保留继承的
--keep public class * extends android.support.v4.**
--keep public class * extends android.support.v7.**
--keep public class * extends android.support.annotation.**
 
 
 #表示不混淆任何包含native方法的类的类名以及native方法名，这个和我们刚才验证的结果是一致

@@ -136,6 +136,10 @@
 
 #反射相关的类和方法
 -keep class com.cjy.retrofitlibrary.model.**{*;}
+-keep class com.cjy.retrofitlibrary.BaseHttpObsever{*;}
+-keep class com.cjy.retrofitlibrary.HttpObsever{*;}
+-keep class com.cjy.retrofitlibrary.RetrofitHttp{*;}
+-keep class com.cjy.retrofitlibrary.RetrofitLibrary{*;}
 
 # 避免Log打印输出
 -assumenosideeffects class android.util.Log {

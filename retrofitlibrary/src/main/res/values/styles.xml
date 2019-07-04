@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Dialog提示框 -->
+    <style name="TipDialog" parent="LoadingDialogLight">
+        <!--阴影-->
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <attr name="LoadingViewStyle" format="reference" />
+
+    <declare-styleable name="LoadingView">
+        <attr name="loading_view_size" format="dimension" />
+        <attr name="loading_view_color" format="color" />
+    </declare-styleable>
+
+    <!--加载框-->
+    <style name="LoadingDialogLight" parent="@android:style/Theme.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景颜色及和透明程度 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 屏幕背景不变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+</resources>

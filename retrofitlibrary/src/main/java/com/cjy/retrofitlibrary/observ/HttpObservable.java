@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
  *
  * @author yong
  */
-public class HttpObservable {
+class HttpObservable {
 
     /*LifecycleProvider*/
     private LifecycleProvider lifecycle;

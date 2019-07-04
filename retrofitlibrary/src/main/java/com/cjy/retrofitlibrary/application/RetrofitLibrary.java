@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 import com.cjy.retrofitlibrary.cancel.RequestManagerImpl;
 import com.cjy.retrofitlibrary.observ.RetrofitHttp;
 import com.cjy.retrofitlibrary.utils.LogUtils;
+import com.trello.rxlifecycle2.LifecycleProvider;
 
 /**
  * <应用初始化> <功能详细描述>
@@ -48,6 +49,21 @@ public class RetrofitLibrary {
     public static void onDestory() {
         mHttpBuilder.clear();
         RequestManagerImpl.getInstance().cancelAll();
+    }
+
+    /**
+     * 获取初始化的Retrofit
+     *
+     * @return
+     */
+    public static RetrofitHttp.Builder getRetrofitHttp() {
+        if (mHttpBuilder == null)
+            mHttpBuilder = new RetrofitHttp.Builder().getInstance();
+        mHttpBuilder.clear();
+//        mHttpBuilder.lifecycle((LifecycleProvider) getMvpView());
+//        mHttpBuilder.addHeader(SharedPrefUser.USER_TOKEN, SharedPrefManager.getUser()
+//                .getString(SharedPrefUser.USER_TOKEN, ""));
+        return mHttpBuilder;
     }
 
     public static String getAppString(@StringRes int resId) {

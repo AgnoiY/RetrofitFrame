@@ -30,6 +30,11 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     public BaseHttpObserver() {
     }
 
+    /**
+     * @param context
+     * @param isDialog    是否显示加载进度对话框
+     * @param isCabcelble 当返回键按下是否关闭加载进度对话框
+     */
     public BaseHttpObserver(Context context, boolean isDialog, boolean isCabcelble) {
         super(context, isDialog, isCabcelble);
     }

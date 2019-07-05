@@ -106,7 +106,7 @@ class UploadRequestBody extends RequestBody {
                 if (progressCallback != null) {
                     RetrofitHttp.Configure.get().getHandler().post(() -> {
                         float progress = (float) writtenBytesCount / (float) totalBytesCount;
-                        progressCallback.progress(file, writtenBytesCount, totalBytesCount, progress, current, totalFile);
+                        progressCallback.onProgress(file, writtenBytesCount, totalBytesCount, progress, current, totalFile);
                     });
                 }
             }

@@ -2,10 +2,6 @@ package com.cjy.retrofitlibrary;
 
 import android.content.Context;
 
-import com.cjy.retrofitlibrary.dialog.UITipDialog;
-
-import java.io.File;
-
 /**
  * 上传回调接口
  * <p>
@@ -13,42 +9,16 @@ import java.io.File;
  *
  * @author yong
  */
-public abstract class UploadObserver<T> extends BaseHttpObserver<T> implements UploadProgressCallback {
+public abstract class UploadObserver<T> extends HttpObserver<T> implements UploadProgressCallback {
 
     public UploadObserver() {
     }
 
-    public UploadObserver(Context context, boolean isDialog, boolean isCabcelble) {
-        super(context, isDialog, isCabcelble);
-    }
-
-    @Override
-    public void progress(File file, long currentSize, long totalSize, float progress, int currentIndex, int totalFile) {
-        onProgress(file, currentSize, totalSize, progress, currentIndex, totalFile);
-    }
-
     /**
-     * 上传回调
-     *
-     * @param file
-     * @param currentSize
-     * @param totalSize
-     * @param progress
-     * @param currentIndex
-     * @param totalFile
+     * @param context
+     * @param isDialog 是否显示加载进度对话框
      */
-    public abstract void onProgress(File file, long currentSize, long totalSize, float progress, int currentIndex, int totalFile);
-
-    /**
-     * 失败回调
-     *
-     * @param action
-     * @param code
-     * @param desc
-     */
-    public void onError(String action, int code, String desc) {
-        if (!isNotTipDialog)
-            UITipDialog.showFall(RetrofitLibrary.getApplication(), desc);
+    public UploadObserver(Context context, boolean isDialog) {
+        super(context, isDialog, true);
     }
-
 }

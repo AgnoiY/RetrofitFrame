@@ -83,7 +83,9 @@ Retrofit框架
       
            public class Name extends BaseResponseModel<Name> {}
            
-3.文件上传：.upload(new UploadObserver<T(实体类)>(context, false){//(Context, 是否加载弹窗)、无参数构造器
+3.文件上传：
+
+           .upload(new UploadObserver<T(实体类)>(context, false){//(Context, 是否加载弹窗)、无参数构造器
 
                     @Override
                     

@@ -290,6 +290,10 @@ public class RetrofitHttp {
         private boolean showLog;
         /*加载失败提示弹出窗*/
         private boolean isNotTipDialog;
+        /*数据库库名*/
+        private String sqliteName;
+        /*数据库版本号*/
+        private int sqliteVersion;
 
         public static Configure get() {
             return Configure.Holder.holders;
@@ -300,9 +304,11 @@ public class RetrofitHttp {
         }
 
         private Configure() {
-            timeout = Constants.TIME_OUT;//默认60秒
-            timeUnit = TimeUnit.SECONDS;//默认秒
-            showLog = true;//默认打印LOG
+            timeout = Constants.TIME_OUT; //默认60秒
+            timeUnit = TimeUnit.SECONDS; //默认秒
+            showLog = true; //默认打印LOG
+            sqliteName = "retrofit.download.db"; //默认数据库库名
+            sqliteVersion = 1; //默认数据库版本号
         }
 
         /*请求基础路径*/
@@ -389,6 +395,26 @@ public class RetrofitHttp {
 
         public Configure setNotTipDialog(boolean notTipDialog) {
             isNotTipDialog = notTipDialog;
+            return this;
+        }
+
+        /*SQLiteName*/
+        public String getSQLiteName() {
+            return sqliteName;
+        }
+
+        public Configure setSQLiteName(String sqliteName) {
+            this.sqliteName = sqliteName;
+            return this;
+        }
+
+        /*SQLiteVersion*/
+        public int getSQLiteVersion() {
+            return sqliteVersion;
+        }
+
+        public Configure setSQLiteVersion(int sqliteVersion) {
+            this.sqliteVersion = sqliteVersion;
             return this;
         }
 

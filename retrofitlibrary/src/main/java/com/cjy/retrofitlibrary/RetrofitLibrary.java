@@ -46,6 +46,7 @@ public class RetrofitLibrary {
     public static void onDestory() {
         mHttpBuilder.clear();
         RequestManagerImpl.getInstance().cancelAll();
+        getHttpConfigure().getHandler().removeCallbacksAndMessages(null);
     }
 
     /**

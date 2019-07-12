@@ -32,7 +32,7 @@ import retrofit2.http.Url;
  *
  * @author yong
  */
-interface Api {
+public interface Api {
 
     /**
      * GET 请求

@@ -15,7 +15,7 @@ import io.reactivex.functions.Function;
  */
 class ServerResultFunction implements Function<JsonElement, Object> {
     @Override
-    public Object apply(@NonNull JsonElement response) throws Exception {
+    public Object apply(@NonNull JsonElement response) {
         /*此处不再处理业务相关逻辑交由开发者重写httpCallback*/
         return new Gson().toJson(response);
     }

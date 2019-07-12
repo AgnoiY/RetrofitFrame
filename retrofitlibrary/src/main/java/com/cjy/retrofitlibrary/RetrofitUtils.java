@@ -1,5 +1,6 @@
 package com.cjy.retrofitlibrary;
 
+import com.cjy.retrofitlibrary.download.HttpsUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
 
@@ -24,19 +25,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 class RetrofitUtils {
 
-    private static RetrofitUtils instance = null;
+    private static RetrofitUtils mInstance = null;
 
     private RetrofitUtils() {
 
     }
 
     public static RetrofitUtils get() {
-        RetrofitUtils retrofitUtils = instance;
+        RetrofitUtils retrofitUtils = mInstance;
         if (retrofitUtils == null) {
             synchronized (RetrofitUtils.class) {
-                retrofitUtils = instance;
+                retrofitUtils = mInstance;
                 if (retrofitUtils == null) {
-                    instance = retrofitUtils = new RetrofitUtils();
+                    mInstance = retrofitUtils = new RetrofitUtils();
                 }
             }
         }
@@ -76,6 +77,17 @@ class RetrofitUtils {
         return retrofit.build();
     }
 
+    /**
+     * 获取下载时使用 OkHttpClient
+     *
+     * @param interceptorArray
+     * @return
+     */
+    public OkHttpClient getOkHttpClientDownload(Interceptor... interceptorArray) {
+        final long timeout = Constants.TIME_OUT;//超时时长
+        final TimeUnit timeUnit = TimeUnit.SECONDS;//单位秒
+        return getOkHttpClient(true, timeout, timeUnit, interceptorArray);
+    }
 
     /**
      * 获取OkHttpClient
@@ -100,8 +112,8 @@ class RetrofitUtils {
          * https设置
          * 备注:信任所有证书,不安全有风险
          */
-//        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
-//        okHttpClient.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
+        okHttpClient.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
         /**
          * 配置https的域名匹配规则，不需要就不要加入，使用不当会导致https握手失败
          * 备注:google平台不允许直接返回true
@@ -115,19 +127,6 @@ class RetrofitUtils {
             }
         }
         return okHttpClient.build();
-    }
-
-
-    /**
-     * 获取下载时使用 OkHttpClient
-     *
-     * @param interceptorArray
-     * @return
-     */
-    public OkHttpClient getOkHttpClientDownload(Interceptor... interceptorArray) {
-        final long timeout = Constants.TIME_OUT;//超时时长
-        final TimeUnit timeUnit = TimeUnit.SECONDS;//单位秒
-        return getOkHttpClient(true, timeout, timeUnit, interceptorArray);
     }
 
     /**

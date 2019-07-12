@@ -17,4 +17,19 @@ public final class Constants {
      */
     public static final long TIME_OUT = 60;
 
+    /**
+     * 数据库
+     */
+    public static final String TABLE = "table";
+    public static final String TABLENAME = "download";
+    public static final String AUTO_INCREMENT = " primary key autoincrement";
+    public static final String UNIQUE = " unique on conflict replace";
+    public static final String _ID = "_id";
+    public static final String LOCALURL = "localUrl";
+    public static final String SERVERURL = "serverUrl";
+    public static final String TOTALSIZE = "totalSize";
+    public static final String CURRENTSIZE = "currentSize";
+    public static final String PROGRESS = "progress";
+    public static final String STATE = "state";
+
 }

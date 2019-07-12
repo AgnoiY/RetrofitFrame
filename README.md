@@ -1,7 +1,7 @@
 # RrtrofitFrame
 Retrofit框架
 
-1.添加方法
+1.添加方法:
 
    allprojects{
   
@@ -19,7 +19,7 @@ Retrofit框架
    
     /*网络请求框架*/
     
-    implementation 'com.github.AgnoiY:RrtrofitFrame:1.0.18'
+    implementation 'com.github.AgnoiY:RrtrofitFrame:1.0.19'
     
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     
@@ -43,9 +43,9 @@ Retrofit框架
   
   }
   
-2.使用方法
+2.使用方法:
 
-　　在Application中
+　　在Application中:
  
     　 onCreate()方法里进行注册：
  
@@ -57,7 +57,7 @@ Retrofit框架
      
 　　　　　　RetrofitLibrary.onDestory();
       
-  　调用方法
+  　调用方法:
    
    　　RetrofitLibrary.getRetrofitHttp()
      
@@ -69,21 +69,57 @@ Retrofit框架
              
            .build()
              
-           .request(new HttpObserver<Ｔ(实体类)>(this, true, true) { //(Context, 是否加载弹窗, 点击返回键是否取消加载弹窗)多个重载方法
+           .request(new HttpObserver<Ｔ(实体类)>(context, true, true) {//(Context, 是否加载弹窗, 点击返回键是否取消加载弹窗)多个重载方法
              
+                    @Override
+                    
+                    public void onSuccess(String action, T value) { //action: 标识（请求不设置，默认是apiUrl）
+                   
+                    }
+                    
+                });
+                
+    实体类:继承BaseResponseModel<Ｔ>或BaseResponseListModel<T>
+      
+           public class Name extends BaseResponseModel<Name> {}
+           
+3.文件上传：
+
+           .upload(new UploadObserver<T(实体类)>(context, false){//(Context, 是否加载弹窗)、无参数构造器
+
                     @Override
                     
                     public void onSuccess(String action, T value) {
                    
                     }
                     
-                });
-                
-    实体类要继承BaseResponseModel<Ｔ>或BaseResponseListModel<T>
-      
-           public class Name extends BaseResponseModel<Name> {}
+                    /**
+                    
+                     * 上传进度回调
+                     
+                     *
+                     
+                     * @param file         源文件
+                     
+                     * @param currentSize  当前上传值
+                     
+                     * @param totalSize    总大小
+                     
+                     * @param progress     进度
+                     
+                     * @param currentIndex 当前下标
+                     
+                     * @param totalFile    总文件数
+                     
+                     */
+                     
+                    public void onProgress(File file, long currentSize, long totalSize, 
+                    
+                                   float progress, int currentIndex, int totalFile);
+
+               });
           
-３．重写业务逻辑解析方式继承BaseHttpObserver，实体类无需继承上述两个，根据需要自定义
+4．重写业务逻辑解析方式继承BaseHttpObserver，实体类无需继承上述两个，根据需要自定义
 
 　　　
 　　

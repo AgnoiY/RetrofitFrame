@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        login("15713802736", "a123456");
+//        login("15713802736", "a123456");
         DownloadBean bean = download();
         DownloadBean beanQuery = RetrofitDownload.get().getDownloadModel(bean);
         mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());

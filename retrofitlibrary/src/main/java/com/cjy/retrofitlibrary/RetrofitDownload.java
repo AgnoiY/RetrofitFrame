@@ -8,6 +8,7 @@ import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.internal.schedulers.IoScheduler;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -102,16 +104,18 @@ public class RetrofitDownload {
         }
         /* RANGE 断点续传下载 */
         //数据变换
+
         api.download("bytes=" + download.getCurrentSize() + "-", download.getServerUrl())
-                .subscribeOn(Schedulers.io())
                 .map((Function<ResponseBody, Object>) responseBody -> {
                             download.setState(DownloadModel.State.LOADING);//下载中状态
                             SQLiteHelper.get().insertOrUpdate(download);//更新数据库状态(后期考虑下性能问题)
                             //写入文件
                             ResponseUtils.get().downloadLocalFile(responseBody, new File(download.getLocalUrl()), download);
+
                             return download;
                         }
                 )
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
 

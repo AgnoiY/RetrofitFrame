@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.Method;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -47,14 +48,10 @@ public class RetrofitHttp {
     private ActivityEvent activityEvent;
     /*FragmentEvent*/
     private FragmentEvent fragmentEvent;
-    /*BaseHttpObserver*/
-    private BaseHttpObserver httpObserver;
     /*标识请求的TAG*/
     private String tag;
     /*文件map*/
     private Map<String, File> fileMap;
-    /*上传文件回调*/
-    private UploadObserver uploadCallback;
     /*基础URL*/
     private String baseUrl;
     /*apiUrl*/
@@ -64,7 +61,9 @@ public class RetrofitHttp {
     /*是否强制JSON格式*/
     boolean isJson;
 
-    /*构造函数*/
+    /**
+     * 构造函数
+     */
     private RetrofitHttp(Builder builder) {
         this.parameter = builder.parameter;
         this.header = builder.header;
@@ -80,71 +79,47 @@ public class RetrofitHttp {
         this.method = builder.method;
     }
 
-    /*普通Http请求*/
+    /**
+     * 普通Http请求
+     */
     public void request(BaseHttpObserver httpObserver) {
-        this.httpObserver = httpObserver;
         if (httpObserver == null) {
             throw new NullPointerException("BaseHttpObserver must not null!");
         } else {
-            doRequest();
+            doRequest(httpObserver);
         }
     }
 
-    /*上传文件请求*/
+    /**
+     * 上传文件请求
+     */
     public void upload(UploadObserver uploadCallback) {
-        this.uploadCallback = uploadCallback;
         if (uploadCallback == null) {
             throw new NullPointerException("UploadObserver must not null!");
         } else {
-            doUpload();
+            doUpload(uploadCallback);
         }
     }
 
-    /*执行请求*/
-    private void doRequest() {
+    /**
+     * 执行请求
+     */
+    private void doRequest(BaseHttpObserver httpObserver) {
 
-        /*加载失败提示弹出窗*/
-        httpObserver.setNotTipDialog(Configure.get().isNotTipDialog);
-
-        /*设置请求唯一标识*/
-        httpObserver.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
-
-        /*header处理*/
-        disposeHeader();
-
-        /*Parameter处理*/
-        disposeParameter();
+        doObserver(httpObserver);
 
         /*请求方式处理*/
         Observable apiObservable = disposeApiObservable();
 
-        /* 被观察者 httpObservable */
-        HttpObservable httpObservable = new HttpObservable.Builder(apiObservable)
-                .baseObserver(httpObserver)
-                .lifecycleProvider(lifecycle)
-                .activityEvent(activityEvent)
-                .fragmentEvent(fragmentEvent)
-                .build();
-        /* 观察者  httpObserver */
-        /*设置监听*/
-        httpObservable.observe().subscribe(httpObserver);
-
+        doObservable(httpObserver, apiObservable);
     }
 
-    /*执行文件上传*/
-    private void doUpload() {
+    /**
+     * 执行文件上传
+     */
+    private void doUpload(UploadObserver uploadCallback) {
 
-        /*加载失败提示弹出窗*/
-        uploadCallback.setNotTipDialog(Configure.get().isNotTipDialog);
-
-        /*设置请求唯一标识*/
-        uploadCallback.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
-
-        /*header处理*/
-        disposeHeader();
-
-        /*Parameter处理*/
-        disposeParameter();
+        doObserver(uploadCallback);
 
         /*处理文件集合*/
         List<MultipartBody.Part> fileList = new ArrayList<>();
@@ -165,31 +140,77 @@ public class RetrofitHttp {
         /*请求处理*/
         Observable apiObservable = RetrofitUtils.get().getRetrofit(getBaseUrl(), header).create(Api.class).upload(disposeApiUrl(), parameter, header, fileList);
 
+        doObservable(uploadCallback, apiObservable);
+
+    }
+
+    /**
+     * 设置请求配置
+     *
+     * @param httpObserver
+     */
+    private void doObserver(BaseHttpObserver httpObserver) {
+        /*加载失败提示弹出窗*/
+        httpObserver.setNotTipDialog(Configure.get().isNotTipDialog);
+
+        /*设置请求唯一标识*/
+        httpObserver.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
+
+        /*header处理*/
+        disposeHeader();
+
+        /*Parameter处理*/
+        disposeParameter();
+    }
+
+    /**
+     * 设置Observabl
+     *
+     * @param httpObserver
+     */
+    private void doObservable(BaseHttpObserver httpObserver, Observable apiObservable) {
+
         /* 被观察者 httpObservable */
         HttpObservable httpObservable = new HttpObservable.Builder(apiObservable)
-                .baseObserver(uploadCallback)
+                .baseObserver(httpObserver)
                 .lifecycleProvider(lifecycle)
                 .activityEvent(activityEvent)
                 .fragmentEvent(fragmentEvent)
                 .build();
-        /* 观察者  uploadCallback */
+
+        /* 观察者  httpObserver */
         /*设置监听*/
-        httpObservable.observe().subscribe(uploadCallback);
+        httpObservable.observe().subscribe(httpObserver);
 
     }
 
-    /*获取基础URL*/
+    /**
+     * 获取基础URL
+     */
     private String getBaseUrl() {
         //如果没有重新指定URL则是用默认配置
-        return TextUtils.isEmpty(baseUrl) ? Configure.get().getBaseUrl() : baseUrl;
+        if (TextUtils.isEmpty(baseUrl)) {
+            baseUrl = Configure.get().getBaseUrl();
+            if (TextUtils.isEmpty(baseUrl)) {
+                LogUtils.e("baseUrl is null");
+            }
+        }
+        return baseUrl;
     }
 
-    /*ApiUrl处理*/
+    /**
+     * ApiUrl处理
+     */
     private String disposeApiUrl() {
-        return TextUtils.isEmpty(apiUrl) ? "" : apiUrl;
+        if (TextUtils.isEmpty(apiUrl)) {
+            LogUtils.d("apiUrl is null");
+        }
+        return apiUrl;
     }
 
-    /*处理Header*/
+    /**
+     * 处理Header
+     */
     private void disposeHeader() {
 
         /*header空处理*/
@@ -212,7 +233,9 @@ public class RetrofitHttp {
 
     }
 
-    /*处理 Parameter*/
+    /**
+     * 处理 Parameter
+     */
     private void disposeParameter() {
 
         /*空处理*/
@@ -227,7 +250,9 @@ public class RetrofitHttp {
         }
     }
 
-    /*处理ApiObservable*/
+    /**
+     * 处理ApiObservable
+     */
     private Observable disposeApiObservable() {
 
         Observable apiObservable = null;

@@ -124,7 +124,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
         int count = 0;
         database = mInstance.getWritableDatabase();
         if (database != null) {
-            count = database.delete(getTable(), LOCALURL + "=?", new String[]{model.getLocalUrl()});
+            count = database.delete(getTable(), LOCALURL + "=?", new String[]{model.getServerUrl()});
             database.close();
         }
         return count;
@@ -182,39 +182,6 @@ class SQLiteHelper extends SQLiteOpenHelper {
             database.close();
         }
         return count;
-    }
-
-    /**
-     * 获取　ContentValues
-     *
-     * @param var
-     * @return
-     */
-    private ContentValues getContentValues(DownloadModel var) {
-        ContentValues values = new ContentValues();
-        List<String> list = EntityGatherUtils.getEntityList(var.getClass());
-        for (int i = 0; i < list.size(); i += 2) {
-            String key = list.get(i);
-            if (key.equals(TABLE) || key.contains(_ID)) {
-                continue;
-            }
-            Object object = EntityGatherUtils.getValueByFieldName(key, var);
-            if (object instanceof String) {
-                values.put(key, (String) object);
-            } else if (object instanceof Integer) {
-                values.put(key, (Integer) object);
-            } else if (object instanceof Long) {
-                values.put(key, (Long) object);
-            } else if (object instanceof Float) {
-                values.put(key, (Float) object);
-            } else if (object instanceof Boolean) {
-                Boolean aBoolean = (Boolean) object;
-                values.put(key, aBoolean ? 1 : 0);
-            } else if (object instanceof Enum) {
-                values.put(key, ((Enum) object).name());
-            }
-        }
-        return values;
     }
 
     /**
@@ -288,10 +255,11 @@ class SQLiteHelper extends SQLiteOpenHelper {
         if (type.contains(String.class.getSimpleName())) {
             value = cursor.getString(cursor.getColumnIndex(column));
         } else if (type.contains(Integer.class.getSimpleName()) ||
-                type.contains(int.class.getSimpleName()) ||
-                type.contains(Boolean.class.getSimpleName()) ||
-                type.contains(boolean.class.getSimpleName())) {
+                type.contains(int.class.getSimpleName())) {
             value = cursor.getInt(cursor.getColumnIndex(column));
+        } else if (type.contains(Boolean.class.getSimpleName()) ||
+                type.contains(boolean.class.getSimpleName())) {
+            value = cursor.getInt(cursor.getColumnIndex(column)) == 1;
         } else if (type.contains(Long.class.getSimpleName()) ||
                 type.contains(long.class.getSimpleName())) {
             value = cursor.getLong(cursor.getColumnIndex(column));
@@ -306,6 +274,39 @@ class SQLiteHelper extends SQLiteOpenHelper {
             value = DownloadModel.State.valueOf(value.toString());
         }
         return value;
+    }
+
+    /**
+     * 获取　ContentValues
+     *
+     * @param var
+     * @return
+     */
+    private ContentValues getContentValues(DownloadModel var) {
+        ContentValues values = new ContentValues();
+        List<String> list = EntityGatherUtils.getEntityList(var.getClass());
+        for (int i = 0; i < list.size(); i += 2) {
+            String key = list.get(i);
+            if (key.equals(TABLE) || key.contains(_ID)) {
+                continue;
+            }
+            Object object = EntityGatherUtils.getValueByFieldName(key, var);
+            if (object instanceof String) {
+                values.put(key, (String) object);
+            } else if (object instanceof Integer) {
+                values.put(key, (Integer) object);
+            } else if (object instanceof Long) {
+                values.put(key, (Long) object);
+            } else if (object instanceof Float) {
+                values.put(key, (Float) object);
+            } else if (object instanceof Boolean) {
+                Boolean aBoolean = (Boolean) object;
+                values.put(key, aBoolean ? 1 : 0);
+            } else if (object instanceof Enum) {
+                values.put(key, ((Enum) object).name());
+            }
+        }
+        return values;
     }
 
 }

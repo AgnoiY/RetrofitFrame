@@ -10,7 +10,7 @@ package com.cjy.retrofitlibrary;
 interface RequestCancel {
 
     /**
-     * 取消请求
+     * 手动取消请求
      */
     void cancel();
 

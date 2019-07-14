@@ -10,7 +10,6 @@ import com.cjy.retrofitlibrary.model.DownloadModel;
 
 import java.lang.ref.SoftReference;
 
-import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
@@ -22,11 +21,10 @@ import io.reactivex.disposables.Disposable;
  *
  * @author yong
  */
-class DownloadObserver<T extends DownloadModel> implements DownloadProgressCallback, Observer<T> {
+public class DownloadObserver<T extends DownloadModel> extends BaseObserver<T> implements DownloadProgressCallback {
 
     private DownloadModel download;
     private Handler handler;
-    private Disposable disposable;
     private SoftReference<DownloadCallback> downloadCallback;
 
     public void setDownload(DownloadModel download) {
@@ -46,7 +44,7 @@ class DownloadObserver<T extends DownloadModel> implements DownloadProgressCallb
      */
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-        disposable = d;
+        super.onSubscribe(d);
         setDownloadProgress(DownloadModel.State.WAITING, null, null);
     }
 
@@ -56,6 +54,7 @@ class DownloadObserver<T extends DownloadModel> implements DownloadProgressCallb
      */
     @Override
     public void onError(Throwable e) {
+        super.onError(e);
         setDownloadProgress(DownloadModel.State.ERROR, null, e);
     }
 
@@ -65,12 +64,17 @@ class DownloadObserver<T extends DownloadModel> implements DownloadProgressCallb
      */
     @Override
     public void onNext(T t) {
+        super.onNext(t);
         setDownloadProgress(DownloadModel.State.FINISH, t, null);
     }
 
+    /**
+     * 取消请求
+     * 备注：暂停下载时调用
+     */
     @Override
-    public void onComplete() {
-        //
+    public void onCanceled() {
+        cancel();
     }
 
 
@@ -98,16 +102,6 @@ class DownloadObserver<T extends DownloadModel> implements DownloadProgressCallb
                 downloadCallback.get().onProgress(setProgress());
             }
         });
-    }
-
-    /**
-     * 取消请求
-     * 备注：暂停下载时调用
-     */
-    public void dispose() {
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
     }
 
     /**
@@ -147,5 +141,4 @@ class DownloadObserver<T extends DownloadModel> implements DownloadProgressCallb
         download.setProgress(progress);
         return download;
     }
-
 }

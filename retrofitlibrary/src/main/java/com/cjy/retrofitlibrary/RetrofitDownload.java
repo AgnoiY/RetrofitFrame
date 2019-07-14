@@ -104,7 +104,6 @@ public class RetrofitDownload {
         }
         /* RANGE 断点续传下载 */
         //数据变换
-
         api.download("bytes=" + download.getCurrentSize() + "-", download.getServerUrl())
                 .map((Function<ResponseBody, Object>) responseBody -> {
                             download.setState(DownloadModel.State.LOADING);//下载中状态
@@ -139,7 +138,7 @@ public class RetrofitDownload {
         /*1.暂停网络数据*/
         if (mCallbackMap.containsKey(download.getServerUrl())) {
             DownloadObserver observer = mCallbackMap.get(download.getServerUrl());
-            observer.dispose();//取消
+            observer.onCanceled();//取消
             mCallbackMap.remove(download.getServerUrl());
         }
 

@@ -47,35 +47,29 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     @Override
     public void onNext(@NonNull T value) {
         super.onNext(value);
-        inSuccess(getTag(), value);
+        initSuccess(value);
     }
 
     @Override
     public void onError(Throwable e) {
         super.onError(e);
-        if (e instanceof ApiException) {
-            ApiException exception = (ApiException) e;
-            inError(getTag(), exception.getCode(), exception.getMsg());
-        } else {
-            inError(getTag(), ExceptionEngine.UN_KNOWN_ERROR, RetrofitLibrary.getAppString(R.string.un_known_error));
-        }
+        initError(e);
     }
 
     @Override
     public void onCanceled() {
-        onCanceledLogic();
+        initCancel();
     }
 
     /**
      * 请求成功
      *
-     * @param action
      * @param value
      */
-    private void inSuccess(String action, T value) {
+    private void initSuccess(T value) {
         T result = parse((String) value);
         if (callSuccess && result != null) {
-            onSuccess(action, result);
+            onSuccess(getTag(), result);
         }
     }
 
@@ -100,30 +94,26 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     /**
      * 请求出错
      *
-     * @param action
-     * @param code
-     * @param desc
+     * @param e
      */
-    private void inError(String action, int code, String desc) {
-        onError(action, code, desc);
-    }
-
-    /**
-     * Http被取消回调处理逻辑
-     */
-    private void onCanceledLogic() {
-        if (!ThreadUtils.isMainThread()) {
-            RetrofitHttp.Configure.get().getHandler().post(this::inCancel);
+    private void initError(Throwable e) {
+        if (e instanceof ApiException) {
+            ApiException exception = (ApiException) e;
+            onError(getTag(), exception.getCode(), exception.getMsg());
         } else {
-            inCancel();
+            onError(getTag(), ExceptionEngine.UN_KNOWN_ERROR, RetrofitLibrary.getAppString(R.string.un_known_error));
         }
     }
 
     /**
-     * 请求取消
+     * 请求被取消
      */
-    private void inCancel() {
-        onCancel();
+    private void initCancel() {
+        if (!ThreadUtils.isMainThread()) {
+            RetrofitHttp.Configure.get().getHandler().post(this::onCancel);
+        } else {
+            onCancel();
+        }
     }
 
     /**

@@ -82,12 +82,13 @@ public class RetrofitHttp {
     /**
      * 普通Http请求
      */
-    public void request(BaseHttpObserver httpObserver) {
+    public RetrofitHttp request(BaseHttpObserver httpObserver) {
         if (httpObserver == null) {
             throw new NullPointerException("BaseHttpObserver must not null!");
         } else {
             doRequest(httpObserver);
         }
+        return this;
     }
 
     /**
@@ -102,24 +103,40 @@ public class RetrofitHttp {
     }
 
     /**
-     * 执行请求
+     * 普通Http请求
+     */
+    public RetrofitHttp download(DownloadObserver downloadObserver) {
+        if (baseObserver == null) {
+            throw new NullPointerException("BaseObserver must not null!");
+        } else {
+            doDownload(baseObserver);
+        }
+        return this;
+    }
+
+    /**
+     * 普通请求
+     *
+     * @param httpObserver
      */
     private void doRequest(BaseHttpObserver httpObserver) {
 
-        doObserver(httpObserver);
+        setObserver(httpObserver);
 
         /*请求方式处理*/
         Observable apiObservable = disposeApiObservable();
 
-        doObservable(httpObserver, apiObservable);
+        setObservable(httpObserver, apiObservable);
     }
 
     /**
-     * 执行文件上传
+     * 文件上传
+     *
+     * @param uploadCallback
      */
-    private void doUpload(UploadObserver uploadCallback) {
+    private void doUpload(BaseHttpObserver uploadCallback) {
 
-        doObserver(uploadCallback);
+        setObserver(uploadCallback);
 
         /*处理文件集合*/
         List<MultipartBody.Part> fileList = new ArrayList<>();
@@ -140,7 +157,24 @@ public class RetrofitHttp {
         /*请求处理*/
         Observable apiObservable = RetrofitUtils.get().getRetrofit(getBaseUrl(), header).create(Api.class).upload(disposeApiUrl(), parameter, header, fileList);
 
-        doObservable(uploadCallback, apiObservable);
+        setObservable(uploadCallback, apiObservable);
+
+    }
+
+    /**
+     * 文件下载
+     *
+     * @param downloadObserver
+     */
+    private void doDownload(DownloadObserver downloadObserver) {
+
+        setObserver(downloadObserver);
+
+        /*请求处理*/
+        Observable apiObservable = RetrofitUtils.get().getRetrofit(getBaseUrl(), header).create(Api.class)
+                .upload(disposeApiUrl(), parameter, header, fileList);
+
+        setObservable(downloadObserver, apiObservable);
 
     }
 
@@ -149,7 +183,7 @@ public class RetrofitHttp {
      *
      * @param httpObserver
      */
-    private void doObserver(BaseHttpObserver httpObserver) {
+    private void setObserver(BaseHttpObserver httpObserver) {
         /*加载失败提示弹出窗*/
         httpObserver.setNotTipDialog(Configure.get().isNotTipDialog);
 
@@ -168,7 +202,7 @@ public class RetrofitHttp {
      *
      * @param httpObserver
      */
-    private void doObservable(BaseHttpObserver httpObserver, Observable apiObservable) {
+    private void setObservable(BaseHttpObserver httpObserver, Observable apiObservable) {
 
         /* 被观察者 httpObservable */
         HttpObservable httpObservable = new HttpObservable.Builder(apiObservable)

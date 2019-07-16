@@ -3,6 +3,7 @@ package com.cjy.retrofitlibrary.download;
 import android.text.TextUtils;
 
 import java.io.File;
+import java.math.BigDecimal;
 
 /**
  * 计算工具类
@@ -27,25 +28,10 @@ public class ComputeUtils {
      */
     public static float getProgress(long current, long total) {
         if (total == 0) return 0;
-        float progress = keepDecimal((float) current / (float) total, 3);
-        return progress;
-    }
-
-    /**
-     * 保留小数
-     *
-     * @param decimal 　保留数
-     * @param digit   　保留小数位数
-     * @return
-     */
-    public static float keepDecimal(Object decimal, int digit) {
-
-        String format = "%." + digit + "f";
-
-        if (decimal != null && (decimal instanceof Float || decimal instanceof Double))
-            return Float.valueOf(removeZero(String.format(format, decimal)));
-
-        return 0;
+        BigDecimal decimal = new BigDecimal((float) current);
+        BigDecimal bigDecimal = new BigDecimal((float) total);
+        String progress = removeZero(decimal.divide(bigDecimal, 4, BigDecimal.ROUND_HALF_UP).toString());
+        return Float.valueOf(progress);
     }
 
     /**
@@ -54,7 +40,7 @@ public class ComputeUtils {
      * @param rate
      * @return
      */
-    public static String removeZero(String rate) {
+    private static String removeZero(String rate) {
         rate = rate.replaceAll("0+?$", "");//去掉多余的0
         rate = rate.replaceAll("[.]$", "");//如最后一位是.则去掉
         return rate;

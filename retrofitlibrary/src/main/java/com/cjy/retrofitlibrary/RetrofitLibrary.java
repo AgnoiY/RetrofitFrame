@@ -54,7 +54,7 @@ public class RetrofitLibrary {
      *
      * @return
      */
-    public static RetrofitHttp.Builder getRetrofitHttp() {
+    public static RetrofitHttp.Builder getHttp() {
         if (mHttpBuilder == null)
             mHttpBuilder = new RetrofitHttp.Builder().getInstance();
         mHttpBuilder.clear();

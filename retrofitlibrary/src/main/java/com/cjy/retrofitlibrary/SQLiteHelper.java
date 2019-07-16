@@ -15,7 +15,6 @@ import com.cjy.retrofitlibrary.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cjy.retrofitlibrary.Constants.LOCALURL;
 import static com.cjy.retrofitlibrary.Constants.SERVERURL;
 import static com.cjy.retrofitlibrary.Constants.TABLE;
 import static com.cjy.retrofitlibrary.Constants._ID;
@@ -99,9 +98,9 @@ class SQLiteHelper extends SQLiteOpenHelper {
             database = mInstance.getWritableDatabase();
             ContentValues values = getContentValues(model);
             if (TextUtils.isEmpty(getTable())) return 0;
-            String selection = LOCALURL + "=?";
+            String selection = SERVERURL + "=?";
             String[] selectionArgs = new String[]{model.getServerUrl()};
-            Cursor cursor = queryLocalUrl(model.getServerUrl());
+            Cursor cursor = queryServerUrl(model.getServerUrl());
             if (cursor.moveToNext()) {
                 count = database.update(getTable(), values, selection, selectionArgs);
             } else {
@@ -124,7 +123,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
         int count = 0;
         database = mInstance.getWritableDatabase();
         if (database != null) {
-            count = database.delete(getTable(), LOCALURL + "=?", new String[]{model.getServerUrl()});
+            count = database.delete(getTable(), SERVERURL + "=?", new String[]{model.getServerUrl()});
             database.close();
         }
         return count;
@@ -141,7 +140,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
         T t = null;
         database = mInstance.getWritableDatabase();
         if (database != null) {
-            Cursor cursor = queryLocalUrl(model.getServerUrl());
+            Cursor cursor = queryServerUrl(model.getServerUrl());
             List<T> tList = (List<T>) getCursorModel(cursor, model.getClass());
             if (tList != null && !tList.isEmpty())
                 t = tList.get(0);
@@ -207,7 +206,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      * @param serverUrl
      * @return
      */
-    private Cursor queryLocalUrl(String serverUrl) {
+    private Cursor queryServerUrl(String serverUrl) {
         String selection = SERVERURL + "=?";
         String[] selectionArgs = new String[]{serverUrl};
         return database.query(getTable(), null, selection, selectionArgs, null, null, null);

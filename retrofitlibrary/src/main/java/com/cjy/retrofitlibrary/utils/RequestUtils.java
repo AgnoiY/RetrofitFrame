@@ -62,7 +62,7 @@ public class RequestUtils {
      * @return
      */
     public static Object getHeaderValueEncoded(Object value) {
-        if (value == null) return "null";
+        if (value == null) return null;
         if (value instanceof String) {
             String strValue = ((String) value).replace("\n", "");//换行符
             for (int i = 0, length = strValue.length(); i < length; i++) {

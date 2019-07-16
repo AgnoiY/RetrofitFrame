@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.cjy.retrofitlibrary.download.DownloadCallback;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.Method;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
@@ -103,14 +104,14 @@ public class RetrofitHttp {
     }
 
     /**
-     * 普通Http请求
+     * 文件下载
      */
     public RetrofitHttp download(DownloadObserver downloadObserver) {
-        if (baseObserver == null) {
-            throw new NullPointerException("BaseObserver must not null!");
-        } else {
-            doDownload(baseObserver);
-        }
+//        if (baseObserver == null) {
+//            throw new NullPointerException("BaseObserver must not null!");
+//        } else {
+//            doDownload(baseObserver);
+//        }
         return this;
     }
 
@@ -134,7 +135,7 @@ public class RetrofitHttp {
      *
      * @param uploadCallback
      */
-    private void doUpload(BaseHttpObserver uploadCallback) {
+    private void doUpload(UploadObserver uploadCallback) {
 
         setObserver(uploadCallback);
 
@@ -148,7 +149,8 @@ public class RetrofitHttp {
             for (Map.Entry<String, File> entry : fileMap.entrySet()) {
                 file = entry.getValue();
                 requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                MultipartBody.Part part = MultipartBody.Part.createFormData(entry.getKey(), file.getName(), new UploadRequestBody(requestBody, file, index, size, uploadCallback));
+                MultipartBody.Part part = MultipartBody.Part.createFormData(entry.getKey(), file.getName(),
+                        new UploadRequestBody(requestBody, file, index, size, uploadCallback));
                 fileList.add(part);
                 index++;
             }
@@ -164,17 +166,10 @@ public class RetrofitHttp {
     /**
      * 文件下载
      *
-     * @param downloadObserver
+     * @param downloadCallback
      */
-    private void doDownload(DownloadObserver downloadObserver) {
+    private void doDownload(DownloadCallback downloadCallback) {
 
-        setObserver(downloadObserver);
-
-        /*请求处理*/
-        Observable apiObservable = RetrofitUtils.get().getRetrofit(getBaseUrl(), header).create(Api.class)
-                .upload(disposeApiUrl(), parameter, header, fileList);
-
-        setObservable(downloadObserver, apiObservable);
 
     }
 
@@ -261,7 +256,9 @@ public class RetrofitHttp {
         if (!header.isEmpty()) {
             //处理header中文或者换行符出错问题
             for (Map.Entry<String, Object> entry : header.entrySet()) {
-                header.put(entry.getKey(), RequestUtils.getHeaderValueEncoded(entry.getValue()));
+                Object value = RequestUtils.getHeaderValueEncoded(entry.getValue());
+                if (value != null)
+                    header.put(entry.getKey(), value);
             }
         }
 

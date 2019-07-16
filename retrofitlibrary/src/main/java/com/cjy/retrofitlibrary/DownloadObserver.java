@@ -74,7 +74,7 @@ public class DownloadObserver<T extends DownloadModel> extends BaseObserver<T> i
      */
     @Override
     public void onCanceled() {
-        cancel();
+        onCancleProgress();
     }
 
 

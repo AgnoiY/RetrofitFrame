@@ -9,7 +9,7 @@ import com.cjy.retrofitlibrary.model.DownloadModel;
  *
  * @author yong
  */
-public abstract class DownloadCallback<T extends DownloadModel> {
+public interface   DownloadCallback<T extends DownloadModel> {
 
     /**
      * 进度回调

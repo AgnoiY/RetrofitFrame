@@ -34,9 +34,10 @@
 
             <TextView
                 android:id="@+id/progress_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="0%" />
+                android:gravity="center"
+                android:text="00.00%" />
 
         </LinearLayout>
 

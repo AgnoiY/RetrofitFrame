@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author yong
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DownloadCallback<DownloadBean> {
 
     private ActivityMainBinding mMainBinding;
 
@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-//        login("15713802736", "a123456");
+        login("15713802736", "a123456");
         DownloadBean bean = download();
         DownloadBean beanQuery = RetrofitDownload.get().getDownloadModel(bean);
+        if (beanQuery != null)
+            beanQuery.setCallback(this);
         mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
-        mMainBinding.progressTv.setText((beanQuery == null ? 0 : beanQuery.getProgress() * 100) + "%");
+        mMainBinding.progressTv.setText((beanQuery == null ? 0 : String.format("%.2f", beanQuery.getProgress() * 100)) + "%");
         mMainBinding.downStateTv.setText("下载状态：" + getStateText(beanQuery == null ? bean.getState() : beanQuery.getState()));
         mMainBinding.progress.setProgress(beanQuery == null ? 0 : (int) (beanQuery.getProgress() * 100));
         mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(beanQuery == null ? bean : beanQuery));
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("mobile", userid);
         map.put("password", pwd);
 
-        RetrofitLibrary.getRetrofitHttp().post().apiUrl(UrlConstans.LOGIN)
+        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LOGIN)
                 .addParameter(map).build()
                 .request(new HttpObserver<LoginModel>(this, true) {
                     @Override
@@ -102,25 +104,24 @@ public class MainActivity extends AppCompatActivity {
 
         DownloadBean bean = new DownloadBean(url1, icon1, file1.getAbsolutePath());
 
-        bean.setCallback(new DownloadCallback<DownloadBean>() {
-            @Override
-            public void onProgress(DownloadBean model) {
-                mMainBinding.downStateTv.setText("下载状态：" + getStateText(bean.getState()));
-                mMainBinding.progressTv.setText(model.getProgress() * 100 + "%");
-                mMainBinding.progress.setProgress((int) (model.getProgress() * 100));
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onSuccess(DownloadBean model) {
-                mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
-            }
-        });
+        bean.setCallback(this);
 
         return bean;
+    }
+
+    @Override
+    public void onProgress(DownloadBean model) {
+        mMainBinding.downStateTv.setText("下载状态：" + getStateText(model.getState()));
+        mMainBinding.progressTv.setText(String.format("%.2f", model.getProgress() * 100) + "%");
+        mMainBinding.progress.setProgress((int) (model.getProgress() * 100));
+    }
+
+    @Override
+    public void onError(Throwable e) {
+    }
+
+    @Override
+    public void onSuccess(DownloadBean model) {
+        mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
     }
 }

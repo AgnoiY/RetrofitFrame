@@ -2,13 +2,16 @@ package com.cjy.retrofitlibrary.model;
 
 import com.cjy.retrofitlibrary.Api;
 import com.cjy.retrofitlibrary.download.Column;
+import com.cjy.retrofitlibrary.download.DownLoadServer;
 import com.cjy.retrofitlibrary.download.DownloadCallback;
 import com.cjy.retrofitlibrary.download.Ignore;
 import com.cjy.retrofitlibrary.download.NotNull;
 import com.cjy.retrofitlibrary.download.PrimaryKey;
 import com.cjy.retrofitlibrary.download.Table;
+import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 import static com.cjy.retrofitlibrary.Constants.AUTO_INCREMENT;
 import static com.cjy.retrofitlibrary.Constants.CURRENTSIZE;
@@ -68,6 +71,7 @@ public class DownloadModel implements Serializable {
     private DownloadCallback callback;//回调接口
 
     public DownloadModel() {
+//        getDownloadServer();
     }
 
     public DownloadModel(String url) {
@@ -109,6 +113,8 @@ public class DownloadModel implements Serializable {
     }
 
     public String getServerUrl() {
+        if (serverUrl == null)
+            getDownloadServer();
         return serverUrl == null ? "" : serverUrl;
     }
 
@@ -164,4 +170,24 @@ public class DownloadModel implements Serializable {
     public void setCallback(DownloadCallback callback) {
         this.callback = callback;
     }
+
+    /**
+     * 获取对象中注解转换成List
+     *
+     * @return
+     */
+    public void getDownloadServer() {
+        Class var = this.getClass();
+        do {
+            Field[] fields = var.getDeclaredFields();//获取类的各个属性值
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(DownLoadServer.class)) {
+                    serverUrl = (String) EntityGatherUtils.getValueByFieldName(field.getName(), this);
+                }
+            }
+            var = var.getSuperclass();
+
+        } while (var != Object.class);
+    }
+
 }

@@ -1,7 +1,11 @@
 package com.cjy.retrofitlibrary.download;
 
 
+import android.os.Environment;
+
 import com.cjy.retrofitlibrary.model.DownloadModel;
+
+import java.io.File;
 
 /**
  * 下载实体类，继承Download
@@ -11,13 +15,14 @@ public class DownloadBean extends DownloadModel {
     /**
      * 额外字段，apk图标
      */
+    @DownLoadServer
     private String icon;
 
     public DownloadBean() {
+
     }
 
     public DownloadBean(String url, String icon, String localUrl) {
-        setServerUrl(url);
         setLocalUrl(localUrl);
         setIcon(icon);
     }

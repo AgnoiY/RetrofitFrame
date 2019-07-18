@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
         mMainBinding.progressTv.setText((beanQuery == null ? 0 : String.format("%.2f", beanQuery.getProgress() * 100)) + "%");
+        mMainBinding.serverTv.setText("下载地址：" + (beanQuery == null ? bean.getServerUrl() : beanQuery.getServerUrl()));
         mMainBinding.downStateTv.setText("下载状态：" + getStateText(beanQuery == null ? bean.getState() : beanQuery.getState()));
         mMainBinding.progress.setProgress(beanQuery == null ? 0 : (int) (beanQuery.getProgress() * 100));
         mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(beanQuery == null ? bean : beanQuery));
@@ -102,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         String url1 = "http://imtt.dd.qq.com/16891/50CC095EFBE6059601C6FB652547D737.apk?fsname=com.tencent.mm_6.6.7_1321.apk&csr=1bbd";
         String icon1 = "http://pp.myapp.com/ma_icon/0/icon_10910_1534495359/96";
 
-        DownloadBean bean = new DownloadBean(url1, icon1, file1.getAbsolutePath());
+//        DownloadBean bean = new DownloadBean(url1, icon1, file1.getAbsolutePath());
+        DownloadBean bean = new DownloadBean(url1, url1, file1.getAbsolutePath());
 
         bean.setCallback(this);
 

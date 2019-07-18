@@ -67,10 +67,12 @@ public class EntityGatherUtils {
         if (table == null) return list;
         list.add(TABLE);
         list.add(table.value());
-        Field[] fields = var.getDeclaredFields();//获取类的各个属性值
-        Field[] fieldsSuper = var.getSuperclass().getDeclaredFields();//获取父类的各个属性值
-        list = getFieldList(list, fields);
-        list = getFieldList(list, fieldsSuper);
+        do {
+            Field[] fields = var.getDeclaredFields();//获取类的各个属性值
+            list = getFieldList(list, fields);
+            var = (Class<T>) var.getSuperclass();
+        } while (var != Object.class);
+
         return list;
     }
 
@@ -84,11 +86,12 @@ public class EntityGatherUtils {
     private static List<String> getFieldList(List<String> list, Field[] fields) {
         for (Field field : fields) {
             String fieldType = " " + field.getType().getSimpleName();//获取类的属性类型
-            if (fieldType.contains(String.class.getSimpleName()) || fieldType.contains(DownloadModel.State.class.getSimpleName())) {
+            if (fieldType.contains(String.class.getSimpleName()) ||
+                    fieldType.contains(DownloadModel.State.class.getSimpleName())) {
                 fieldType = " varchar";
-            } else if (fieldType.contains(int.class.getSimpleName())) {
-                fieldType = " Integer";
-            } else if (fieldType.contains(boolean.class.getSimpleName()) || fieldType.contains(Boolean.class.getSimpleName())) {
+            } else if (fieldType.contains(int.class.getSimpleName()) ||
+                    fieldType.contains(boolean.class.getSimpleName()) ||
+                    fieldType.contains(Boolean.class.getSimpleName())) {
                 fieldType = " Integer";
             }
 
@@ -123,9 +126,12 @@ public class EntityGatherUtils {
      */
     public static <T> T setValueByFieldName(Class<T> var, T t, String fieldName, Object value) {
         try {
-            Field[] fieldSuper = var.getSuperclass().getDeclaredFields();//获取父类的各个属性值
-            Field[] fields = var.getDeclaredFields();//获取类的各个属性值
-            return setFieldName(setFieldName(t, fieldSuper, fieldName, value), fields, fieldName, value);
+            do {
+                Field[] fields = var.getDeclaredFields();//获取类的各个属性值
+                t = setFieldName(t, fields, fieldName, value);
+                var = (Class<T>) var.getSuperclass();
+            } while (var != Object.class);
+            return t;
         } catch (IllegalAccessException e) {
             LogUtils.w(TAG, e);
             return null;
@@ -163,11 +169,12 @@ public class EntityGatherUtils {
      */
     public static <T> String getFieldType(Class<T> var, String fieldName) {
         String type;
-        Field[] fieldsSuper = var.getSuperclass().getDeclaredFields();//获取父类的各个属性值
-        Field[] fields = var.getDeclaredFields();//获取类的各个属性值
-        type = getFieldType(fields, fieldName);
-        if (type == null)
-            type = getFieldType(fieldsSuper, fieldName);
+        do {
+            Field[] fields = var.getDeclaredFields();//获取类的各个属性值
+            type = getFieldType(fields, fieldName);
+            var = (Class<T>) var.getSuperclass();
+        } while (var != Object.class);
+
         return type;
     }
 

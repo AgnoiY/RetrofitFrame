@@ -94,8 +94,8 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     public long insertOrUpdate(DownloadModel model) {
         long count = 0;
+        database = mInstance.getWritableDatabase();
         if (database != null) {
-            database = mInstance.getWritableDatabase();
             ContentValues values = getContentValues(model);
             if (TextUtils.isEmpty(getTable())) return 0;
             String selection = SERVERURL + "=?";

@@ -17,6 +17,7 @@ import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -389,13 +390,18 @@ public class RetrofitHttp {
 
         /*基础Header*/
         public RetrofitHttp.Configure setBaseHeader(Map<String, Object> header) {
-            this.header = header;
+            if (this.header == null) {
+                this.header = new HashMap<>();
+            }
+            this.header.putAll(header);
             return this;
         }
 
         /* 增加 Header 不断叠加 Header 包括基础 Header */
         public RetrofitHttp.Configure addHeader(String key, Object header) {
-            this.header = new TreeMap<>();
+            if (this.header == null) {
+                this.header = new HashMap<>();
+            }
             this.header.put(key, header);
             return this;
         }

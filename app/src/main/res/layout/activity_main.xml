@@ -17,6 +17,14 @@
             android:text="Hello World!"
             android:textColor="@color/colorPrimary" />
 
+        <TextView
+            android:id="@+id/server_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="下载地址："
+            android:textColor="@color/colorPrimary" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -39,19 +39,17 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
 
     private void initData() {
         login("15713802736", "a123456");
-        DownloadBean bean = download();
-        DownloadBean beanQuery = RetrofitDownload.get().getDownloadModel(bean);
-        if (beanQuery != null)
-            beanQuery.setCallback(this);
+        DownloadBean bean = RetrofitDownload.get().getDownloadModel(download());
+        bean.setCallback(this);
         mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
-        mMainBinding.progressTv.setText((beanQuery == null ? 0 : String.format("%.2f", beanQuery.getProgress() * 100)) + "%");
-        mMainBinding.serverTv.setText("下载地址：" + (beanQuery == null ? bean.getServerUrl() : beanQuery.getServerUrl()));
-        mMainBinding.downStateTv.setText("下载状态：" + getStateText(beanQuery == null ? bean.getState() : beanQuery.getState()));
-        mMainBinding.progress.setProgress(beanQuery == null ? 0 : (int) (beanQuery.getProgress() * 100));
-        mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(beanQuery == null ? bean : beanQuery));
-        mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(beanQuery == null ? bean : beanQuery));
-        mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(beanQuery, true));
+        mMainBinding.progressTv.setText(String.format("%.2f", bean.getProgress() * 100) + "%");
+        mMainBinding.serverTv.setText("下载地址：" + bean.getServerUrl());
+        mMainBinding.downStateTv.setText("下载状态：" + getStateText(bean.getState()));
+        mMainBinding.progress.setProgress((int) (bean.getProgress() * 100));
+        mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(bean));
+        mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(bean));
+        mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(bean, true));
     }
 
     private String getStateText(DownloadModel.State state) {
@@ -105,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
 
 //        DownloadBean bean = new DownloadBean(url1, icon1, file1.getAbsolutePath());
         DownloadBean bean = new DownloadBean(url1, url1, file1.getAbsolutePath());
-
-        bean.setCallback(this);
 
         return bean;
     }

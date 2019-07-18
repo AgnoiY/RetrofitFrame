@@ -167,8 +167,9 @@ public class DownloadModel implements Serializable {
         return callback;
     }
 
-    public void setCallback(DownloadCallback callback) {
+    public DownloadModel setCallback(DownloadCallback callback) {
         this.callback = callback;
+        return this;
     }
 
     /**

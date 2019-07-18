@@ -198,7 +198,7 @@ public class RetrofitHttp {
      *
      * @param httpObserver
      */
-    private void setObservable(BaseHttpObserver httpObserver, Observable apiObservable) {
+    private <T> void setObservable(BaseHttpObserver<T> httpObserver, Observable apiObservable) {
 
         /* 被观察者 httpObservable */
         HttpObservable httpObservable = new HttpObservable.Builder(apiObservable)

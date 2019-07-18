@@ -1,5 +1,6 @@
 package com.cjy.retrofitlibrary;
 
+import com.cjy.retrofitlibrary.model.DownloadModel;
 import com.google.gson.JsonElement;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -27,7 +28,9 @@ class HttpObservable {
     /*BaseObserver*/
     private BaseObserver observer;
     /*Observable<JsonElement> apiObservable*/
-    private Observable<JsonElement> apiObservable;
+    private Observable apiObservable;
+    /*Download*/
+    DownloadModel downloadModel;
 
     /*构造函数*/
     private HttpObservable(Builder builder) {
@@ -36,6 +39,7 @@ class HttpObservable {
         this.fragmentEvent = builder.fragmentEvent;
         this.observer = builder.observer;
         this.apiObservable = builder.apiObservable;
+        this.downloadModel = builder.downloadModel;
     }
 
 
@@ -52,7 +56,7 @@ class HttpObservable {
      */
     /*map*/
     private Observable map() {
-        return apiObservable.map(new ServerResultFunction());
+        return downloadModel != null ? apiObservable.map(new DownloadFunction(downloadModel)) : apiObservable.map(new ServerResultFunction());
     }
 
     /* compose 操作符 介于 map onErrorResumeNext */
@@ -104,15 +108,17 @@ class HttpObservable {
     public static final class Builder {
 
         /*LifecycleProvider*/
-        LifecycleProvider lifecycle;
+        private LifecycleProvider lifecycle;
         /*ActivityEvent*/
-        ActivityEvent activityEvent;
+        private ActivityEvent activityEvent;
         /*FragmentEvent*/
-        FragmentEvent fragmentEvent;
+        private FragmentEvent fragmentEvent;
         /*BaseObserver*/
-        BaseObserver observer;
+        private BaseObserver observer;
         /*Observable<Response> apiObservable*/
-        Observable apiObservable;
+        private Observable apiObservable;
+        /*Download*/
+        private DownloadModel downloadModel;
 
         public Builder(Observable apiObservable) {
             this.apiObservable = apiObservable;
@@ -135,6 +141,11 @@ class HttpObservable {
 
         public HttpObservable.Builder fragmentEvent(FragmentEvent fragmentEvent) {
             this.fragmentEvent = fragmentEvent;
+            return this;
+        }
+
+        public Builder downloadModel(DownloadModel downloadModel) {
+            this.downloadModel = downloadModel;
             return this;
         }
 

@@ -220,7 +220,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      * @return
      */
     public <T> T query(DownloadModel model) {
-        T t = null;
+        T t = (T) model;
         database = mInstance.getWritableDatabase();
         if (database != null) {
             Cursor cursor = queryServerUrl(model.getServerUrl());
@@ -334,6 +334,9 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     private Object getCursorValue(String type, Cursor cursor, String column) {
         Object value = null;
+
+        if (type == null) return value;
+
         if (type.contains(String.class.getSimpleName())) {
             value = cursor.getString(cursor.getColumnIndex(column));
         } else if (type.contains(Integer.class.getSimpleName()) ||

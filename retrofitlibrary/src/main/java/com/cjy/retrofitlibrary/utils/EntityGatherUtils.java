@@ -150,12 +150,13 @@ public class EntityGatherUtils {
      * @throws IllegalAccessException
      */
     private static <T> T setFieldName(Object object, Field[] fields, String fieldName, Object value) throws IllegalAccessException {
-        for (Field field : fields) {
-            if (field.getName().equals(fieldName)) {
-                field.setAccessible(true);
-                field.set(object, value);
+        if (value != null)
+            for (Field field : fields) {
+                if (field.getName().equals(fieldName)) {
+                    field.setAccessible(true);
+                    field.set(object, value);
+                }
             }
-        }
         return (T) object;
     }
 

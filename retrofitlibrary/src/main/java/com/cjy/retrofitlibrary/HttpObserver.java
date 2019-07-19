@@ -81,7 +81,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
         }
 
         switch (code) {
-            case 0://成功
+            case 200://成功
                 if (isResponse) {
                     t = (T) mResponse.getData();
                     if (t == null || t instanceof String) {

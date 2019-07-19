@@ -25,9 +25,10 @@ import java.util.Map;
  *
  * @author yong
  */
-public class MainActivity extends AppCompatActivity implements DownloadCallback<DownloadBean> {
+public class MainActivity extends AppCompatActivity implements DownloadCallback<VersionUpdateModel> {
 
     private ActivityMainBinding mMainBinding;
+    private VersionUpdateModel updateModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,28 +38,44 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     private void initData() {
-        login("15713802736", "a123456");
-        DownloadBean bean = RetrofitDownload.get().getDownloadModel(download());
-        bean.setCallback(this);
-        mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());
-        mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
-        mMainBinding.progressTv.setText(String.format("%.2f", bean.getProgress() * 100) + "%");
-        mMainBinding.serverTv.setText("下载地址：" + bean.getServerUrl());
-        mMainBinding.downStateTv.setText("下载状态：" + bean.getStateText());
-        mMainBinding.progress.setProgress((int) (bean.getProgress() * 100));
-        mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(bean));
-        mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(bean));
-        mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(bean, true));
+        login("15713802736", "123456");
+        mMainBinding.text.setOnClickListener(v -> {
+            Map<String, Object> parameterMap = new HashMap<>();
+            parameterMap.put("appPlatform", "android");
+            parameterMap.put("versionCd", "1.0.0");
+
+            RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.VERSION)
+                    .addParameter(parameterMap).build()
+                    .request(new HttpObserver<VersionUpdateModel>(this, true) {
+                        @Override
+                        public void onSuccess(String action, VersionUpdateModel value) {
+                            updateModel = RetrofitDownload.get().getDownloadModel(value);
+                            updateModel.setCallback(MainActivity.this);
+                            updateModel.setLocalUrl(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                                    "WEIXIN" + ".apk").getAbsolutePath());
+                            mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());
+                            mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
+                            mMainBinding.progressTv.setText(String.format("%.2f", updateModel.getProgress() * 100) + "%");
+                            mMainBinding.serverTv.setText("下载地址：" + updateModel.getServerUrl());
+                            mMainBinding.downStateTv.setText("下载状态：" + updateModel.getStateText());
+                            mMainBinding.progress.setProgress((int) (updateModel.getProgress() * 100));
+                        }
+                    });
+        });
+        mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(updateModel));
+        mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(updateModel));
+        mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(updateModel, true));
     }
 
     private void login(String userid, String pwd) {
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("mobile", userid);
-        map.put("password", pwd);
+        Map<String, Object> parameterMap = new HashMap<>();
+        parameterMap.put("type", 2);
+        parameterMap.put("loginName", userid);
+        parameterMap.put("loginPwd", pwd);
 
         RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LOGIN)
-                .addParameter(map).build()
+                .addParameter(parameterMap).build()
                 .request(new HttpObserver<LoginModel>(this, true) {
                     @Override
                     public void onSuccess(String action, LoginModel value) {
@@ -80,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     @Override
-    public void onProgress(DownloadBean model) {
+    public void onProgress(VersionUpdateModel model) {
         mMainBinding.downStateTv.setText("下载状态：" + model.getStateText());
         mMainBinding.progressTv.setText(String.format("%.2f", model.getProgress() * 100) + "%");
         mMainBinding.progress.setProgress((int) (model.getProgress() * 100));
@@ -91,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     @Override
-    public void onSuccess(DownloadBean model) {
+    public void onSuccess(VersionUpdateModel model) {
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
     }
 }

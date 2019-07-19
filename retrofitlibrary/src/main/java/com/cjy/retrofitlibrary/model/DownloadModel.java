@@ -34,7 +34,7 @@ import static com.cjy.retrofitlibrary.Constants._ID;
  * @author yong
  */
 @Table(TABLENAME)
-public class DownloadModel implements Serializable {
+public class DownloadModel<T> extends BaseResponseModel<T> implements Serializable {
 
     @PrimaryKey(AUTO_INCREMENT)
     @Column(_ID)

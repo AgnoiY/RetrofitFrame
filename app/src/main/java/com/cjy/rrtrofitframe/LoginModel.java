@@ -15,62 +15,29 @@ import java.util.List;
 public class LoginModel extends BaseResponseModel<LoginModel> {
 
     /**
-     * userId : 51
-     * token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBUFAiLCJ1c2VyX2lkIjoiNTEiLCJpc3MiOiJTZXJ2aWNlIiwiZXhwIjoxNTU1OTk1NzY4LCJpYXQiOjE1NDgyMTk3Njh9.R3vVgsugepFWyTd06Pms3pnBU_1qck9WbP8JqCM6N-c
+     * obj : {"accountNonExpired":true,"accountNonLocked":true,"authorities":[{"authority":"ROLE_ADMIN"}],"companyId":134,"credentialsNonExpired":true,"enabled":true,"id":225,"isAgreeDisclaimer":1,"loginName":"15713802736","mobile":"15713802736","passCode":0,"status":1,"userType":"10","username":"15713802736"}
+     * expire : 21600
+     * token : eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjM1MjA4MDUsInN1YiI6IjE1NzEzODAyNzM2IiwiZXhwIjoxNTYzNTQyNDA1LCJqdGkiOiI0NTM4MTFlM2Y4YTk0Y2UwOGNkMWNmYzA3ZGQwOGVmMCIsImUiOjIxNjAwLCJhdWQiOiI3MTMyZjAzZTM5NmY0NjkwODUxNDQyNWI3MTJkMTVmYyJ9.ZAiLOokK7X-9ukeMcJ8it5WdCpIghyyj3gTuulFyhHw
      */
 
-    private int userId;
+    private ObjBean obj;
+    private int expire;
     private String token;
-    /**
-     * total : 6
-     * list : [{"id":135,"orderNum":"20190506121558430010499712003055","orderId":98,"type":3,"title":"订单取消","content":"您的订单20190506121558430010499712003055已成功取消。如有疑问请联系客服400-121-143。","time":"2019-05-06 12:30"},{"id":133,"orderNum":"20190506121558430010499712003055","orderId":98,"type":2,"title":"待支付订单","content":"您的订单20190506121558430010499712003055尚未支付成功，请在15分钟内完成支付，逾期订单将被取消","time":"2019-05-06 12:15"},{"id":80,"orderNum":"20190422183319113010499712007428","orderId":60,"type":2,"title":"待支付订单","content":"您的订单20190422183319113010499712007428尚未支付成功，请在15分钟内完成支付，逾期订单将被取消","time":"2019-04-22 18:33"},{"id":76,"orderNum":"20190422171812338010499712003689","orderId":56,"type":2,"title":"待支付订单","content":"您的订单20190422171812338010499712003689尚未支付成功，请在15分钟内完成支付，逾期订单将被取消","time":"2019-04-22 17:18"},{"id":75,"orderNum":"20190422170149665010499712002306","orderId":55,"type":2,"title":"待支付订单","content":"您的订单20190422170149665010499712002306尚未支付成功，请在15分钟内完成支付，逾期订单将被取消","time":"2019-04-22 17:01"},{"id":73,"orderNum":"20190422163825182010499712008090","orderId":53,"type":2,"title":"待支付订单","content":"您的订单20190422163825182010499712008090尚未支付成功，请在15分钟内完成支付，逾期订单将被取消","time":"2019-04-22 16:38"}]
-     * pageNum : 1
-     * pageSize : 20
-     * size : 6
-     * startRow : 1
-     * endRow : 6
-     * pages : 1
-     * prePage : 0
-     * nextPage : 0
-     * isFirstPage : true
-     * isLastPage : true
-     * hasPreviousPage : false
-     * hasNextPage : false
-     * navigatePages : 8
-     * navigatepageNums : [1]
-     * navigateFirstPage : 1
-     * navigateLastPage : 1
-     * firstPage : 1
-     * lastPage : 1
-     */
 
-    private int total;
-    private int pageNum;
-    private int pageSize;
-    private int size;
-    private int startRow;
-    private int endRow;
-    private int pages;
-    private int prePage;
-    private int nextPage;
-    private boolean isFirstPage;
-    private boolean isLastPage;
-    private boolean hasPreviousPage;
-    private boolean hasNextPage;
-    private int navigatePages;
-    private int navigateFirstPage;
-    private int navigateLastPage;
-    private int firstPage;
-    private int lastPage;
-    private List<ListBean> list;
-    private List<Integer> navigatepageNums;
-
-    public int getUserId() {
-        return userId;
+    public ObjBean getObj() {
+        return obj;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setObj(ObjBean obj) {
+        this.obj = obj;
+    }
+
+    public int getExpire() {
+        return expire;
+    }
+
+    public void setExpire(int expire) {
+        this.expire = expire;
     }
 
     public String getToken() {
@@ -81,185 +48,78 @@ public class LoginModel extends BaseResponseModel<LoginModel> {
         this.token = token;
     }
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getStartRow() {
-        return startRow;
-    }
-
-    public void setStartRow(int startRow) {
-        this.startRow = startRow;
-    }
-
-    public int getEndRow() {
-        return endRow;
-    }
-
-    public void setEndRow(int endRow) {
-        this.endRow = endRow;
-    }
-
-    public int getPages() {
-        return pages;
-    }
-
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
-    public int getPrePage() {
-        return prePage;
-    }
-
-    public void setPrePage(int prePage) {
-        this.prePage = prePage;
-    }
-
-    public int getNextPage() {
-        return nextPage;
-    }
-
-    public void setNextPage(int nextPage) {
-        this.nextPage = nextPage;
-    }
-
-    public boolean isIsFirstPage() {
-        return isFirstPage;
-    }
-
-    public void setIsFirstPage(boolean isFirstPage) {
-        this.isFirstPage = isFirstPage;
-    }
-
-    public boolean isIsLastPage() {
-        return isLastPage;
-    }
-
-    public void setIsLastPage(boolean isLastPage) {
-        this.isLastPage = isLastPage;
-    }
-
-    public boolean isHasPreviousPage() {
-        return hasPreviousPage;
-    }
-
-    public void setHasPreviousPage(boolean hasPreviousPage) {
-        this.hasPreviousPage = hasPreviousPage;
-    }
-
-    public boolean isHasNextPage() {
-        return hasNextPage;
-    }
-
-    public void setHasNextPage(boolean hasNextPage) {
-        this.hasNextPage = hasNextPage;
-    }
-
-    public int getNavigatePages() {
-        return navigatePages;
-    }
-
-    public void setNavigatePages(int navigatePages) {
-        this.navigatePages = navigatePages;
-    }
-
-    public int getNavigateFirstPage() {
-        return navigateFirstPage;
-    }
-
-    public void setNavigateFirstPage(int navigateFirstPage) {
-        this.navigateFirstPage = navigateFirstPage;
-    }
-
-    public int getNavigateLastPage() {
-        return navigateLastPage;
-    }
-
-    public void setNavigateLastPage(int navigateLastPage) {
-        this.navigateLastPage = navigateLastPage;
-    }
-
-    public int getFirstPage() {
-        return firstPage;
-    }
-
-    public void setFirstPage(int firstPage) {
-        this.firstPage = firstPage;
-    }
-
-    public int getLastPage() {
-        return lastPage;
-    }
-
-    public void setLastPage(int lastPage) {
-        this.lastPage = lastPage;
-    }
-
-    public List<ListBean> getList() {
-        return list;
-    }
-
-    public void setList(List<ListBean> list) {
-        this.list = list;
-    }
-
-    public List<Integer> getNavigatepageNums() {
-        return navigatepageNums;
-    }
-
-    public void setNavigatepageNums(List<Integer> navigatepageNums) {
-        this.navigatepageNums = navigatepageNums;
-    }
-
-
-    public static class ListBean {
+    public static class ObjBean {
         /**
-         * id : 135
-         * orderNum : 20190506121558430010499712003055
-         * orderId : 98
-         * type : 3
-         * title : 订单取消
-         * content : 您的订单20190506121558430010499712003055已成功取消。如有疑问请联系客服400-121-143。
-         * time : 2019-05-06 12:30
+         * accountNonExpired : true
+         * accountNonLocked : true
+         * authorities : [{"authority":"ROLE_ADMIN"}]
+         * companyId : 134
+         * credentialsNonExpired : true
+         * enabled : true
+         * id : 225
+         * isAgreeDisclaimer : 1
+         * loginName : 15713802736
+         * mobile : 15713802736
+         * passCode : 0
+         * status : 1
+         * userType : 10
+         * username : 15713802736
          */
 
+        private boolean accountNonExpired;
+        private boolean accountNonLocked;
+        private int companyId;
+        private boolean credentialsNonExpired;
+        private boolean enabled;
         private int id;
-        private String orderNum;
-        private int orderId;
-        private int type;
-        private String title;
-        private String content;
-        private String time;
+        private int isAgreeDisclaimer;
+        private String loginName;
+        private String mobile;
+        private int passCode;
+        private int status;
+        private String userType;
+        private String username;
+        private List<AuthoritiesBean> authorities;
+
+        public boolean isAccountNonExpired() {
+            return accountNonExpired;
+        }
+
+        public void setAccountNonExpired(boolean accountNonExpired) {
+            this.accountNonExpired = accountNonExpired;
+        }
+
+        public boolean isAccountNonLocked() {
+            return accountNonLocked;
+        }
+
+        public void setAccountNonLocked(boolean accountNonLocked) {
+            this.accountNonLocked = accountNonLocked;
+        }
+
+        public int getCompanyId() {
+            return companyId;
+        }
+
+        public void setCompanyId(int companyId) {
+            this.companyId = companyId;
+        }
+
+        public boolean isCredentialsNonExpired() {
+            return credentialsNonExpired;
+        }
+
+        public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+            this.credentialsNonExpired = credentialsNonExpired;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
 
         public int getId() {
             return id;
@@ -269,52 +129,84 @@ public class LoginModel extends BaseResponseModel<LoginModel> {
             this.id = id;
         }
 
-        public String getOrderNum() {
-            return orderNum;
+        public int getIsAgreeDisclaimer() {
+            return isAgreeDisclaimer;
         }
 
-        public void setOrderNum(String orderNum) {
-            this.orderNum = orderNum;
+        public void setIsAgreeDisclaimer(int isAgreeDisclaimer) {
+            this.isAgreeDisclaimer = isAgreeDisclaimer;
         }
 
-        public int getOrderId() {
-            return orderId;
+        public String getLoginName() {
+            return loginName;
         }
 
-        public void setOrderId(int orderId) {
-            this.orderId = orderId;
+        public void setLoginName(String loginName) {
+            this.loginName = loginName;
         }
 
-        public int getType() {
-            return type;
+        public String getMobile() {
+            return mobile;
         }
 
-        public void setType(int type) {
-            this.type = type;
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
 
-        public String getTitle() {
-            return title;
+        public int getPassCode() {
+            return passCode;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setPassCode(int passCode) {
+            this.passCode = passCode;
         }
 
-        public String getContent() {
-            return content;
+        public int getStatus() {
+            return status;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setStatus(int status) {
+            this.status = status;
         }
 
-        public String getTime() {
-            return time;
+        public String getUserType() {
+            return userType;
         }
 
-        public void setTime(String time) {
-            this.time = time;
+        public void setUserType(String userType) {
+            this.userType = userType;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public List<AuthoritiesBean> getAuthorities() {
+            return authorities;
+        }
+
+        public void setAuthorities(List<AuthoritiesBean> authorities) {
+            this.authorities = authorities;
+        }
+
+        public static class AuthoritiesBean {
+            /**
+             * authority : ROLE_ADMIN
+             */
+
+            private String authority;
+
+            public String getAuthority() {
+                return authority;
+            }
+
+            public void setAuthority(String authority) {
+                this.authority = authority;
+            }
         }
     }
 }

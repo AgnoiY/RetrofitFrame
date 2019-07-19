@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toast_auto_define_content_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="@dimen/dialog_tips_corner"
+    android:layout_marginRight="@dimen/dialog_tips_corner"
+    android:background="@drawable/dialog_loading_bg"
+    android:gravity="center"
+    android:minWidth="120dp"
+    android:minHeight="56dp"
+    android:orientation="vertical"
+    android:padding="@dimen/dialog_tips_corner">
 
-    <LinearLayout
-        android:id="@+id/toast_auto_define_content_ll"
+    <ImageView
+        android:id="@+id/toast_auto_define_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/dialog_tips_corner"
-        android:layout_marginRight="@dimen/dialog_tips_corner"
-        android:background="@drawable/dialog_loading_bg"
-        android:gravity="center"
-        android:minWidth="120dp"
-        android:minHeight="56dp"
-        android:orientation="vertical"
-        android:padding="@dimen/dialog_tips_corner">
+        android:src="@mipmap/ic_notify_success" />
 
-        <ImageView
-            android:id="@+id/toast_auto_define_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_notify_success" />
+    <TextView
+        android:id="@+id/toast_auto_define_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_distance_12"
+        android:text="@string/network_error"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_14" />
 
-        <TextView
-            android:id="@+id/toast_auto_define_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/top_distance_12"
-            android:text="@string/network_error"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_14" />
-
-    </LinearLayout>
-</merge>
+</LinearLayout>

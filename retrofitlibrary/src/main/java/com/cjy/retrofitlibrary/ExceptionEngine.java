@@ -5,6 +5,7 @@ import com.google.gson.stream.MalformedJsonException;
 
 import org.json.JSONException;
 
+import java.io.FileNotFoundException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -33,6 +34,7 @@ public class ExceptionEngine {
     public static final int ANALYTIC_CLIENT_DATA_ERROR = 1002;//解析(客户端)数据错误
     public static final int CONNECT_ERROR = 1003;//网络连接错误
     public static final int TIME_OUT_ERROR = 1004;//网络连接超时
+    public static final int FILE_NOT_FOUND_ERROR = 1005;//未知错误
 
     public static ApiException handleException(Throwable e) {
         ApiException ex;
@@ -54,6 +56,9 @@ public class ExceptionEngine {
             return ex;
         } else if (e instanceof SocketTimeoutException) {//网络超时
             ex = new ApiException(e, TIME_OUT_ERROR, RetrofitLibrary.getAppString(R.string.time_out_error));
+            return ex;
+        } else if (e instanceof FileNotFoundException){  //文件不存在，可能是没有权限
+            ex = new ApiException(e, FILE_NOT_FOUND_ERROR, RetrofitLibrary.getAppString(R.string.file_not_found_error));
             return ex;
         } else {  //未知错误
             ex = new ApiException(e, UN_KNOWN_ERROR, RetrofitLibrary.getAppString(R.string.un_known_error));

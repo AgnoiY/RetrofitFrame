@@ -11,7 +11,6 @@ import com.cjy.retrofitlibrary.RetrofitDownload;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
 import com.cjy.retrofitlibrary.download.DownloadBean;
 import com.cjy.retrofitlibrary.download.DownloadCallback;
-import com.cjy.retrofitlibrary.model.DownloadModel;
 import com.cjy.rrtrofitframe.databinding.ActivityMainBinding;
 
 import java.io.File;
@@ -45,38 +44,11 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
         mMainBinding.progressTv.setText(String.format("%.2f", bean.getProgress() * 100) + "%");
         mMainBinding.serverTv.setText("下载地址：" + bean.getServerUrl());
-        mMainBinding.downStateTv.setText("下载状态：" + getStateText(bean.getState()));
+        mMainBinding.downStateTv.setText("下载状态：" + bean.getStateText());
         mMainBinding.progress.setProgress((int) (bean.getProgress() * 100));
         mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(bean));
         mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(bean));
         mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(bean, true));
-    }
-
-    private String getStateText(DownloadModel.State state) {
-        String stateText = "下载";
-        switch (state) {
-            case NONE:
-                stateText = "下载";
-                break;
-            case WAITING:
-                stateText = "等待中";
-                break;
-            case LOADING:
-                stateText = "下载中";
-                break;
-            case PAUSE:
-                stateText = "暂停中";
-                break;
-            case ERROR:
-                stateText = "错误";
-                break;
-            case FINISH:
-                stateText = "完成";
-                break;
-            default:
-                break;
-        }
-        return stateText;
     }
 
     private void login(String userid, String pwd) {
@@ -109,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
 
     @Override
     public void onProgress(DownloadBean model) {
-        mMainBinding.downStateTv.setText("下载状态：" + getStateText(model.getState()));
+        mMainBinding.downStateTv.setText("下载状态：" + model.getStateText());
         mMainBinding.progressTv.setText(String.format("%.2f", model.getProgress() * 100) + "%");
         mMainBinding.progress.setProgress((int) (model.getProgress() * 100));
     }

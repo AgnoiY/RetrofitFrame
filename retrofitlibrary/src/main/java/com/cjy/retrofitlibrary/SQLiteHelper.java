@@ -58,9 +58,28 @@ class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(createSQLite());
     }
 
+    /**
+     * 升级数据库
+     *
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpDowngrade(db);
+    }
 
+    /**
+     * 降级数据库
+     *
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpDowngrade(db);
     }
 
     /**
@@ -83,6 +102,70 @@ class SQLiteHelper extends SQLiteOpenHelper {
             builder.append(key + value);
         }
         return builder.replace(builder.length() - 1, builder.length(), ")").toString();
+    }
+
+    /**
+     * 数据库版本升降
+     *
+     * @param db
+     */
+    private void onUpDowngrade(SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            String tableNameTemp = getTable() + "_temp"; //临时表
+
+            //1. 将表名改为临时表
+            String sqlRename = "ALTER TABLE " + getTable() + " RENAME to " + tableNameTemp;
+            db.execSQL(sqlRename);
+
+            //2. 创建新表
+            db.execSQL(createSQLite());
+
+            //3. 导入数据　
+            restoreData(db, getTable(), tableNameTemp);
+
+            //4. 删除临时表　　
+            String sqlDropTemp = "DROP TABLE IF EXISTS " + tableNameTemp;
+            db.execSQL(sqlDropTemp);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            LogUtils.w(e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    /**
+     * 从临时表中恢复数据
+     *
+     * @param db
+     * @param tableName     需要恢复的表
+     * @param tableNameTemp 临时表
+     */
+    private void restoreData(SQLiteDatabase db, String tableName, String tableNameTemp) {
+
+
+        String columns = TextUtils.join(",", queryColumns(db, tableNameTemp));
+
+        String sql = "INSERT INTO " + tableName + "(" + columns + ") SELECT " + columns + " FROM " + tableNameTemp;
+
+        db.execSQL(sql);
+
+    }
+
+    /**
+     * 获取表中所有字段名
+     *
+     * @return
+     */
+    private String[] queryColumns(SQLiteDatabase db, String tableName) {
+
+        String sql = "SELECT * FROM " + tableName;
+        Cursor cursor = db.rawQuery(sql, null);
+        String[] columnNames = cursor.getColumnNames();
+        cursor.close();
+
+        return columnNames;
     }
 
     /**

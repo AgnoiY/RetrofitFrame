@@ -19,6 +19,7 @@ import static com.cjy.retrofitlibrary.Constants.LOCALURL;
 import static com.cjy.retrofitlibrary.Constants.PROGRESS;
 import static com.cjy.retrofitlibrary.Constants.SERVERURL;
 import static com.cjy.retrofitlibrary.Constants.STATE;
+import static com.cjy.retrofitlibrary.Constants.STATETEXT;
 import static com.cjy.retrofitlibrary.Constants.TABLENAME;
 import static com.cjy.retrofitlibrary.Constants.TOTALSIZE;
 import static com.cjy.retrofitlibrary.Constants.UNIQUE;
@@ -41,12 +42,12 @@ public class DownloadModel implements Serializable {
 
     @NotNull
     @Column(LOCALURL)
-    private String localUrl;//本地存储地址
+    private String localUrl; //本地存储地址
 
     @PrimaryKey(UNIQUE)
     @NotNull
     @Column(SERVERURL)
-    private String serverUrl;//下载地址
+    private String serverUrl; //下载地址
 
     @NotNull
     @Column(TOTALSIZE)
@@ -54,21 +55,25 @@ public class DownloadModel implements Serializable {
 
     @NotNull
     @Column(CURRENTSIZE)
-    private long currentSize;//当前大小
+    private long currentSize; //当前大小
 
     @NotNull
     @Column(PROGRESS)
-    private float progress;//下载百分比
+    private float progress; //下载百分比
 
     @NotNull
     @Column(STATE)
-    private State state = State.NONE;//下载状态
+    private State state = State.NONE; //下载状态
+
+    @NotNull
+    @Column(STATETEXT)
+    private String stateText = "下载"; //下载状态Text
 
     @Ignore
-    private Api api;//接口service
+    private Api api; //接口service
 
     @Ignore
-    private DownloadCallback callback;//回调接口
+    private DownloadCallback callback; //回调接口
 
     public DownloadModel() {
 //        getDownloadServer();
@@ -82,19 +87,6 @@ public class DownloadModel implements Serializable {
         setServerUrl(url);
         setCallback(callback);
     }
-
-    /**
-     * 枚举下载状态
-     */
-    public enum State {
-        NONE,           //无状态
-        WAITING,        //等待
-        LOADING,        //下载中
-        PAUSE,          //暂停
-        ERROR,          //错误
-        FINISH,         //完成
-    }
-
 
     public int getId() {
         return _id;
@@ -151,8 +143,19 @@ public class DownloadModel implements Serializable {
         return state;
     }
 
-    public void setState(State state) {
+    public DownloadModel setState(State state) {
         this.state = state;
+        this.stateText = getStateText(state);
+        return this;
+    }
+
+    public String getStateText() {
+        return stateText;
+    }
+
+    public DownloadModel setStateText(String stateText) {
+        this.stateText = stateText;
+        return this;
     }
 
     public Api getApi() {
@@ -189,6 +192,51 @@ public class DownloadModel implements Serializable {
             var = var.getSuperclass();
 
         } while (var != Object.class);
+    }
+
+    /**
+     * 枚举下载状态
+     */
+    public enum State {
+        NONE,           //无状态
+        WAITING,        //等待
+        LOADING,        //下载中
+        PAUSE,          //暂停
+        ERROR,          //错误
+        FINISH,         //完成
+    }
+
+    /**
+     * 设置存储的下载状态
+     *
+     * @param state
+     * @return
+     */
+    private String getStateText(State state) {
+        String stateText = "下载";
+        switch (state) {
+            case NONE:
+                stateText = "下载";
+                break;
+            case WAITING:
+                stateText = "等待中";
+                break;
+            case LOADING:
+                stateText = "下载中";
+                break;
+            case PAUSE:
+                stateText = "暂停中";
+                break;
+            case ERROR:
+                stateText = "错误";
+                break;
+            case FINISH:
+                stateText = "完成";
+                break;
+            default:
+                break;
+        }
+        return stateText;
     }
 
 }

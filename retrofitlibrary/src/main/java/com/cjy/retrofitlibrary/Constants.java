@@ -31,5 +31,6 @@ public final class Constants {
     public static final String CURRENTSIZE = "currentSize";
     public static final String PROGRESS = "progress";
     public static final String STATE = "state";
+    public static final String STATETEXT = "stateText";
 
 }

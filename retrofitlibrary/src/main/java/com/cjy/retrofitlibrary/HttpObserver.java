@@ -2,7 +2,7 @@ package com.cjy.retrofitlibrary;
 
 import android.content.Context;
 
-import com.cjy.retrofitlibrary.dialog.UITipDialog;
+import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.model.BaseResponseListModel;
 import com.cjy.retrofitlibrary.model.BaseResponseModel;
 
@@ -111,7 +111,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      */
     public void onError(String action, int code, String desc) {
         if (!isNotTipDialog)
-        UITipDialog.showFall(mContext, desc);
+        AutoDefineToast.showFailToast(mContext, desc);
     }
 
     /**

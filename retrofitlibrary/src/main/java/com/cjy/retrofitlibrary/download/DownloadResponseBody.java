@@ -1,7 +1,5 @@
 package com.cjy.retrofitlibrary.download;
 
-import com.cjy.retrofitlibrary.utils.LogUtils;
-
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -61,7 +59,6 @@ public class DownloadResponseBody extends ResponseBody {
                 if (totalBytesCount == 0) {
                     totalBytesCount = contentLength();
                 }
-                LogUtils.d("download progress readBytesCount:" + readBytesCount + "  totalBytesCount:" + totalBytesCount + " callback:" + callback);
                 if (callback != null) {
                     callback.progress(readBytesCount, totalBytesCount);
                 }

@@ -1,11 +1,7 @@
 package com.cjy.retrofitlibrary.download;
 
 
-import android.os.Environment;
-
 import com.cjy.retrofitlibrary.model.DownloadModel;
-
-import java.io.File;
 
 /**
  * 下载实体类，继承Download

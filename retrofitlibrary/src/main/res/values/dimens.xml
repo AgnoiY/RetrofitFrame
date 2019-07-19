@@ -16,6 +16,7 @@
     <!-- 距上侧边距 -->
     <dimen name="top_distance_5">5dp</dimen>
     <dimen name="top_distance_10">10dp</dimen>
+    <dimen name="top_distance_12">12dp</dimen>
     <dimen name="top_distance_15">15dp</dimen>
     <dimen name="top_distance_20">20dp</dimen>
 

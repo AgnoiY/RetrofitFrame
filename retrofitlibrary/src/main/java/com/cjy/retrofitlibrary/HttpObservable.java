@@ -56,7 +56,7 @@ class HttpObservable {
      */
     /*map*/
     private Observable map() {
-        return downloadModel != null ? apiObservable.map(new DownloadFunction(downloadModel)) : apiObservable.map(new ServerResultFunction());
+        return downloadModel != null ? apiObservable.map(new DownloadFunction(downloadModel, (DownloadObserver) observer)) : apiObservable.map(new ServerResultFunction());
     }
 
     /* compose 操作符 介于 map onErrorResumeNext */

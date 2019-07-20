@@ -1,7 +1,7 @@
 package com.cjy.retrofitlibrary;
 
-import android.app.Application;
 import android.content.Context;
+import android.os.Looper;
 
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.download.ResponseUtils;
@@ -37,9 +37,12 @@ class DownloadFunction implements Function<ResponseBody, Object> {
         try {
             //写入文件
             ResponseUtils.get().downloadLocalFile(responseBody, new File(mDownloadModel.getLocalUrl()), mDownloadModel);
-        } catch (FileNotFoundException e){
-            Context mContext = RetrofitHttp.Configure.get().getContext();
-            AutoDefineToast.showInfoToast(mContext,mContext.getString(R.string.file_not_found_permission_error));
+        } catch (FileNotFoundException e) {
+            new android.os.Handler(Looper.getMainLooper()).post(() -> {
+                Context mContext = RetrofitHttp.Configure.get().getContext();
+                AutoDefineToast.showInfoToast(mContext, mContext.getString(R.string.file_not_found_permission_error));
+
+            });
             SQLiteHelper.get().delete(mDownloadModel);
             LogUtils.w(e);
         }

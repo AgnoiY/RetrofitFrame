@@ -173,6 +173,7 @@ public class EntityGatherUtils {
         do {
             Field[] fields = var.getDeclaredFields();//获取类的各个属性值
             type = getFieldType(fields, fieldName);
+            if (type != null) return type;
             var = (Class<T>) var.getSuperclass();
         } while (var != Object.class);
 

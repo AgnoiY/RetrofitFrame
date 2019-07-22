@@ -1,7 +1,6 @@
 package com.cjy.retrofitlibrary;
 
 import com.cjy.retrofitlibrary.model.DownloadModel;
-import com.google.gson.JsonElement;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
@@ -56,7 +55,8 @@ class HttpObservable {
      */
     /*map*/
     private Observable map() {
-        return downloadModel != null ? apiObservable.map(new DownloadFunction(downloadModel, (DownloadObserver) observer)) : apiObservable.map(new ServerResultFunction());
+        return downloadModel != null ? apiObservable.map(new DownloadFunction(downloadModel)) :
+                apiObservable.map(new ServerResultFunction());
     }
 
     /* compose 操作符 介于 map onErrorResumeNext */

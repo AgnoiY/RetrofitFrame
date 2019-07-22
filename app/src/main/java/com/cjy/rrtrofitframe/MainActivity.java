@@ -1,15 +1,14 @@
 package com.cjy.rrtrofitframe;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.cjy.retrofitlibrary.ApiException;
 import com.cjy.retrofitlibrary.HttpObserver;
 import com.cjy.retrofitlibrary.RetrofitDownload;
-import com.cjy.retrofitlibrary.RetrofitHttp;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.download.DownloadBean;
@@ -109,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     @Override
     public void onError(Throwable e) {
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
-        AutoDefineToast.showInfoToast(MainActivity.this, e.getMessage());
+        if (e instanceof ApiException)
+            AutoDefineToast.showInfoToast(MainActivity.this, ((ApiException) e).getMsg());
     }
 
     @Override

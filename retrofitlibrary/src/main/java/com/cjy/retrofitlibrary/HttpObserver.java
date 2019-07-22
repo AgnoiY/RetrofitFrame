@@ -109,6 +109,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      * @param code   错误码
      * @param desc   错误信息
      */
+    @Override
     public void onError(String action, int code, String desc) {
         if (!isNotTipDialog)
         AutoDefineToast.showFailToast(mContext, desc);

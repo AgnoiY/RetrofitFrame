@@ -7,7 +7,7 @@ package com.cjy.retrofitlibrary;
  *
  * @author yong
  */
-class ApiException extends Exception {
+public class ApiException extends Exception {
     private final int code;//错误码
     private final String msg;//错误信息
 

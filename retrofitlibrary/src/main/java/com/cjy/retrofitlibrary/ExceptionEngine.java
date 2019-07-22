@@ -59,7 +59,13 @@ public class ExceptionEngine {
             ex = new ApiException(e, TIME_OUT_ERROR, RetrofitLibrary.getAppString(R.string.time_out_error));
             return ex;
         } else if (e instanceof FileNotFoundException) {  //文件不存在，可能是没有权限
-            ex = new ApiException(e, FILE_NOT_FOUND_ERROR, RetrofitLibrary.getAppString(R.string.file_not_found_error));
+            String msg;
+            if (e.getMessage().contains("Permission")) {
+                msg = RetrofitLibrary.getAppString(R.string.file_not_found_permission_error);
+            } else {
+                msg = RetrofitLibrary.getAppString(R.string.file_not_found_error);
+            }
+            ex = new ApiException(e, FILE_NOT_FOUND_ERROR, msg);
             return ex;
         } else {  //未知错误
             ex = new ApiException(e, UN_KNOWN_ERROR, RetrofitLibrary.getAppString(R.string.un_known_error));

@@ -16,7 +16,7 @@ public class BaseResponseModel<T> {
     /**
      * 数据对象/成功返回对象
      */
-    @Data()
+    @Data
     private T data;
     /**
      * 状态码

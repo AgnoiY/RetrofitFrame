@@ -44,8 +44,8 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
         /**
          * 接口响应数据格式如@Response
          * 根据业务封装:
-         * 1. response.isSuccess() (code==0) 业务逻辑成功回调convert()=>onSuccess()，否则失败回调onError()
-         * 2.统一处理接口逻辑 例如:code==101 token过期等等
+         * 1. response.isSuccess() (code==200) 业务逻辑成功回调convert()=>onSuccess()，否则失败回调onError()
+         * 2.统一处理接口逻辑 例如:code==401 token过期等等
          */
         return convertModel(tData);
     }

@@ -23,9 +23,14 @@ import io.reactivex.annotations.NonNull;
 public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements CallBack<T> {
 
     /**
-     * 加载失败提示弹出窗 :默认弹窗－false
+     * 加载失败提示弹出窗: 默认弹窗 － true: 加载
      */
-    protected boolean isNotTipDialog;
+    protected boolean isToast;
+
+    /**
+     * 下载路径
+     */
+    protected String downloadPath;
 
     public BaseHttpObserver() {
     }
@@ -140,11 +145,22 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     /**
      * 加载失败提示弹出窗
      *
-     * @param notTipDialog 默认弹窗－false
+     * @param isToast 默认弹窗 － true: 加载
      * @return
      */
-    protected BaseHttpObserver<T> setNotTipDialog(boolean notTipDialog) {
-        isNotTipDialog = notTipDialog;
+    protected BaseHttpObserver<T> setToast(boolean isToast) {
+        this.isToast = isToast;
+        return this;
+    }
+
+    /**
+     * 设置下载路径
+     *
+     * @param downloadPath 下载路径
+     * @return
+     */
+    protected BaseHttpObserver<T> setDownloadPath(String downloadPath) {
+        this.downloadPath = downloadPath;
         return this;
     }
 }

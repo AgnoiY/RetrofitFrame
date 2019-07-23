@@ -111,8 +111,8 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      */
     @Override
     public void onError(String action, int code, String desc) {
-        if (!isNotTipDialog)
-        AutoDefineToast.showFailToast(mContext, desc);
+        if (isToast)
+            AutoDefineToast.showFailToast(mContext, desc);
     }
 
     /**

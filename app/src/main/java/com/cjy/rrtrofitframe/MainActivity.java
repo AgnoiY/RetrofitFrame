@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
                     .request(new HttpObserver<VersionUpdateModel>(this, true) {
                         @Override
                         public void onSuccess(String action, VersionUpdateModel value) {
+                            updateModel = value;
                             updateModel = RetrofitDownload.get().getDownloadModel(value);
                             updateModel.setCallback(MainActivity.this);
                             updateModel.setLocalUrl(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),

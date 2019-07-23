@@ -24,8 +24,7 @@ public class App extends Application {
         headerMap.put("platform", "android");
         headerMap.put("profiles", "prd");
         RetrofitLibrary.getHttpConfigure()
-                .setBaseHeader(headerMap)
-                .setNotTipDialog(true);
+                .setBaseHeader(headerMap);
         RetrofitLibrary.init(this, UrlConstans.BASESERVER);
     }
 

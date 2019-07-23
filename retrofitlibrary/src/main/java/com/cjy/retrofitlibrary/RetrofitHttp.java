@@ -60,6 +60,8 @@ public class RetrofitHttp {
     private String apiUrl;
     /*String参数*/
     String bodyString;
+    /*下载路径*/
+    String downloadPath;
     /*是否强制JSON格式*/
     boolean isJson;
 
@@ -79,6 +81,7 @@ public class RetrofitHttp {
         this.isJson = builder.isJson;
         this.bodyString = builder.bodyString;
         this.method = builder.method;
+        this.downloadPath = builder.downloadPath;
     }
 
     /**
@@ -107,11 +110,11 @@ public class RetrofitHttp {
     /**
      * 文件下载
      */
-    public RetrofitHttp download(DownloadObserver downloadObserver) {
-//        if (baseObserver == null) {
-//            throw new NullPointerException("BaseObserver must not null!");
-//        } else {
-//            doDownload(baseObserver);
+    public RetrofitHttp download(String filePath) {
+//        if (callback == null) {
+//            throw new NullPointerException("DownloadCallback must not null!");
+//        } else if (!TextUtils.isEmpty(filePath)) {
+//            doDownload(callback, filePath);
 //        }
         return this;
     }
@@ -169,8 +172,7 @@ public class RetrofitHttp {
      *
      * @param downloadCallback
      */
-    private void doDownload(DownloadCallback downloadCallback) {
-
+    private void doDownload(DownloadCallback downloadCallback, String filePath) {
 
     }
 
@@ -181,10 +183,13 @@ public class RetrofitHttp {
      */
     private void setObserver(BaseHttpObserver httpObserver) {
         /*加载失败提示弹出窗*/
-        httpObserver.setNotTipDialog(Configure.get().isNotTipDialog);
+        httpObserver.setToast(Configure.get().isToast);
 
         /*设置请求唯一标识*/
         httpObserver.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
+
+        /*设置请求唯一标识*/
+        httpObserver.setDownloadPath(downloadPath);
 
         /*header处理*/
         disposeHeader();
@@ -346,7 +351,7 @@ public class RetrofitHttp {
         /*是否显示Log*/
         private boolean showLog;
         /*加载失败提示弹出窗*/
-        private boolean isNotTipDialog;
+        private boolean isToast;
         /*数据库库名*/
         private String sqliteName;
         /*数据库版本号*/
@@ -364,6 +369,7 @@ public class RetrofitHttp {
             timeout = Constants.TIME_OUT; //默认60秒
             timeUnit = TimeUnit.SECONDS; //默认秒
             showLog = true; //默认打印LOG
+            isToast = true; //默认加载提示Toast
             sqliteName = "retrofit.download.db"; //默认数据库库名
             sqliteVersion = 1; //默认数据库版本号
         }
@@ -451,12 +457,12 @@ public class RetrofitHttp {
         }
 
         /*TipDialog*/
-        public boolean isNotTipDialog() {
-            return isNotTipDialog;
+        public boolean isToast() {
+            return isToast;
         }
 
-        public Configure setNotTipDialog(boolean notTipDialog) {
-            isNotTipDialog = notTipDialog;
+        public Configure setToast(boolean isToast) {
+            this.isToast = isToast;
             return this;
         }
 
@@ -516,6 +522,8 @@ public class RetrofitHttp {
         private String apiUrl;
         /*String参数*/
         private String bodyString;
+        /*下载路径*/
+        private String downloadPath;
         /*是否强制JSON格式*/
         private boolean isJson;
 
@@ -651,6 +659,18 @@ public class RetrofitHttp {
             return this;
         }
 
+        /*downloadPath*/
+        public RetrofitHttp.Builder downloadPath(String downloadPath) {
+            this.downloadPath = downloadPath;
+            return this;
+        }
+
+        /*downloadPath*/
+        public RetrofitHttp.Builder downloadPath(File downloadPath) {
+            this.downloadPath = downloadPath.getAbsolutePath();
+            return this;
+        }
+
         /*文件*/
         public RetrofitHttp.Builder file(String name, File file) {
             if (fileMap == null) {
@@ -692,6 +712,7 @@ public class RetrofitHttp {
             this.bodyString = "";
             this.isJson = false;
             this.instance = null;
+            this.downloadPath = "";
             return this;
         }
 

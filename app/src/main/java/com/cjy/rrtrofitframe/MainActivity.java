@@ -7,16 +7,18 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.cjy.retrofitlibrary.ApiException;
+import com.cjy.retrofitlibrary.DownloadCallback;
 import com.cjy.retrofitlibrary.HttpObserver;
 import com.cjy.retrofitlibrary.RetrofitDownload;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
-import com.cjy.retrofitlibrary.DownloadCallback;
 import com.cjy.retrofitlibrary.model.DownloadModel;
+import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.rrtrofitframe.databinding.ActivityMainBinding;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     private void initData() {
-        login("15713802736", "123456");
+        login("15713802736", "a123456");
         mMainBinding.text.setOnClickListener(v -> {
             Map<String, Object> parameterMap = new HashMap<>();
             parameterMap.put("appPlatform", "android");
@@ -73,16 +75,39 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     private void login(String userid, String pwd) {
 
         Map<String, Object> parameterMap = new HashMap<>();
-        parameterMap.put("type", 2);
-        parameterMap.put("loginName", userid);
-        parameterMap.put("loginPwd", pwd);
+//        parameterMap.put("type", 2);
+//        parameterMap.put("loginName", userid);
+//        parameterMap.put("loginPwd", pwd);
+        parameterMap.put("mobile", userid);
+        parameterMap.put("password", pwd);
 
-        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LOGIN)
+        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LOGIN1)
                 .addParameter(parameterMap).build()
                 .request(new HttpObserver<LoginModel>(this, true) {
                     @Override
                     public void onSuccess(String action, LoginModel value) {
                         mMainBinding.text.setText(value.getToken());
+                        getList( value.getUserId(),value.getToken());
+                    }
+                });
+
+    }
+
+    private void getList(int id,String token) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userid", id);
+
+        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LIST2)
+//                .addHeader("Authorization", "Bearer " + token)
+//                .addParameter("status", -7)
+//                .addHeader("token", token)
+                .setParameter(map)
+                .build()
+                .request(new HttpObserver<ListModel>(this, true) {
+                    @Override
+                    public void onSuccess(String action, ListModel value) {
+                        LogUtils.d(action, value.getData() + ": " + value.getData().size());
                     }
                 });
 

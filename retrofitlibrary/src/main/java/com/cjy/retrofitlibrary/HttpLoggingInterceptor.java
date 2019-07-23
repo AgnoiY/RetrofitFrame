@@ -189,11 +189,11 @@ final class HttpLoggingInterceptor implements Interceptor {
         }
         // Request body headers are only present when installed as a network interceptor. Force
         // them to be included (when available) so there values are known.
-        if (requestBody.contentType() != null && hasRequestBody) {
+        if (hasRequestBody && requestBody.contentType() != null) {
             logger.log("Content-Type: " + requestBody.contentType());
         }
 
-        if (requestBody.contentLength() != -1 && hasRequestBody) {
+        if (hasRequestBody && requestBody.contentLength() != -1) {
             logger.log("Content-Length: " + requestBody.contentLength());
         }
 

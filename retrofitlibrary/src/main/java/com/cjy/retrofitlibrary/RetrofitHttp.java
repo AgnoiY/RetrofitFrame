@@ -589,7 +589,7 @@ public class RetrofitHttp {
         /* 增加 Parameter 不断叠加参数 包括基础参数 */
         public RetrofitHttp.Builder addParameter(String key, Object parameter) {
             if (this.parameter == null) {
-                this.parameter = new TreeMap<>();
+                this.parameter = new HashMap<>();
             }
             if (parameter != null) {
                 this.parameter.put(key, parameter);
@@ -613,7 +613,7 @@ public class RetrofitHttp {
         /* 增加 Header 不断叠加 Header 包括基础 Header */
         public RetrofitHttp.Builder addHeader(String key, Object header) {
             if (this.header == null) {
-                this.header = new TreeMap<>();
+                this.header = new HashMap<>();
             }
             this.header.put(key, header);
             return this;

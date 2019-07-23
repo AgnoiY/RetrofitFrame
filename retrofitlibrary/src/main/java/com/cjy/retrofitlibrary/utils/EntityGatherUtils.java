@@ -1,9 +1,13 @@
 package com.cjy.retrofitlibrary.utils;
 
-import com.cjy.retrofitlibrary.download.Column;
-import com.cjy.retrofitlibrary.download.NotNull;
-import com.cjy.retrofitlibrary.download.PrimaryKey;
-import com.cjy.retrofitlibrary.download.Table;
+import com.cjy.retrofitlibrary.annotation.download.Column;
+import com.cjy.retrofitlibrary.annotation.download.NotNull;
+import com.cjy.retrofitlibrary.annotation.download.PrimaryKey;
+import com.cjy.retrofitlibrary.annotation.download.Table;
+import com.cjy.retrofitlibrary.annotation.model.Code;
+import com.cjy.retrofitlibrary.annotation.model.Data;
+import com.cjy.retrofitlibrary.annotation.model.Message;
+import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
 import java.lang.reflect.Field;
@@ -113,6 +117,34 @@ public class EntityGatherUtils {
             }
         }
         return list;
+    }
+
+    /**
+     * 获取对象中注解下载地址
+     *
+     * @return
+     */
+    public static <T> BaseModel<T> getResponseModel(T t) {
+        Class var = t.getClass();
+        BaseModel mBaseModel = new BaseModel();
+        do {
+            Field[] fields = var.getDeclaredFields();//获取类的各个属性值
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(Code.class)) {
+                    mBaseModel.setCode((int) EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                    Code code = field.getAnnotation(Code.class);
+                    mBaseModel.setCodes(code.value());
+                } else if (field.isAnnotationPresent(Message.class)) {
+                    mBaseModel.setMsg((String) EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                } else if (field.isAnnotationPresent(Data.class)) {
+                    mBaseModel.setData(EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                }
+            }
+            var = var.getSuperclass();
+
+        } while (var != Object.class);
+
+        return mBaseModel;
     }
 
     /**

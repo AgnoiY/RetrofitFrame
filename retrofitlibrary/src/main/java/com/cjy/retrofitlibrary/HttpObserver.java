@@ -3,8 +3,8 @@ package com.cjy.retrofitlibrary;
 import android.content.Context;
 
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
-import com.cjy.retrofitlibrary.model.BaseResponseListModel;
-import com.cjy.retrofitlibrary.model.BaseResponseModel;
+import com.cjy.retrofitlibrary.model.BaseModel;
+import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
 
 import java.util.List;
 
@@ -21,8 +21,6 @@ import java.util.List;
 public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
 
     private Context mContext;
-    private BaseResponseModel mResponse;
-    private BaseResponseListModel mResponseList;
 
     public HttpObserver() {
     }
@@ -49,56 +47,31 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
          * 1. response.isSuccess() (code==0) 业务逻辑成功回调convert()=>onSuccess()，否则失败回调onError()
          * 2.统一处理接口逻辑 例如:code==101 token过期等等
          */
-        if (tData instanceof BaseResponseModel) {
-            mResponse = (BaseResponseModel) tData;
-            return convertModel(true);
-        } else if (tData instanceof BaseResponseListModel) {
-            mResponseList = (BaseResponseListModel) tData;
-            return convertModel(false);
-        }
-        return null;
+        return convertModel(tData);
     }
 
     /**
      * 业务逻辑
      *
-     * @param isResponse
      * @return T
      */
-    private T convertModel(boolean isResponse) {
-
+    private T convertModel(T tData) {
         T t = null;
-        List<T> tList = null;
-        int code;
-        String msg;
+        BaseModel mBaseModel = EntityGatherUtils.getResponseModel(tData);
+        int code = mBaseModel.getCode();
 
-        if (isResponse) {
-            code = mResponse.getCode();
-            msg = mResponse.getMsg();
-        } else {
-            code = mResponseList.getCode();
-            msg = mResponseList.getMsg();
-        }
+        if (code == mBaseModel.getCodeSuccess()) { //成功
+            t = (T) mBaseModel.getData();
+            if (t == null || t instanceof String || t instanceof List) {
+                t = tData;
+            }
+        } else if (code == mBaseModel.getCodeToken()) { //token过期，跳转登录页面重新登录
+            isLoginToken();
+        } else { //统一为错误处理
+            onError(getTag(), code, mBaseModel.getMsg());
 
-        switch (code) {
-            case 200://成功
-                if (isResponse) {
-                    t = (T) mResponse.getData();
-                    if (t == null || t instanceof String) {
-                        t = (T) mResponse;
-                    }
-                } else {
-                    tList = (List<T>) mResponseList.getData();
-                }
-                break;
-            case 401://token过期，跳转登录页面重新登录
-                isLoginToken();
-                break;
-            default://统一为错误处理
-                onError(getTag(), code, msg);
-                break;
         }
-        return isResponse ? t : (T) tList;
+        return t;
     }
 
     /**

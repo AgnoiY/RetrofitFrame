@@ -21,8 +21,18 @@ public class LoginModel extends BaseResponseModel<LoginModel> {
      */
 
     private ObjBean obj;
+    private int userId;
     private int expire;
     private String token;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public LoginModel setUserId(int userId) {
+        this.userId = userId;
+        return this;
+    }
 
     public ObjBean getObj() {
         return obj;

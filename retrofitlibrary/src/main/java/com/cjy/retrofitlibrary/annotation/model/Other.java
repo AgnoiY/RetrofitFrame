@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary.annotation.model;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -7,11 +7,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 数据库字段不为空
+ * 请求数据中其他信息数据
+ * <p>
+ * Data：2019/07/23
+ *
+ * @author yong
+ * <p>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @Inherited
-public @interface NotNull {
-    String value() default " not null";
+public @interface Other {
+
 }

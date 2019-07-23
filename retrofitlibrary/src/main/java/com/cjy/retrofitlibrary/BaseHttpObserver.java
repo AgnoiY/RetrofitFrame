@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 

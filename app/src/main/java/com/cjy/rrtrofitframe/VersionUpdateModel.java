@@ -1,7 +1,6 @@
 package com.cjy.rrtrofitframe;
 
-import com.cjy.retrofitlibrary.download.DownLoadServer;
-import com.cjy.retrofitlibrary.model.BaseResponseModel;
+import com.cjy.retrofitlibrary.annotation.download.DownLoadServer;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
 /**

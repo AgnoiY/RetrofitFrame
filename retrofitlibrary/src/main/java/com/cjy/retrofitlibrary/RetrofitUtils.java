@@ -159,7 +159,6 @@ class RetrofitUtils {
             try {
                 response = chain.proceed(request);
             } catch (final Exception e) {
-                //httpObserver.onCanceled();
                 LogUtils.w(e);
                 throw e;
             }

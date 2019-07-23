@@ -1,13 +1,13 @@
 package com.cjy.retrofitlibrary.model;
 
 import com.cjy.retrofitlibrary.Api;
-import com.cjy.retrofitlibrary.download.Column;
-import com.cjy.retrofitlibrary.download.DownLoadServer;
 import com.cjy.retrofitlibrary.DownloadCallback;
-import com.cjy.retrofitlibrary.download.Ignore;
-import com.cjy.retrofitlibrary.download.NotNull;
-import com.cjy.retrofitlibrary.download.PrimaryKey;
-import com.cjy.retrofitlibrary.download.Table;
+import com.cjy.retrofitlibrary.annotation.download.Column;
+import com.cjy.retrofitlibrary.annotation.download.DownLoadServer;
+import com.cjy.retrofitlibrary.annotation.download.Ignore;
+import com.cjy.retrofitlibrary.annotation.download.NotNull;
+import com.cjy.retrofitlibrary.annotation.download.PrimaryKey;
+import com.cjy.retrofitlibrary.annotation.download.Table;
 import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
 
 import java.io.Serializable;
@@ -175,7 +175,7 @@ public class DownloadModel<T> extends BaseResponseModel<T> implements Serializab
     }
 
     /**
-     * 获取对象中注解转换成List
+     * 获取对象中注解下载地址
      *
      * @return
      */

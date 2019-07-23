@@ -11,8 +11,8 @@ import com.cjy.retrofitlibrary.HttpObserver;
 import com.cjy.retrofitlibrary.RetrofitDownload;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
-import com.cjy.retrofitlibrary.download.DownloadBean;
-import com.cjy.retrofitlibrary.download.DownloadCallback;
+import com.cjy.retrofitlibrary.DownloadCallback;
+import com.cjy.retrofitlibrary.model.DownloadModel;
 import com.cjy.rrtrofitframe.databinding.ActivityMainBinding;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
                             updateModel.setCallback(MainActivity.this);
                             updateModel.setLocalUrl(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                                     "WEIXIN" + ".apk").getAbsolutePath());
-                            mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadBean.class).size());
+                            mMainBinding.downNumTv.setText("下载数量：" + RetrofitDownload.get().getDownloadList(DownloadModel.class).size());
                             mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
                             mMainBinding.progressTv.setText(String.format("%.2f", updateModel.getProgress() * 100) + "%");
                             mMainBinding.serverTv.setText("下载地址：" + updateModel.getServerUrl());
@@ -88,13 +88,13 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
 
     }
 
-    private DownloadBean download() {
+    private DownloadModel download() {
         File file1 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "WEIXIN" + ".apk");
         String url1 = "http://imtt.dd.qq.com/16891/50CC095EFBE6059601C6FB652547D737.apk?fsname=com.tencent.mm_6.6.7_1321.apk&csr=1bbd";
         String icon1 = "http://pp.myapp.com/ma_icon/0/icon_10910_1534495359/96";
 
-//        DownloadBean bean = new DownloadBean(url1, icon1, file1.getAbsolutePath());
-        DownloadBean bean = new DownloadBean(url1, url1, file1.getAbsolutePath());
+        DownloadModel bean = new DownloadModel(url1);
+        bean.setLocalUrl(file1.getAbsolutePath());
 
         return bean;
     }

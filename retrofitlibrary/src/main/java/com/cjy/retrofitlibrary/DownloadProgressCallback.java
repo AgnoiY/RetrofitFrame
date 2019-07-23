@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary;
 
 /**
  * 下载回调接口
@@ -7,7 +7,7 @@ package com.cjy.retrofitlibrary.download;
  *
  * @author yong
  */
-public interface DownloadProgressCallback {
+interface DownloadProgressCallback {
 
     /**
      * 下载进度回调

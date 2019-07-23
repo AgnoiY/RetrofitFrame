@@ -3,7 +3,7 @@ package com.cjy.retrofitlibrary.model;
 import com.cjy.retrofitlibrary.Api;
 import com.cjy.retrofitlibrary.download.Column;
 import com.cjy.retrofitlibrary.download.DownLoadServer;
-import com.cjy.retrofitlibrary.download.DownloadCallback;
+import com.cjy.retrofitlibrary.DownloadCallback;
 import com.cjy.retrofitlibrary.download.Ignore;
 import com.cjy.retrofitlibrary.download.NotNull;
 import com.cjy.retrofitlibrary.download.PrimaryKey;
@@ -76,7 +76,6 @@ public class DownloadModel<T> extends BaseResponseModel<T> implements Serializab
     private DownloadCallback callback; //回调接口
 
     public DownloadModel() {
-//        getDownloadServer();
     }
 
     public DownloadModel(String url) {

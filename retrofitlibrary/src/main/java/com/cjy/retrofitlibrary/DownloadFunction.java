@@ -1,6 +1,6 @@
 package com.cjy.retrofitlibrary;
 
-import com.cjy.retrofitlibrary.download.ResponseUtils;
+import com.cjy.retrofitlibrary.utils.ResponseUtils;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
 import java.io.File;

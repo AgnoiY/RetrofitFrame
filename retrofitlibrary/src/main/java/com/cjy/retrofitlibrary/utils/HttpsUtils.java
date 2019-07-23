@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary.utils;
 
 
 import java.io.IOException;

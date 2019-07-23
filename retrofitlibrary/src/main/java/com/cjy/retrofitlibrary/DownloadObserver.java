@@ -3,9 +3,6 @@ package com.cjy.retrofitlibrary;
 
 import android.os.Handler;
 
-import com.cjy.retrofitlibrary.download.ComputeUtils;
-import com.cjy.retrofitlibrary.download.DownloadCallback;
-import com.cjy.retrofitlibrary.download.DownloadProgressCallback;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
 import java.lang.ref.SoftReference;

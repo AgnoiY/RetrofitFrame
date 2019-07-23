@@ -1,6 +1,6 @@
 package com.cjy.retrofitlibrary;
 
-import com.cjy.retrofitlibrary.download.HttpsUtils;
+import com.cjy.retrofitlibrary.utils.HttpsUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.RequestUtils;
 

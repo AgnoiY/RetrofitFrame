@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary;
 
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
@@ -9,26 +9,26 @@ import com.cjy.retrofitlibrary.model.DownloadModel;
  *
  * @author yong
  */
-public interface   DownloadCallback<T extends DownloadModel> {
+public interface DownloadCallback<T extends DownloadModel> {
 
     /**
      * 进度回调
      *
-     * @param model       下载状态
+     * @param model 下载状态
      */
-    public abstract void onProgress(T model);
+    void onProgress(T model);
 
     /**
      * 下载出错
      *
      * @param e
      */
-    public abstract void onError(Throwable e);
+    void onError(Throwable e);
 
     /**
      * 下载成功
      *
      * @param model
      */
-    public abstract void onSuccess(T model);
+    void onSuccess(T model);
 }

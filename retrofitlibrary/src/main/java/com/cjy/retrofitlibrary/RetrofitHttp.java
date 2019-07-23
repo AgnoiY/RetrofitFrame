@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.cjy.retrofitlibrary.download.DownloadCallback;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.Method;
 import com.cjy.retrofitlibrary.utils.RequestUtils;

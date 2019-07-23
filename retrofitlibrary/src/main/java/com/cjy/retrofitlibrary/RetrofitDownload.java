@@ -1,7 +1,5 @@
 package com.cjy.retrofitlibrary;
 
-import com.cjy.retrofitlibrary.download.ComputeUtils;
-import com.cjy.retrofitlibrary.download.DownloadInterceptor;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.RequestUtils;

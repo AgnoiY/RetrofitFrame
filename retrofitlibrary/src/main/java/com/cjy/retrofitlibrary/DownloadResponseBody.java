@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import okio.Source;
  *
  * @author yong
  */
-public class DownloadResponseBody extends ResponseBody {
+class DownloadResponseBody extends ResponseBody {
 
     private ResponseBody responseBody;
     private DownloadProgressCallback callback;

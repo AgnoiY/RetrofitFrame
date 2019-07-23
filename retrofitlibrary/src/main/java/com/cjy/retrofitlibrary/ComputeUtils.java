@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary;
 
 import android.text.TextUtils;
 
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  *
  * @author yong
  */
-public class ComputeUtils {
+class ComputeUtils {
 
     ComputeUtils() {
         throw new IllegalStateException("ComputeUtils class");

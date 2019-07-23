@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.download;
+package com.cjy.retrofitlibrary;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import okhttp3.Response;
  *
  * @author yong
  */
-public class DownloadInterceptor implements Interceptor {
+class DownloadInterceptor implements Interceptor {
 
     private DownloadProgressCallback callback;
 

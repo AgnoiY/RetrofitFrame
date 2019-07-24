@@ -33,7 +33,7 @@ public @interface Code {
     Class login() default Object.class;
 
     /**
-     * Token过期, 重新登录Activity, 提示语
+     * Token过期, 重新登录Activity提示语
      *
      * @return
      */

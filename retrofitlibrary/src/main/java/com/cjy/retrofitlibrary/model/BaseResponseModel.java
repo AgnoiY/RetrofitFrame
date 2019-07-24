@@ -16,21 +16,31 @@ public class BaseResponseModel<T> {
 
     /**
      * 数据对象/成功返回对象
+     * 自定义字段：添加注解@Data
      */
     @Data
     private T data;
+
     /**
      * 状态码
+     * 自定义字段：添加注解@Code
+     * 状态码返回值(自定义值)value:　默认－200: 请求成功, 401: 登录Token过期
+     * 登录Token过期,login:　重新登录Activity
+     * loginTip:　重新登录提示语
      */
     @Code
     private int code;
+
     /**
      * 描述信息
+     * 自定义字段：添加注解@Message
      */
     @Message
     private String msg;
+
     /**
-     * 请求状态
+     * 请求成功状态
+     * 自定义字段：添加注解@Success
      */
     @Success
     private boolean isSuccess = true;

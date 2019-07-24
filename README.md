@@ -19,7 +19,7 @@ Retrofit框架
    
     /*网络请求框架*/
     
-    implementation 'com.github.AgnoiY:RrtrofitFrame:1.0.19'
+    implementation 'com.github.AgnoiY:RrtrofitFrame:1.1.2'
     
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     
@@ -79,7 +79,7 @@ Retrofit框架
                     
                 });
                 
-    实体类:继承BaseResponseModel<Ｔ>或BaseResponseListModel<T>
+    实体类:继承BaseResponseModel<Ｔ>
       
            public class Name extends BaseResponseModel<Name> {}
            
@@ -119,7 +119,7 @@ Retrofit框架
 
                });
           
-4．重写业务逻辑解析方式继承BaseHttpObserver，实体类无需继承上述两个，根据需要自定义
+4．业务逻辑基类不一样，通过注解改变
 
 　　　
 　　

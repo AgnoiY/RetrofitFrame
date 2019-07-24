@@ -18,5 +18,24 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Inherited
 public @interface Code {
-    int[] value() default {200, 401};//200: 请求成功, 401: 登录Token过期
+    /**
+     * 200: 请求成功, 401: 登录Token过期
+     *
+     * @return
+     */
+    int[] value() default {200, 401};
+
+    /**
+     * Token过期, 重新登录Activity
+     *
+     * @return
+     */
+    Class login() default Object.class;
+
+    /**
+     * Token过期, 重新登录Activity, 提示语
+     *
+     * @return
+     */
+    String loginTip() default "";
 }

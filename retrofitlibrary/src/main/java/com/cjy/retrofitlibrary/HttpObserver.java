@@ -1,10 +1,13 @@
 package com.cjy.retrofitlibrary;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
+import com.cjy.retrofitlibrary.utils.LogUtils;
 
 import java.util.List;
 
@@ -20,8 +23,6 @@ import java.util.List;
  */
 public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
 
-    private Context mContext;
-
     public HttpObserver() {
     }
 
@@ -36,7 +37,6 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      */
     public HttpObserver(Context context, boolean isDialog, boolean isCabcelble) {
         super(context, isDialog, isCabcelble);
-        this.mContext = context;
     }
 
     @Override
@@ -66,7 +66,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
                 t = tData;
             }
         } else if (code == mBaseModel.getCodeToken()) { //token过期，跳转登录页面重新登录
-            isLoginToken();
+            isLoginToken(mBaseModel.getLoginClass(), mBaseModel.getLoginTip());
         } else { //统一为错误处理
             onError(getTag(), code, mBaseModel.getMsg());
         }
@@ -84,14 +84,30 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
     @Override
     public void onError(String action, int code, String desc) {
         if (isToast)
-            AutoDefineToast.showFailToast(mContext, desc);
+            AutoDefineToast.showFailToast(RetrofitLibrary.getApplication(), desc);
     }
 
     /**
      * token过期，跳转登录页面重新登录
      */
-    protected void isLoginToken() {
-//        RetrofitLibrary.getApplication().startActivities();
+    protected void isLoginToken(Class loginClass, String loginTip) {
+        Context mContext = RetrofitLibrary.getApplication();
+        RetrofitHttp.Configure mConfigure = RetrofitHttp.Configure.get();
+        if (loginClass == null) {
+            loginClass = mConfigure.getLoginClass();
+        }
+        if (loginClass == null) {
+            LogUtils.e(RetrofitLibrary.getAppString(R.string.login_else_where_Activity));
+            return;
+        }
+        if (TextUtils.isEmpty(loginTip)) {
+            loginTip = mConfigure.getLoginTip();
+        }
+        if (!TextUtils.isEmpty(loginTip))
+            AutoDefineToast.showInfoToast(mContext, loginTip);
+        Intent intent = new Intent(mContext, loginClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
     }
 
 }

@@ -32,6 +32,14 @@ public class BaseModel<T> {
      * 请求状态
      */
     private boolean isSuccess = true;
+    /**
+     * Token过期, 重新登录Activity
+     */
+    private Class loginClass;
+    /**
+     * Token过期, 重新登录Activity, 提示语
+     */
+    private String loginTip;
 
     public int getCode() {
         return code;
@@ -100,6 +108,26 @@ public class BaseModel<T> {
 
     public BaseModel<T> setSuccess(boolean success) {
         isSuccess = success;
+        return this;
+    }
+
+    public Class getLoginClass() {
+        return loginClass;
+    }
+
+    public BaseModel<T> setLoginClass(Class loginClass) {
+        if (loginClass == Object.class)
+            loginClass = null;
+        this.loginClass = loginClass;
+        return this;
+    }
+
+    public String getLoginTip() {
+        return loginTip;
+    }
+
+    public BaseModel<T> setLoginTip(String loginTip) {
+        this.loginTip = loginTip;
         return this;
     }
 }

@@ -135,6 +135,8 @@ public class EntityGatherUtils {
                     mBaseModel.setCode((int) EntityGatherUtils.getValueByFieldName(field.getName(), t));
                     Code code = field.getAnnotation(Code.class);
                     mBaseModel.setCodes(code.value());
+                    mBaseModel.setLoginClass(code.login());
+                    mBaseModel.setLoginTip(code.loginTip());
                 } else if (field.isAnnotationPresent(Message.class)) {
                     mBaseModel.setMsg((String) EntityGatherUtils.getValueByFieldName(field.getName(), t));
                 } else if (field.isAnnotationPresent(Data.class)) {

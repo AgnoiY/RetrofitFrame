@@ -21,7 +21,7 @@ public class BaseResponseModels<T> {
     /**
      * 状态码
      */
-    @Code({0, -5})
+    @Code(value = {0, -5}, login = LoginActivity.class, loginTip = "重新登录")
     private int code;
     /**
      * 描述信息

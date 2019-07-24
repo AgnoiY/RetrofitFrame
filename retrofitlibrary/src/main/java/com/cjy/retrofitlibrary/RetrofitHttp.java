@@ -355,6 +355,9 @@ public class RetrofitHttp {
         private String sqliteName;
         /*数据库版本号*/
         private int sqliteVersion;
+        /*重新登录Activity, 提示语*/
+        private Class loginClass;
+        private String loginTip;
 
         public static Configure get() {
             return Configure.Holder.holders;
@@ -482,6 +485,25 @@ public class RetrofitHttp {
 
         public Configure setSQLiteVersion(int sqliteVersion) {
             this.sqliteVersion = sqliteVersion;
+            return this;
+        }
+
+        /*重新登录Activity*/
+        public Class getLoginClass() {
+            return loginClass;
+        }
+
+        public Configure setLoginClass(Class loginClass) {
+            this.loginClass = loginClass;
+            return this;
+        }
+
+        public String getLoginTip() {
+            return loginTip;
+        }
+
+        public Configure setLoginTip(String loginTip) {
+            this.loginTip = loginTip;
             return this;
         }
 

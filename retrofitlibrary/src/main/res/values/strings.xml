@@ -1,10 +1,7 @@
 <resources>
 
-    <!-- BasePresenter -->
-    <string name="view_add_error">View添加失败</string>
-
     <!-- 网络访问 -->
-    <string name="login_elsewhere">账号在其他地方登录</string>
+    <string name="login_else_where_Activity">请设置账号重新登录的Activity</string>
     <string name="network_error">网络错误</string>
     <string name="data_parsing_error">解析错误</string>
     <string name="time_out_error">网络超时</string>
@@ -13,6 +10,6 @@
     <string name="file_not_found_error">文件不存在</string>
     <string name="file_not_found_permission_error">没有权限</string>
     <string name="request_cancelled">请求取消了</string>
-    <string name="no_netwoek">网络开小差，请检查您的网络设置</string>
+    <string name="no_network">网络开小差，请检查您的网络设置</string>
 
 </resources>

@@ -60,7 +60,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
         BaseModel mBaseModel = EntityGatherUtils.getResponseModel(tData);
         int code = mBaseModel.getCode();
 
-        if (code == mBaseModel.getCodeSuccess()) { //成功
+        if (code == mBaseModel.getCodeSuccess() && mBaseModel.isSuccess()) { //成功
             t = (T) mBaseModel.getData();
             if (t == null || t instanceof String || t instanceof List) {
                 t = tData;
@@ -69,7 +69,6 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
             isLoginToken();
         } else { //统一为错误处理
             onError(getTag(), code, mBaseModel.getMsg());
-
         }
         return t;
     }
@@ -92,7 +91,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      * token过期，跳转登录页面重新登录
      */
     protected void isLoginToken() {
-
+//        RetrofitLibrary.getApplication().startActivities();
     }
 
 }

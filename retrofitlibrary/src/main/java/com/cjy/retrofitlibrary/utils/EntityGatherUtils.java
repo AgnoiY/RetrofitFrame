@@ -7,6 +7,7 @@ import com.cjy.retrofitlibrary.annotation.download.Table;
 import com.cjy.retrofitlibrary.annotation.model.Code;
 import com.cjy.retrofitlibrary.annotation.model.Data;
 import com.cjy.retrofitlibrary.annotation.model.Message;
+import com.cjy.retrofitlibrary.annotation.model.Success;
 import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
@@ -138,6 +139,8 @@ public class EntityGatherUtils {
                     mBaseModel.setMsg((String) EntityGatherUtils.getValueByFieldName(field.getName(), t));
                 } else if (field.isAnnotationPresent(Data.class)) {
                     mBaseModel.setData(EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                } else if (field.isAnnotationPresent(Success.class)) {
+                    mBaseModel.setSuccess((boolean) EntityGatherUtils.getValueByFieldName(field.getName(), t));
                 }
             }
             var = var.getSuperclass();
@@ -235,12 +238,18 @@ public class EntityGatherUtils {
      * @return
      */
     public static Object getValueByFieldName(String fieldName, Object object) {
-        String firstLetter = fieldName.substring(0, 1).toUpperCase();
-        String getter = "get" + firstLetter + fieldName.substring(1);
         try {
+            String getter = fieldName;
+            Class var = object.getClass();
+            String booleanName = getFieldType(var, fieldName);
+            if (!booleanName.equals(Boolean.class.getSimpleName()) &&
+                    !booleanName.equals(boolean.class.getSimpleName())) {
+                String firstLetter = fieldName.substring(0, 1).toUpperCase();
+                getter = "get" + firstLetter + fieldName.substring(1);
+            }
             Class[] classes = new Class[]{};
             Object[] objects = new Object[]{};
-            Method method = object.getClass().getMethod(getter, classes);
+            Method method = var.getMethod(getter, classes);
             return method.invoke(object, objects);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             LogUtils.w(TAG, e);

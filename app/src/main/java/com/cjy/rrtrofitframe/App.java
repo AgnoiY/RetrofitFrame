@@ -19,12 +19,12 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Map<String, Object> headerMap = new HashMap<>();
-//        headerMap.put("v", "1.6.0");
-//        headerMap.put("platform", "android");
-//        headerMap.put("profiles", "prd");
-//        RetrofitLibrary.getHttpConfigure()
-//                .setBaseHeader(headerMap);
+        Map<String, Object> headerMap = new HashMap<>();
+        headerMap.put("v", "1.6.0");
+        headerMap.put("platform", "android");
+        headerMap.put("profiles", "prd");
+        RetrofitLibrary.getHttpConfigure()
+                .setBaseHeader(headerMap);
         RetrofitLibrary.init(this, UrlConstans.BASESERVER);
     }
 

@@ -1,9 +1,8 @@
-package com.cjy.retrofitlibrary.model;
+package com.cjy.rrtrofitframe;
 
 import com.cjy.retrofitlibrary.annotation.model.Code;
 import com.cjy.retrofitlibrary.annotation.model.Data;
 import com.cjy.retrofitlibrary.annotation.model.Message;
-import com.cjy.retrofitlibrary.annotation.model.Success;
 
 /**
  * <自定义下载实体类基类>
@@ -12,7 +11,7 @@ import com.cjy.retrofitlibrary.annotation.model.Success;
  *
  * @author yong
  */
-public class BaseResponseModel<T> {
+public class BaseResponseModels<T> {
 
     /**
      * 数据对象/成功返回对象
@@ -22,24 +21,19 @@ public class BaseResponseModel<T> {
     /**
      * 状态码
      */
-    @Code
+    @Code({0, -5})
     private int code;
     /**
      * 描述信息
      */
     @Message
     private String msg;
-    /**
-     * 请求状态
-     */
-    @Success
-    private boolean isSuccess = true;
 
     public T getData() {
         return data;
     }
 
-    public BaseResponseModel<T> setData(T data) {
+    public BaseResponseModels<T> setData(T data) {
         this.data = data;
         return this;
     }
@@ -48,7 +42,7 @@ public class BaseResponseModel<T> {
         return code;
     }
 
-    public BaseResponseModel<T> setCode(int code) {
+    public BaseResponseModels<T> setCode(int code) {
         this.code = code;
         return this;
     }
@@ -57,17 +51,8 @@ public class BaseResponseModel<T> {
         return msg;
     }
 
-    public BaseResponseModel<T> setMsg(String msg) {
+    public BaseResponseModels<T> setMsg(String msg) {
         this.msg = msg;
-        return this;
-    }
-
-    public boolean isSuccess() {
-        return isSuccess;
-    }
-
-    public BaseResponseModel<T> setSuccess(boolean success) {
-        isSuccess = success;
         return this;
     }
 }

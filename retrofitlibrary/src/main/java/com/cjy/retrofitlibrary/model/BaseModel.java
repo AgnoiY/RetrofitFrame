@@ -28,6 +28,10 @@ public class BaseModel<T> {
      * 描述信息
      */
     private String msg;
+    /**
+     * 请求状态
+     */
+    private boolean isSuccess = true;
 
     public int getCode() {
         return code;
@@ -44,6 +48,7 @@ public class BaseModel<T> {
 
     /**
      * 请求成功状态码
+     *
      * @return
      */
     public int getCodeSuccess() {
@@ -51,8 +56,10 @@ public class BaseModel<T> {
             return codes[0];
         return 200;
     }
+
     /**
      * 请求Token过期状态码
+     *
      * @return
      */
     public int getCodeToken() {
@@ -87,4 +94,12 @@ public class BaseModel<T> {
         return this;
     }
 
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public BaseModel<T> setSuccess(boolean success) {
+        isSuccess = success;
+        return this;
+    }
 }

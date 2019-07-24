@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     private void initData() {
-        login("15713802736", "a123456");
+        login("15713802736", "123456");
         mMainBinding.text.setOnClickListener(v -> {
             Map<String, Object> parameterMap = new HashMap<>();
             parameterMap.put("appPlatform", "android");
@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     private void login(String userid, String pwd) {
 
         Map<String, Object> parameterMap = new HashMap<>();
-//        parameterMap.put("type", 2);
-//        parameterMap.put("loginName", userid);
-//        parameterMap.put("loginPwd", pwd);
-        parameterMap.put("mobile", userid);
-        parameterMap.put("password", pwd);
+        parameterMap.put("type", 2);
+        parameterMap.put("loginName", userid);
+        parameterMap.put("loginPwd", pwd);
+//        parameterMap.put("mobile", userid);
+//        parameterMap.put("password", pwd);
 
-        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LOGIN1)
+        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LOGIN)
                 .addParameter(parameterMap).build()
                 .request(new HttpObserver<LoginModel>(this, true) {
                     @Override
@@ -98,16 +98,16 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         Map<String, Object> map = new HashMap<>();
         map.put("userid", id);
 
-        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LIST2)
-//                .addHeader("Authorization", "Bearer " + token)
-//                .addParameter("status", -7)
+        RetrofitLibrary.getHttp().post().apiUrl(UrlConstans.LIST)
+                .addHeader("Authorization", "Bearer " + token)
+                .addParameter("status", -7)
 //                .addHeader("token", token)
-                .setParameter(map)
+//                .setParameter(map)
                 .build()
                 .request(new HttpObserver<ListModel>(this, true) {
                     @Override
                     public void onSuccess(String action, ListModel value) {
-                        LogUtils.d(action, value.getData() + ": " + value.getData().size());
+//                        LogUtils.d(action, value.getData() + ": " + value.getData().size());
                     }
                 });
 

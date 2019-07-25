@@ -3,6 +3,8 @@ package com.cjy.retrofitlibrary;
 import android.app.Application;
 import android.support.annotation.StringRes;
 
+import com.cjy.retrofitlibrary.annotation.toast.ToastCancel;
+import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 
 /**
@@ -45,6 +47,7 @@ public class RetrofitLibrary {
      */
     public static void onDestory() {
         mHttpBuilder.clear();
+        AnnotationUtils.setToast(ToastCancel.class, null, null);
         RequestManagerImpl.getInstance().cancelAll();
         getHttpConfigure().getHandler().removeCallbacksAndMessages(null);
     }

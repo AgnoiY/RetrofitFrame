@@ -358,6 +358,8 @@ public class RetrofitHttp {
         /*重新登录Activity, 提示语*/
         private Class loginClass;
         private String loginTip;
+        /*Toast*/
+        private Class toastClass;
 
         public static Configure get() {
             return Configure.Holder.holders;
@@ -504,6 +506,15 @@ public class RetrofitHttp {
 
         public Configure setLoginTip(String loginTip) {
             this.loginTip = loginTip;
+            return this;
+        }
+
+        public Class getToastClass() {
+            return toastClass;
+        }
+
+        public Configure setToastClass(Class toastClass) {
+            this.toastClass = toastClass;
             return this;
         }
 

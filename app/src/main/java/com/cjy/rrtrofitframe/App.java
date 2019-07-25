@@ -29,8 +29,8 @@ public class App extends Application {
     }
 
     @Override
-    public void onTerminate() {
-        super.onTerminate();
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
         RetrofitLibrary.onDestory();
     }
 }

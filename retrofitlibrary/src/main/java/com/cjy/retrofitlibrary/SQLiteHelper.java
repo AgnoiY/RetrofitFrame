@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.cjy.retrofitlibrary.model.DownloadModel;
-import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
+import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
     private String createSQLite() {
         StringBuilder builder = new StringBuilder();
         builder.append("create table if not exists ");
-        List<String> list = EntityGatherUtils.getEntityList(DownloadModel.class);
+        List<String> list = AnnotationUtils.getEntityList(DownloadModel.class);
         for (int i = 0; i < list.size(); i += 2) {
             String key = list.get(i);
             String value = list.get(i + 1);
@@ -272,7 +272,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      * @return
      */
     private String getTable() {
-        List<String> list = EntityGatherUtils.getEntityList(DownloadModel.class);
+        List<String> list = AnnotationUtils.getEntityList(DownloadModel.class);
         for (int i = 0; i < list.size(); i += 2) {
             String key = list.get(i);
             String value = list.get(i + 1);
@@ -311,8 +311,8 @@ class SQLiteHelper extends SQLiteOpenHelper {
                 try {
                     T t = var.newInstance();
                     for (String column : columns) {
-                        String type = EntityGatherUtils.getFieldType(var, column);
-                        t = EntityGatherUtils.setValueByFieldName(var, t, column, getCursorValue(type, cursor, column));
+                        String type = AnnotationUtils.getFieldType(var, column);
+                        t = AnnotationUtils.setValueByFieldName(var, t, column, getCursorValue(type, cursor, column));
                     }
                     tList.add(t);
                 } catch (IllegalAccessException | InstantiationException e) {
@@ -369,13 +369,13 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     private ContentValues getContentValues(DownloadModel var) {
         ContentValues values = new ContentValues();
-        List<String> list = EntityGatherUtils.getEntityList(var.getClass());
+        List<String> list = AnnotationUtils.getEntityList(var.getClass());
         for (int i = 0; i < list.size(); i += 2) {
             String key = list.get(i);
             if (key.equals(TABLE) || key.contains(_ID)) {
                 continue;
             }
-            Object object = EntityGatherUtils.getValueByFieldName(key, var);
+            Object object = AnnotationUtils.getValueByFieldName(key, var);
             if (object instanceof String) {
                 values.put(key, (String) object);
             } else if (object instanceof Integer) {

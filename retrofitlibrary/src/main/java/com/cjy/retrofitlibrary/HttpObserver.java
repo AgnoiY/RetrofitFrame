@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
+import com.cjy.retrofitlibrary.annotation.toast.ToastFail;
+import com.cjy.retrofitlibrary.annotation.toast.ToastInfo;
 import com.cjy.retrofitlibrary.model.BaseModel;
-import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
+import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      */
     private T convertModel(T tData) {
         T t = null;
-        BaseModel mBaseModel = EntityGatherUtils.getResponseModel(tData);
+        BaseModel mBaseModel = AnnotationUtils.getResponseModel(tData);
         int code = mBaseModel.getCode();
 
         if (code == mBaseModel.getCodeSuccess() && mBaseModel.isSuccess()) { //成功
@@ -84,7 +85,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
     @Override
     public void onError(String action, int code, String desc) {
         if (isToast)
-            AutoDefineToast.showFailToast(RetrofitLibrary.getApplication(), desc);
+            AnnotationUtils.setToast(ToastFail.class, RetrofitLibrary.getApplication(), desc);
     }
 
     /**
@@ -103,8 +104,10 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
         if (TextUtils.isEmpty(loginTip)) {
             loginTip = mConfigure.getLoginTip();
         }
-        if (!TextUtils.isEmpty(loginTip))
-            AutoDefineToast.showInfoToast(mContext, loginTip);
+        if (!TextUtils.isEmpty(loginTip)) {
+            AnnotationUtils.setToast(ToastInfo.class, mContext, loginTip);
+        }
+
         Intent intent = new Intent(mContext, loginClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);

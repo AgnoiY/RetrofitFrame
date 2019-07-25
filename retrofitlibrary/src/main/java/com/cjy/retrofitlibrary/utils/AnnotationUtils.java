@@ -1,5 +1,8 @@
 package com.cjy.retrofitlibrary.utils;
 
+import android.content.Context;
+
+import com.cjy.retrofitlibrary.RetrofitHttp;
 import com.cjy.retrofitlibrary.annotation.download.Column;
 import com.cjy.retrofitlibrary.annotation.download.NotNull;
 import com.cjy.retrofitlibrary.annotation.download.PrimaryKey;
@@ -8,12 +11,17 @@ import com.cjy.retrofitlibrary.annotation.model.Code;
 import com.cjy.retrofitlibrary.annotation.model.Data;
 import com.cjy.retrofitlibrary.annotation.model.Message;
 import com.cjy.retrofitlibrary.annotation.model.Success;
+import com.cjy.retrofitlibrary.annotation.toast.ToastContext;
+import com.cjy.retrofitlibrary.annotation.toast.ToastMsg;
+import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +37,12 @@ import static com.cjy.retrofitlibrary.Constants._ID;
  *
  * @author yong
  */
-public class EntityGatherUtils {
+public class AnnotationUtils {
 
-    private static final String TAG = EntityGatherUtils.class.getSimpleName();
+    private static final String TAG = AnnotationUtils.class.getSimpleName();
 
-    EntityGatherUtils() {
-        throw new IllegalStateException("EntityGatherUtils class");
+    AnnotationUtils() {
+        throw new IllegalStateException("AnnotationUtils class");
     }
 
     /**
@@ -132,17 +140,17 @@ public class EntityGatherUtils {
             Field[] fields = var.getDeclaredFields();//获取类的各个属性值
             for (Field field : fields) {
                 if (field.isAnnotationPresent(Code.class)) {
-                    mBaseModel.setCode((int) EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                    mBaseModel.setCode((int) AnnotationUtils.getValueByFieldName(field.getName(), t));
                     Code code = field.getAnnotation(Code.class);
                     mBaseModel.setCodes(code.value());
                     mBaseModel.setLoginClass(code.login());
                     mBaseModel.setLoginTip(code.loginTip());
                 } else if (field.isAnnotationPresent(Message.class)) {
-                    mBaseModel.setMsg((String) EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                    mBaseModel.setMsg((String) AnnotationUtils.getValueByFieldName(field.getName(), t));
                 } else if (field.isAnnotationPresent(Data.class)) {
-                    mBaseModel.setData(EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                    mBaseModel.setData(AnnotationUtils.getValueByFieldName(field.getName(), t));
                 } else if (field.isAnnotationPresent(Success.class)) {
-                    mBaseModel.setSuccess((boolean) EntityGatherUtils.getValueByFieldName(field.getName(), t));
+                    mBaseModel.setSuccess((boolean) AnnotationUtils.getValueByFieldName(field.getName(), t));
                 }
             }
             var = var.getSuperclass();
@@ -256,6 +264,47 @@ public class EntityGatherUtils {
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             LogUtils.w(TAG, e);
             return null;
+        }
+    }
+
+    /**
+     * 提示Toast
+     *
+     * @param annotationType
+     * @param context
+     * @param msg
+     */
+    public static void setToast(Class<? extends Annotation> annotationType, Context context, String msg) {
+        Class var = RetrofitHttp.Configure.get().getToastClass();
+        if (var == null) {
+            var = AutoDefineToast.class;
+        }
+        Method[] methods = var.getDeclaredMethods();
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(annotationType)) {
+                Annotation[][] annotationss = method.getParameterAnnotations();
+                Type[] types = method.getGenericParameterTypes();
+                Object[] objects = new Object[types.length];
+                for (int i = 0; i < annotationss.length; i++) {
+                    Type type = types[i];
+                    Annotation[] annotations = annotationss[i];
+                    for (Annotation annotation : annotations) {
+                        if (annotation instanceof ToastContext && type == Context.class) {
+                            objects[i] = context;
+                        }
+                        if (annotation instanceof ToastMsg && type == String.class) {
+                            objects[i] = msg;
+                        }
+                    }
+                }
+                try {
+                    method.invoke(var, objects);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

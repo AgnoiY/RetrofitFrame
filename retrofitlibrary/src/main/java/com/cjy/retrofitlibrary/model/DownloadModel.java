@@ -8,7 +8,7 @@ import com.cjy.retrofitlibrary.annotation.download.Ignore;
 import com.cjy.retrofitlibrary.annotation.download.NotNull;
 import com.cjy.retrofitlibrary.annotation.download.PrimaryKey;
 import com.cjy.retrofitlibrary.annotation.download.Table;
-import com.cjy.retrofitlibrary.utils.EntityGatherUtils;
+import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -185,7 +185,7 @@ public class DownloadModel<T> extends BaseResponseModel<T> implements Serializab
             Field[] fields = var.getDeclaredFields();//获取类的各个属性值
             for (Field field : fields) {
                 if (field.isAnnotationPresent(DownLoadServer.class)) {
-                    serverUrl = (String) EntityGatherUtils.getValueByFieldName(field.getName(), this);
+                    serverUrl = (String) AnnotationUtils.getValueByFieldName(field.getName(), this);
                 }
             }
             var = var.getSuperclass();

@@ -8,6 +8,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cjy.retrofitlibrary.R;
+import com.cjy.retrofitlibrary.annotation.toast.ToastCancel;
+import com.cjy.retrofitlibrary.annotation.toast.ToastContext;
+import com.cjy.retrofitlibrary.annotation.toast.ToastFail;
+import com.cjy.retrofitlibrary.annotation.toast.ToastInfo;
+import com.cjy.retrofitlibrary.annotation.toast.ToastMsg;
+import com.cjy.retrofitlibrary.annotation.toast.ToastSuccess;
 
 /**
  * <提示信息弹窗>
@@ -24,7 +30,14 @@ public class AutoDefineToast {
 
     private static Toast toast;
 
-    public static void showSuccessToast(Context context, String msg) {
+    /**
+     * 成功提示信息
+     *
+     * @param context
+     * @param msg
+     */
+    @ToastSuccess
+    public static void showSuccessToast(@ToastContext Context context, @ToastMsg String msg) {
         View view = View.inflate(context, R.layout.toast_auto_define, null);
         ImageView toastAutoDefineIv = view.findViewById(R.id.toast_auto_define_iv);
         TextView toastAutoDefineTv = view.findViewById(R.id.toast_auto_define_tv);
@@ -37,7 +50,14 @@ public class AutoDefineToast {
         toast.show();
     }
 
-    public static void showFailToast(Context context, String msg) {
+    /**
+     * 错误提示信息
+     *
+     * @param context
+     * @param msg
+     */
+    @ToastFail
+    public static void showFailToast(@ToastContext Context context, @ToastMsg String msg) {
         View view = View.inflate(context, R.layout.toast_auto_define, null);
         ImageView toastAutoDefineIv = view.findViewById(R.id.toast_auto_define_iv);
         TextView toastAutoDefineTv = view.findViewById(R.id.toast_auto_define_tv);
@@ -50,7 +70,14 @@ public class AutoDefineToast {
         toast.show();
     }
 
-    public static void showInfoToast(Context context, String msg) {
+    /**
+     * 提示信息
+     *
+     * @param context
+     * @param msg
+     */
+    @ToastInfo
+    public static void showInfoToast(@ToastContext Context context, @ToastMsg String msg) {
         View view = View.inflate(context, R.layout.toast_auto_define, null);
         ImageView toastAutoDefineIv = view.findViewById(R.id.toast_auto_define_iv);
         TextView toastAutoDefineTv = view.findViewById(R.id.toast_auto_define_tv);
@@ -66,6 +93,7 @@ public class AutoDefineToast {
     /**
      * 清空Toast
      */
+    @ToastCancel
     public static void destory() {
         if (toast != null)
             toast.cancel();

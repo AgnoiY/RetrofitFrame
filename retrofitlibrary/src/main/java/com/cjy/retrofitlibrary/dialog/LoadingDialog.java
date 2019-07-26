@@ -1,15 +1,17 @@
 package com.cjy.retrofitlibrary.dialog;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.ViewGroup;
 
-import com.cjy.retrofitlibrary.R;
 import com.cjy.retrofitlibrary.Constants;
 import com.cjy.retrofitlibrary.ProgressDialogObserver;
+import com.cjy.retrofitlibrary.R;
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogConstructor;
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogContext;
 
 /**
  * <请求加载弹窗>
@@ -18,7 +20,7 @@ import com.cjy.retrofitlibrary.ProgressDialogObserver;
  *
  * @author yong
  */
-public final class LoadingDialog extends ProgressDialog {
+public final class LoadingDialog extends Dialog {
 
     private long delayMillis = Constants.TIME_OUT * 1000;
     private int mWidth;
@@ -28,8 +30,8 @@ public final class LoadingDialog extends ProgressDialog {
     private boolean isCanceledOnTouchOutside = false;
     private ProgressDialogObserver progressDialogObserver;
 
-
-    public LoadingDialog(Context context) {
+    @DialogConstructor
+    public LoadingDialog(@DialogContext Context context) {
         super(context, R.style.LoadingDialogLight);
         this.mWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
         this.mHeight = ViewGroup.LayoutParams.WRAP_CONTENT;

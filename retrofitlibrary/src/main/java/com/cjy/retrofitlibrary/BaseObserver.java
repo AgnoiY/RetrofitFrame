@@ -3,7 +3,10 @@ package com.cjy.retrofitlibrary;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogConstructor;
 import com.cjy.retrofitlibrary.dialog.LoadingDialog;
+
+import java.lang.reflect.Constructor;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -37,6 +40,13 @@ abstract class BaseObserver<T> implements Observer<T>, ProgressDialogObserver, R
             loadingDialog = new LoadingDialog(context)
                     .setIsCancelable(isCabcelble)
                     .setProgressDialogObserver(this);
+        }
+        Class var = LoadingDialog.class;
+        Constructor[] constructors = var.getDeclaredConstructors();
+        for (Constructor constructor :constructors){
+            if (constructor.isAnnotationPresent(DialogConstructor.class)){
+
+            }
         }
     }
 

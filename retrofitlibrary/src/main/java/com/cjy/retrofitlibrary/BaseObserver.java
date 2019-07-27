@@ -4,9 +4,11 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogConstructor;
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogShow;
 import com.cjy.retrofitlibrary.dialog.LoadingDialog;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -17,7 +19,7 @@ import io.reactivex.disposables.Disposable;
  * 1.重写onSubscribe，添加请求标识
  * 2.重写onError，移除请求
  * 3.重写cancel，取消请求
- * 4.重写onNext，移除请求
+ * 4.重写onNext，成功请求
  * 5.ProgressDialogObserver,加载的提示窗
  * Data：2018/12/18
  *
@@ -45,6 +47,13 @@ abstract class BaseObserver<T> implements Observer<T>, ProgressDialogObserver, R
         Constructor[] constructors = var.getDeclaredConstructors();
         for (Constructor constructor :constructors){
             if (constructor.isAnnotationPresent(DialogConstructor.class)){
+
+            }
+        }
+
+        Method[] methods = var.getDeclaredMethods();
+        for (Method method :methods){
+            if (method.isAnnotationPresent(DialogShow.class)){
 
             }
         }

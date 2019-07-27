@@ -12,6 +12,7 @@ import com.cjy.retrofitlibrary.ProgressDialogObserver;
 import com.cjy.retrofitlibrary.R;
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogConstructor;
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogContext;
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogShow;
 
 /**
  * <请求加载弹窗>
@@ -60,6 +61,7 @@ public final class LoadingDialog extends Dialog {
         mLoadingView = findViewById(R.id.loadingview);
     }
 
+    @DialogShow
     public void showDialog() {
 
         if (!isShowing()) {

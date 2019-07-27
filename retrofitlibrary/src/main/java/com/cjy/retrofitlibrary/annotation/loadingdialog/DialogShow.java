@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
  * <p>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
+@Target(ElementType.METHOD)
 @Inherited
-public @interface DialogContext {
+public @interface DialogShow {
 }

@@ -77,7 +77,7 @@ public class AutoDefineToast {
      * @param msg
      */
     @ToastInfo
-    public static void showInfoToast(@ContextParameter Context context, String a, @MsgParameter String msg) {
+    public static void showInfoToast(@ContextParameter Context context, @MsgParameter String msg) {
         View view = View.inflate(context, R.layout.toast_auto_define, null);
         ImageView toastAutoDefineIv = view.findViewById(R.id.toast_auto_define_iv);
         TextView toastAutoDefineTv = view.findViewById(R.id.toast_auto_define_tv);

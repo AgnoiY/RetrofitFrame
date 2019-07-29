@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.annotation.loadingdialog;
+package com.cjy.retrofitlibrary.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -7,9 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 提示上下文
+ * 加载过程接口
  * <p>
- * Data：2019/07/26
+ * Data：2019/07/25
  *
  * @author yong
  * <p>
@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 @Inherited
-public @interface DialogContext {
+public @interface ProgressParameter {
 }

@@ -47,7 +47,7 @@ public class RetrofitLibrary {
      */
     public static void onDestory() {
         mHttpBuilder.clear();
-        AnnotationUtils.setToast(ToastCancel.class, null, null);
+        AnnotationUtils.getToastMethod(ToastCancel.class, null, null);
         RequestManagerImpl.getInstance().cancelAll();
         getHttpConfigure().getHandler().removeCallbacksAndMessages(null);
     }

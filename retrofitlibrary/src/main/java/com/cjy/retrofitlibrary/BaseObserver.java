@@ -3,12 +3,10 @@ package com.cjy.retrofitlibrary;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogConstructor;
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogClose;
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogShow;
 import com.cjy.retrofitlibrary.dialog.LoadingDialog;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -32,30 +30,14 @@ abstract class BaseObserver<T> implements Observer<T>, ProgressDialogObserver, R
      */
     private String mTag;
     private Disposable d;
-    private LoadingDialog loadingDialog;
+    private Object loadingDialog;
 
     public BaseObserver() {
     }
 
     public BaseObserver(Context context, boolean isDialog, boolean isCabcelble) {
         if (isDialog) {
-            loadingDialog = new LoadingDialog(context)
-                    .setIsCancelable(isCabcelble)
-                    .setProgressDialogObserver(this);
-        }
-        Class var = LoadingDialog.class;
-        Constructor[] constructors = var.getDeclaredConstructors();
-        for (Constructor constructor :constructors){
-            if (constructor.isAnnotationPresent(DialogConstructor.class)){
-
-            }
-        }
-
-        Method[] methods = var.getDeclaredMethods();
-        for (Method method :methods){
-            if (method.isAnnotationPresent(DialogShow.class)){
-
-            }
+            loadingDialog = AnnotationUtils.newConstructor(getDialogClass(), context, isCabcelble, this);
         }
     }
 
@@ -106,7 +88,7 @@ abstract class BaseObserver<T> implements Observer<T>, ProgressDialogObserver, R
     @Override
     public void showProgressDialog() {
         if (null != loadingDialog) {
-            loadingDialog.showDialog();
+            AnnotationUtils.getMethod(loadingDialog, getDialogClass(), DialogShow.class);
         }
     }
 
@@ -116,7 +98,7 @@ abstract class BaseObserver<T> implements Observer<T>, ProgressDialogObserver, R
     @Override
     public void hideProgressDialog() {
         if (null != loadingDialog) {
-            loadingDialog.closeDialog();
+            AnnotationUtils.getMethod(loadingDialog, getDialogClass(), DialogClose.class);
             loadingDialog = null;
         }
     }
@@ -154,5 +136,18 @@ abstract class BaseObserver<T> implements Observer<T>, ProgressDialogObserver, R
      */
     public String getTag() {
         return mTag;
+    }
+
+    /**
+     * 获取加载弹窗
+     *
+     * @return
+     */
+    private Class getDialogClass() {
+        Class var = RetrofitHttp.Configure.get().getDialogClass();
+        if (var == null) {
+            var = LoadingDialog.class;
+        }
+        return var;
     }
 }

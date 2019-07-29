@@ -360,6 +360,8 @@ public class RetrofitHttp {
         private String loginTip;
         /*Toast*/
         private Class toastClass;
+        /*Dialog*/
+        private Class dialogClass;
 
         public static Configure get() {
             return Configure.Holder.holders;
@@ -500,6 +502,7 @@ public class RetrofitHttp {
             return this;
         }
 
+        /*重新登录Activity,提示语*/
         public String getLoginTip() {
             return loginTip;
         }
@@ -509,12 +512,23 @@ public class RetrofitHttp {
             return this;
         }
 
+        /*消息提示*/
         public Class getToastClass() {
             return toastClass;
         }
 
         public Configure setToastClass(Class toastClass) {
             this.toastClass = toastClass;
+            return this;
+        }
+
+        /*加载弹窗*/
+        public Class getDialogClass() {
+            return dialogClass;
+        }
+
+        public Configure setDialogClass(Class dialogClass) {
+            this.dialogClass = dialogClass;
             return this;
         }
 

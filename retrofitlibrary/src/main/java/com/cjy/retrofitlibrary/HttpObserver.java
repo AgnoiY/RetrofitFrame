@@ -85,7 +85,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
     @Override
     public void onError(String action, int code, String desc) {
         if (isToast)
-            AnnotationUtils.setToast(ToastFail.class, RetrofitLibrary.getApplication(), desc);
+            AnnotationUtils.getToastMethod(ToastFail.class, RetrofitLibrary.getApplication(), desc);
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
             loginTip = mConfigure.getLoginTip();
         }
         if (!TextUtils.isEmpty(loginTip)) {
-            AnnotationUtils.setToast(ToastInfo.class, mContext, loginTip);
+            AnnotationUtils.getToastMethod(ToastInfo.class, mContext, loginTip);
         }
 
         Intent intent = new Intent(mContext, loginClass);

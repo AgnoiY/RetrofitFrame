@@ -2,7 +2,13 @@ package com.cjy.retrofitlibrary.utils;
 
 import android.content.Context;
 
+import com.cjy.retrofitlibrary.ProgressDialogObserver;
 import com.cjy.retrofitlibrary.RetrofitHttp;
+import com.cjy.retrofitlibrary.annotation.CabcelbleParameter;
+import com.cjy.retrofitlibrary.annotation.Constructors;
+import com.cjy.retrofitlibrary.annotation.ContextParameter;
+import com.cjy.retrofitlibrary.annotation.MsgParameter;
+import com.cjy.retrofitlibrary.annotation.ProgressParameter;
 import com.cjy.retrofitlibrary.annotation.download.Column;
 import com.cjy.retrofitlibrary.annotation.download.NotNull;
 import com.cjy.retrofitlibrary.annotation.download.PrimaryKey;
@@ -11,13 +17,12 @@ import com.cjy.retrofitlibrary.annotation.model.Code;
 import com.cjy.retrofitlibrary.annotation.model.Data;
 import com.cjy.retrofitlibrary.annotation.model.Message;
 import com.cjy.retrofitlibrary.annotation.model.Success;
-import com.cjy.retrofitlibrary.annotation.toast.ToastContext;
-import com.cjy.retrofitlibrary.annotation.toast.ToastMsg;
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -252,7 +257,7 @@ public class AnnotationUtils {
             String getter = fieldName;
             Class var = object.getClass();
             String booleanName = getFieldType(var, fieldName);
-            if (!booleanName.equals(Boolean.class.getSimpleName()) &&
+            if (booleanName != null && !booleanName.equals(Boolean.class.getSimpleName()) &&
                     !booleanName.equals(boolean.class.getSimpleName())) {
                 String firstLetter = fieldName.substring(0, 1).toUpperCase();
                 getter = "get" + firstLetter + fieldName.substring(1);
@@ -268,43 +273,94 @@ public class AnnotationUtils {
     }
 
     /**
-     * 提示Toast
+     * 获取Toast工具中的方法
      *
      * @param annotationType
      * @param context
      * @param msg
      */
-    public static void setToast(Class<? extends Annotation> annotationType, Context context, String msg) {
+    public static void getToastMethod(Class<? extends Annotation> annotationType, Context context, String msg) {
         Class var = RetrofitHttp.Configure.get().getToastClass();
         if (var == null) {
             var = AutoDefineToast.class;
         }
+        getMethod(null, var, annotationType, context, msg);
+    }
+
+    /**
+     * 获取对象中的的方法
+     *
+     * @param var
+     * @param annotationType
+     * @param objs
+     */
+    public static void getMethod(Object obj, Class var, Class<? extends Annotation> annotationType, Object... objs) {
         Method[] methods = var.getDeclaredMethods();
         for (Method method : methods) {
             if (method.isAnnotationPresent(annotationType)) {
                 Annotation[][] annotationss = method.getParameterAnnotations();
                 Type[] types = method.getGenericParameterTypes();
-                Object[] objects = new Object[types.length];
-                for (int i = 0; i < annotationss.length; i++) {
-                    Type type = types[i];
-                    Annotation[] annotations = annotationss[i];
-                    for (Annotation annotation : annotations) {
-                        if (annotation instanceof ToastContext && type == Context.class) {
-                            objects[i] = context;
-                        }
-                        if (annotation instanceof ToastMsg && type == String.class) {
-                            objects[i] = msg;
-                        }
-                    }
-                }
                 try {
-                    method.invoke(var, objects);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                    method.invoke(obj != null ? obj : var, getParameterValue(annotationss, types, objs));
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    LogUtils.w(e);
                 }
             }
         }
+    }
+
+    /**
+     * 创建构造器
+     *
+     * @param var
+     * @param objs
+     * @return
+     */
+    public static Object newConstructor(Class var, Object... objs) {
+        Constructor[] constructors = var.getDeclaredConstructors();
+        for (Constructor constructor : constructors) {
+            if (constructor.isAnnotationPresent(Constructors.class)) {
+                Annotation[][] annotationss = constructor.getParameterAnnotations();
+                Type[] types = constructor.getGenericParameterTypes();
+                try {
+                    return constructor.newInstance(getParameterValue(annotationss, types, objs));
+                } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                    LogUtils.w(e);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取参数并设置
+     *
+     * @param annotationss
+     * @param types
+     * @param objs
+     * @return
+     */
+    private static Object[] getParameterValue(Annotation[][] annotationss, Type[] types, Object... objs) {
+        Object[] objects = new Object[types.length];
+        for (int i = 0; i < annotationss.length; i++) {
+            Type type = types[i];
+            Annotation[] annotations = annotationss[i];
+            for (Annotation annotation : annotations) {
+                if (annotation instanceof ContextParameter && type == Context.class) {
+                    objects[i] = objs[0];
+                }
+
+                if (annotation instanceof MsgParameter && type == String.class ||
+                        annotation instanceof CabcelbleParameter && (type == Boolean.class || type == boolean.class)) {
+                    objects[i] = objs[1];
+                }
+
+                if (annotation instanceof ProgressParameter && type == ProgressDialogObserver.class) {
+                    objects[i] = objs[2];
+                }
+
+            }
+        }
+        return objects;
     }
 }

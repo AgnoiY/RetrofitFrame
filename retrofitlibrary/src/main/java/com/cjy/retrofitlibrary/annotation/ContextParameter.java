@@ -1,4 +1,4 @@
-package com.cjy.retrofitlibrary.annotation.loadingdialog;
+package com.cjy.retrofitlibrary.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -7,15 +7,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 提示上下午
+ * 提示上下文
  * <p>
- * Data：2019/07/26
+ * Data：2019/07/25
  *
  * @author yong
  * <p>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.CONSTRUCTOR)
+@Target(ElementType.PARAMETER)
 @Inherited
-public @interface DialogConstructor {
+public @interface ContextParameter {
 }

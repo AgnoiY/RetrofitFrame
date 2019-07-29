@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import com.cjy.retrofitlibrary.Constants;
 import com.cjy.retrofitlibrary.ProgressDialogObserver;
 import com.cjy.retrofitlibrary.R;
-import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogConstructor;
-import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogContext;
+import com.cjy.retrofitlibrary.annotation.CabcelbleParameter;
+import com.cjy.retrofitlibrary.annotation.Constructors;
+import com.cjy.retrofitlibrary.annotation.ContextParameter;
+import com.cjy.retrofitlibrary.annotation.ProgressParameter;
+import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogClose;
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogShow;
 
 /**
@@ -27,15 +30,17 @@ public final class LoadingDialog extends Dialog {
     private int mWidth;
     private int mHeight;
     private LoadingView mLoadingView;
-    private boolean isCancelable = false;
+    private boolean isCancelable;
     private boolean isCanceledOnTouchOutside = false;
     private ProgressDialogObserver progressDialogObserver;
 
-    @DialogConstructor
-    public LoadingDialog(@DialogContext Context context) {
+    @Constructors
+    public LoadingDialog(@ContextParameter Context context, @CabcelbleParameter Boolean isCancelable, @ProgressParameter ProgressDialogObserver progressDialogObserver) {
         super(context, R.style.LoadingDialogLight);
         this.mWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
         this.mHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
+        this.isCancelable = isCancelable;
+        this.progressDialogObserver = progressDialogObserver;
     }
 
 
@@ -74,6 +79,7 @@ public final class LoadingDialog extends Dialog {
         }
     }
 
+    @DialogClose
     public void closeDialog() {
         if (isShowing()) {
             dismiss();
@@ -105,18 +111,9 @@ public final class LoadingDialog extends Dialog {
         return this;
     }
 
-    public LoadingDialog setIsCancelable(boolean cancelable) {
-        isCancelable = cancelable;
-        return this;
-    }
-
     public LoadingDialog setIsCanceledOnTouchOutside(boolean canceledOnTouchOutside) {
         isCanceledOnTouchOutside = canceledOnTouchOutside;
         return this;
     }
 
-    public LoadingDialog setProgressDialogObserver(ProgressDialogObserver progressDialogObserver) {
-        this.progressDialogObserver = progressDialogObserver;
-        return this;
-    }
 }

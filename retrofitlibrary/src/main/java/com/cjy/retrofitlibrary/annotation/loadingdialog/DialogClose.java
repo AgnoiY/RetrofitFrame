@@ -7,9 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 显示加载框
+ * 隐藏加载框
  * <p>
- * Data：2019/07/26
+ * Data：2019/07/29
  *
  * @author yong
  * <p>
@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @Inherited
-public @interface DialogShow {
+public @interface DialogClose {
 }

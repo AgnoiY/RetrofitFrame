@@ -13,12 +13,10 @@ import com.cjy.retrofitlibrary.RetrofitDownload;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.model.DownloadModel;
-import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.rrtrofitframe.databinding.ActivityMainBinding;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -87,13 +85,13 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
                     @Override
                     public void onSuccess(String action, LoginModel value) {
                         mMainBinding.text.setText(value.getToken());
-                        getList( value.getUserId(),value.getToken());
+                        getList(value.getUserId(), value.getToken());
                     }
                 });
 
     }
 
-    private void getList(int id,String token) {
+    private void getList(int id, String token) {
 
         Map<String, Object> map = new HashMap<>();
         map.put("userid", id);
@@ -135,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     public void onError(Throwable e) {
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
         if (e instanceof ApiException)
-            AutoDefineToast.showInfoToast(MainActivity.this, ((ApiException) e).getMsg());
+            AutoDefineToast.showFailToast(MainActivity.this, ((ApiException) e).getMsg());
     }
 
     @Override

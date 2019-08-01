@@ -19,7 +19,7 @@ Retrofit框架
    
     /*网络请求框架*/
     
-    implementation 'com.github.AgnoiY:RrtrofitFrame:1.1.3'
+    implementation 'com.github.AgnoiY:RetrofitFrame:1.1.6'
     
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     

@@ -147,7 +147,7 @@ class RetrofitUtils {
             //统一设置 Header
             if (headerMap != null && headerMap.size() > 0) {
                 for (Map.Entry<String, Object> entry : headerMap.entrySet()) {
-                    requestBuilder.addHeader(entry.getKey(), String.valueOf(RequestUtils.getHeaderValueEncoded(entry.getValue())));
+                    requestBuilder.header(entry.getKey(), String.valueOf(RequestUtils.getHeaderValueEncoded(entry.getValue())));
                 }
             }
             return chain.proceed(requestBuilder.build());
@@ -166,7 +166,8 @@ class RetrofitUtils {
         };
 
         Interceptor[] interceptorArray = new Interceptor[]{logInterceptor, headerInterceptor, httpInterceptor};
-        return getOkHttpClient(false, RetrofitHttp.Configure.get().getTimeout(), RetrofitHttp.Configure.get().getTimeUnit(), interceptorArray);
+        RetrofitHttp.Configure mConfigure = RetrofitHttp.Configure.get();
+        return getOkHttpClient(false, mConfigure.getTimeout(), mConfigure.getTimeUnit(), interceptorArray);
     }
 
 }

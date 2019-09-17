@@ -134,7 +134,7 @@ public class AnnotationUtils {
     }
 
     /**
-     * 获取对象中注解下载地址
+     * 获取对象中注解值
      *
      * @return
      */

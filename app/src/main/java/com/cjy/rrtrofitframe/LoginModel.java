@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author yong
  */
-public class LoginModel extends BaseResponseModels<LoginModel> {
+public class LoginModel extends BaseResponseModel<LoginModel> {
 
     /**
      * obj : {"accountNonExpired":true,"accountNonLocked":true,"authorities":[{"authority":"ROLE_ADMIN"}],"companyId":134,"credentialsNonExpired":true,"enabled":true,"id":225,"isAgreeDisclaimer":1,"loginName":"15713802736","mobile":"15713802736","passCode":0,"status":1,"userType":"10","username":"15713802736"}

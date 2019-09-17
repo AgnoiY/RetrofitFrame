@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author yong
  */
-public class ListModel extends BaseResponseModels<List<ListModel>> {
+public class ListModel extends BaseResponseModel<List<ListModel>> {
     /**
      * matchedCount : 0
      * arriveDate : 2019.05.15-2019.05.25

@@ -2,7 +2,10 @@ package com.cjy.rrtrofitframe;
 
 import com.cjy.retrofitlibrary.annotation.model.ModelData;
 
-@ModelData()
+/**
+ * 天气实体类
+ */
+@ModelData() // 无基础基类注解
 public class WeatherBase {
 
     /**

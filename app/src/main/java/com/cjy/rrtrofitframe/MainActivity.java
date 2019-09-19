@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.cjy.retrofitlibrary.ApiException;
 import com.cjy.retrofitlibrary.DownloadCallback;
@@ -68,6 +69,27 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         mMainBinding.startBt.setOnClickListener(v -> RetrofitDownload.get().startDownload(updateModel));
         mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(updateModel));
         mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(updateModel, true));
+
+        mMainBinding.weatherBt.setOnClickListener(v -> weatherForecast());
+    }
+
+    public void weatherForecast() {
+        Map<String, Object> headerMap = new HashMap<>();
+        headerMap.put("appid", "32367191");
+        headerMap.put("appsecret", "T9xNWh49");
+        headerMap.put("version", "v6");
+        headerMap.put("city", "宁波");
+        RetrofitLibrary.getHttp()
+                .get()
+                .baseUrl("https://www.tianqiapi.com/api/")
+                .addParameter(headerMap)
+                .build()
+                .request(new HttpObserver<WeatherBase>(this, false, false) {
+                    @Override
+                    public void onSuccess(String action, WeatherBase value) {
+                        Log.d("WeatherBase:", value + "");
+                    }
+                });
     }
 
     private void login(String userid, String pwd) {

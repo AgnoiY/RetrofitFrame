@@ -16,6 +16,7 @@ import com.cjy.retrofitlibrary.annotation.download.Table;
 import com.cjy.retrofitlibrary.annotation.model.Code;
 import com.cjy.retrofitlibrary.annotation.model.Data;
 import com.cjy.retrofitlibrary.annotation.model.Message;
+import com.cjy.retrofitlibrary.annotation.model.ModelData;
 import com.cjy.retrofitlibrary.annotation.model.Success;
 import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
 import com.cjy.retrofitlibrary.model.BaseModel;
@@ -141,6 +142,14 @@ public class AnnotationUtils {
     public static <T> BaseModel<T> getResponseModel(T t) {
         Class var = t.getClass();
         BaseModel mBaseModel = new BaseModel();
+
+        ModelData modelData = (ModelData) var.getAnnotation(ModelData.class);
+        if (modelData != null) {
+            mBaseModel.setCode(200);
+            mBaseModel.setData(t);
+            return mBaseModel;
+        }
+
         do {
             Field[] fields = var.getDeclaredFields();//获取类的各个属性值
             for (Field field : fields) {

@@ -138,7 +138,7 @@ class RetrofitUtils {
         //日志拦截器
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(message -> LogUtils.i("okHttp:" + message));
         //must
-        logInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        logInterceptor.setLevel(BuildConfig.DEBUG || RetrofitHttp.Configure.get().isShowLog() ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         //Header 拦截器
         Interceptor headerInterceptor = chain -> {

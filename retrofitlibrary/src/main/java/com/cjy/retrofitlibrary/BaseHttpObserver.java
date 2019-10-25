@@ -138,7 +138,7 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
         ParameterizedType ptClass = (ParameterizedType) getClass().getGenericSuperclass();
         if (ptClass != null) {
             type = ptClass.getActualTypeArguments()[0];
-            LogUtils.d("当前类泛型:" + type);
+            LogUtils.i("当前类泛型:" + type);
         }
         return type;
     }

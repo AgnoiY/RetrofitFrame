@@ -18,7 +18,7 @@ import com.cjy.retrofitlibrary.annotation.model.Data;
 import com.cjy.retrofitlibrary.annotation.model.Message;
 import com.cjy.retrofitlibrary.annotation.model.ModelData;
 import com.cjy.retrofitlibrary.annotation.model.Success;
-import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
+import com.cjy.retrofitlibrary.dialog.ToastAutoDefine;
 import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 
@@ -290,7 +290,7 @@ public class AnnotationUtils {
     public static void getToastMethod(Class<? extends Annotation> annotationType, Context context, String msg) {
         Class var = RetrofitHttp.Configure.get().getToastClass();
         if (var == null) {
-            var = AutoDefineToast.class;
+            var = ToastAutoDefine.class;
         }
         getMethod(null, var, annotationType, context, msg);
     }

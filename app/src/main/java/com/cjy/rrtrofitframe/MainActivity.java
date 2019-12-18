@@ -12,7 +12,7 @@ import com.cjy.retrofitlibrary.DownloadCallback;
 import com.cjy.retrofitlibrary.HttpObserver;
 import com.cjy.retrofitlibrary.RetrofitDownload;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
-import com.cjy.retrofitlibrary.dialog.AutoDefineToast;
+import com.cjy.retrofitlibrary.dialog.ToastAutoDefine;
 import com.cjy.retrofitlibrary.model.DownloadModel;
 import com.cjy.rrtrofitframe.databinding.ActivityMainBinding;
 
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     public void onError(Throwable e) {
         mMainBinding.dbNumTv.setText("数据库列表总量：" + RetrofitDownload.get().getDownloadCount());
         if (e instanceof ApiException)
-            AutoDefineToast.showFailToast(MainActivity.this, ((ApiException) e).getMsg());
+            ToastAutoDefine.showFailToast(MainActivity.this, ((ApiException) e).getMsg());
     }
 
     @Override

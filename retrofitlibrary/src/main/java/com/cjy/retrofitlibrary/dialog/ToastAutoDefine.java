@@ -22,10 +22,10 @@ import com.cjy.retrofitlibrary.annotation.toast.ToastSuccess;
  *
  * @author yong
  */
-public class AutoDefineToast {
+public class ToastAutoDefine {
 
-    AutoDefineToast() {
-        throw new IllegalStateException("AutoDefineToast class");
+    ToastAutoDefine() {
+        throw new IllegalStateException("ToastAutoDefine class");
     }
 
     private static Toast toast;
@@ -95,9 +95,10 @@ public class AutoDefineToast {
      */
     @ToastCancel
     public static void destory() {
-        if (toast != null)
+        if (toast != null) {
             toast.cancel();
-        toast = null;
+            toast = null;
+        }
     }
 
 }

@@ -276,7 +276,6 @@ public class AnnotationUtils {
             Method method = var.getMethod(getter, classes);
             return method.invoke(object, objects);
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            LogUtils.w(TAG, e);
             return null;
         }
     }

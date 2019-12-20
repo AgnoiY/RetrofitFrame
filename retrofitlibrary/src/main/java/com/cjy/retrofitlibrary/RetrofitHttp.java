@@ -762,6 +762,14 @@ public class RetrofitHttp {
             return this;
         }
 
+        public RetrofitHttp buildGet(String apiUrl) {
+            return this.apiUrl(apiUrl).get().build();
+        }
+
+        public RetrofitHttp buildPost(String apiUrl) {
+            return this.apiUrl(apiUrl).post().build();
+        }
+
         public RetrofitHttp build() {
             return new RetrofitHttp(this);
         }

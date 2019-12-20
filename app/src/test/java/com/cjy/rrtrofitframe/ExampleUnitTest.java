@@ -1,4 +1,4 @@
-package com.cjy.rrtrofitframe;
+package com.cjy.retrofitframe;
 
 import org.junit.Test;
 

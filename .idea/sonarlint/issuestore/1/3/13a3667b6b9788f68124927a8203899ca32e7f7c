@@ -1,7 +1,0 @@
-
-=squid:S1172®"&Remove these unused method parameters.(òŠéH
-Msquid:S3077À".Remove the "volatile" keyword from this field.(ÜÒ‹¢8õÈ†é-
-˜squid:S1186®"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(òŠéH
-bsquid:CommentedOutCodeLineq"<This block of commented-out lines of code should be removed.(¨¥ÄÅ
-Tsquid:UnusedPrivateMethod®"/Remove this unused private "doDownload" method.(òŠéH
-Ksquid:S1172p"/Remove this unused method parameter "filePath".(–Ë²ıÿÿÿÿ

@@ -26,7 +26,7 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     /**
      * 加载失败提示弹出窗: 默认弹窗 － true: 加载
      */
-    protected boolean isToast;
+    protected boolean isErrorToast;
 
     /**
      * 下载路径
@@ -146,11 +146,11 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
     /**
      * 加载失败提示弹出窗
      *
-     * @param isToast 默认弹窗 － true: 加载
+     * @param isErrorToast 默认弹窗 － true: 加载
      * @return
      */
-    protected BaseHttpObserver<T> setToast(boolean isToast) {
-        this.isToast = isToast;
+    protected BaseHttpObserver<T> setErrorToast(boolean isErrorToast) {
+        this.isErrorToast = isErrorToast;
         return this;
     }
 

@@ -33,16 +33,18 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
     public static SQLiteHelper get() {
         SQLiteHelper dbHelper = mInstance;
-        if (dbHelper == null) {
+        RetrofitHttp.Configure configure = RetrofitHttp.Configure.get();
+        String sqlName = configure.getSQLiteName();
+        int sqlVersion = configure.getSQLiteVersion();
+        if (dbHelper == null && sqlName != null && !sqlName.isEmpty() && sqlVersion > 0) {
             synchronized (SQLiteHelper.class) {
                 dbHelper = mInstance;
                 if (dbHelper == null) {
-                    RetrofitHttp.Configure mConfigure = RetrofitHttp.Configure.get();
-                    if (mConfigure.getContext() == null) {
+                    if (configure.getContext() == null) {
                         throw new NullPointerException("RetrofitHttp not init!");
                     }
-                    mInstance = dbHelper = new SQLiteHelper(mConfigure.getContext(),
-                            mConfigure.getSQLiteName(), mConfigure.getSQLiteVersion());
+                    mInstance = dbHelper = new SQLiteHelper(configure.getContext(),
+                            sqlName, sqlVersion);
                 }
             }
         }
@@ -177,6 +179,9 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     public long insertOrUpdate(DownloadModel model) {
         long count = 0;
+
+        if (mInstance == null) return count;
+
         database = mInstance.getWritableDatabase();
         if (database != null) {
             ContentValues values = getContentValues(model);
@@ -204,6 +209,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     public int delete(DownloadModel model) {
         int count = 0;
+        if (mInstance == null) return count;
         database = mInstance.getWritableDatabase();
         if (database != null) {
             count = database.delete(getTable(), SERVERURL + "=?", new String[]{model.getServerUrl()});
@@ -221,6 +227,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     public <T> T query(DownloadModel model) {
         T t = (T) model;
+        if (mInstance == null) return t;
         database = mInstance.getWritableDatabase();
         if (database != null) {
             Cursor cursor = queryServerUrl(model.getServerUrl());
@@ -241,6 +248,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     public <T> List<T> query(Class<T> var) {
         List<T> list = null;
+        if (mInstance == null) return null;
         database = mInstance.getWritableDatabase();
         if (database != null) {
             list = getCursorModel(database.rawQuery("select * from " + getTable(), null), var);
@@ -256,6 +264,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
      */
     public int queryCount() {
         int count = 0;
+        if (mInstance == null) return count;
         database = mInstance.getWritableDatabase();
         if (database != null && !TextUtils.isEmpty(getTable())) {
             Cursor cursor = database.rawQuery("select * from " + getTable(), null);

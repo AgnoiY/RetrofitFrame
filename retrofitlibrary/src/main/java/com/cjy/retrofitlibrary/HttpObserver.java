@@ -84,7 +84,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      */
     @Override
     public void onError(String action, int code, String desc) {
-        if (isToast)
+        if (isErrorToast)
             AnnotationUtils.getToastMethod(ToastFail.class, RetrofitLibrary.getApplication(), desc);
     }
 

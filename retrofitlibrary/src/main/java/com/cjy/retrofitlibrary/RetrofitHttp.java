@@ -182,7 +182,7 @@ public class RetrofitHttp {
      */
     private void setObserver(BaseHttpObserver httpObserver) {
         /*加载失败提示弹出窗*/
-        httpObserver.setToast(Configure.get().isToast);
+        httpObserver.setErrorToast(Configure.get().isErrorToast());
 
         /*设置请求唯一标识*/
         httpObserver.setTag(TextUtils.isEmpty(tag) ? disposeApiUrl() : tag);
@@ -350,7 +350,7 @@ public class RetrofitHttp {
         /*是否显示Log*/
         private boolean showLog;
         /*加载失败提示弹出窗*/
-        private boolean isToast;
+        private boolean isErrorToast;
         /*数据库库名*/
         private String sqliteName;
         /*数据库版本号*/
@@ -375,9 +375,7 @@ public class RetrofitHttp {
             timeout = Constants.TIME_OUT; //默认60秒
             timeUnit = TimeUnit.SECONDS; //默认秒
             showLog = true; //默认打印LOG
-            isToast = true; //默认加载提示Toast
-            sqliteName = "retrofit.download.db"; //默认数据库库名
-            sqliteVersion = 1; //默认数据库版本号
+            isErrorToast = true; //默认加载提示Toast
         }
 
         /*请求基础路径*/
@@ -463,12 +461,12 @@ public class RetrofitHttp {
         }
 
         /*TipDialog*/
-        public boolean isToast() {
-            return isToast;
+        public boolean isErrorToast() {
+            return isErrorToast;
         }
 
-        public Configure setToast(boolean isToast) {
-            this.isToast = isToast;
+        public Configure setErrorToast(boolean isErrorToast) {
+            this.isErrorToast = isErrorToast;
             return this;
         }
 
@@ -488,6 +486,12 @@ public class RetrofitHttp {
         }
 
         public Configure setSQLiteVersion(int sqliteVersion) {
+            this.sqliteVersion = sqliteVersion;
+            return this;
+        }
+
+        public Configure setSQLite(String sqliteName, int sqliteVersion) {
+            this.sqliteName = sqliteName;
             this.sqliteVersion = sqliteVersion;
             return this;
         }

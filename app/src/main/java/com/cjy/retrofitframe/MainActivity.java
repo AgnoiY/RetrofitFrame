@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
                     @Override
                     public void onSuccess(String action, LoginModel value) {
                         mMainBinding.text.setText(value.getToken());
-                        getList(value.getUserId(), value.getToken());
+                        RetrofitLibrary.getHttpConfigure().addHeader("token", value.getToken());
+//                        getList(value.getUserId(), value.getToken());
                     }
                 });
 

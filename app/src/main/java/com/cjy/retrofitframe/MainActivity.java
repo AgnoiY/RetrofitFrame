@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
+import com.cjy.retrofitframe.databinding.ActivityMainBinding;
 import com.cjy.retrofitlibrary.ApiException;
 import com.cjy.retrofitlibrary.DownloadCallback;
 import com.cjy.retrofitlibrary.HttpObserver;
@@ -14,7 +14,6 @@ import com.cjy.retrofitlibrary.RetrofitDownload;
 import com.cjy.retrofitlibrary.RetrofitLibrary;
 import com.cjy.retrofitlibrary.dialog.ToastAutoDefine;
 import com.cjy.retrofitlibrary.model.DownloadModel;
-import com.cjy.retrofitframe.databinding.ActivityMainBinding;
 
 import java.io.File;
 import java.util.HashMap;
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     private void initData() {
-        login("15713802736", "123456");
         mMainBinding.text.setOnClickListener(v -> {
             Map<String, Object> parameterMap = new HashMap<>();
             parameterMap.put("appPlatform", "android");
@@ -70,26 +68,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         mMainBinding.pauseBt.setOnClickListener(v -> RetrofitDownload.get().stopDownload(updateModel));
         mMainBinding.deleteBt.setOnClickListener(v -> RetrofitDownload.get().removeDownload(updateModel, true));
 
-        mMainBinding.weatherBt.setOnClickListener(v -> weatherForecast());
-    }
-
-    public void weatherForecast() {
-        Map<String, Object> headerMap = new HashMap<>();
-        headerMap.put("appid", "32367191");
-        headerMap.put("appsecret", "T9xNWh49");
-        headerMap.put("version", "v6");
-        headerMap.put("city", "宁波");
-        RetrofitLibrary.getHttp()
-                .get()
-                .baseUrl("https://www.tianqiapi.com/api/")
-                .addParameter(headerMap)
-                .build()
-                .request(new HttpObserver<WeatherBase>(this, false, false) {
-                    @Override
-                    public void onSuccess(String action, WeatherBase value) {
-                        Log.d("WeatherBase:", value + "");
-                    }
-                });
+        mMainBinding.weatherBt.setOnClickListener(v -> login("15713802736", "123456"));
     }
 
     private void login(String userid, String pwd) {
@@ -108,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
                     public void onSuccess(String action, LoginModel value) {
                         mMainBinding.text.setText(value.getToken());
                         RetrofitLibrary.getHttpConfigure().addHeader("token", value.getToken());
-//                        getList(value.getUserId(), value.getToken());
+                        getList(value.getUserId(), value.getToken());
                     }
                 });
 

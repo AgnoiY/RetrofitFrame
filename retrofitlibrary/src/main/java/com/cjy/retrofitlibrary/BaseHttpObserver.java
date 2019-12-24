@@ -5,14 +5,15 @@ import android.content.Context;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.cjy.retrofitlibrary.utils.ThreadUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import io.reactivex.annotations.NonNull;
+import io.reactivex.exceptions.UndeliverableException;
 
 /**
  * Http请求回调
@@ -90,7 +91,7 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
         try {
             t = onConvert(new Gson().fromJson(data, getTypeClass()));
             callSuccess = true;
-        } catch (JSONException e) {
+        } catch (JSONException | JsonSyntaxException e) {
             callSuccess = false;
             onError(getTag(), ExceptionEngine.ANALYTIC_CLIENT_DATA_ERROR, RetrofitLibrary.getAppString(R.string.data_parsing_error));
         }
@@ -135,10 +136,15 @@ public abstract class BaseHttpObserver<T> extends BaseObserver<T> implements Cal
      */
     private Type getTypeClass() {
         Type type = null;
-        ParameterizedType ptClass = (ParameterizedType) getClass().getGenericSuperclass();
-        if (ptClass != null) {
-            type = ptClass.getActualTypeArguments()[0];
-            LogUtils.i("当前类泛型:" + type);
+        try {
+            ParameterizedType ptClass = (ParameterizedType) getClass().getGenericSuperclass();
+            if (ptClass != null) {
+                type = ptClass.getActualTypeArguments()[0];
+                LogUtils.i("当前类泛型:" + type);
+            }
+        } catch (ClassCastException t) {
+            LogUtils.w(t);
+            type = Object.class;
         }
         return type;
     }

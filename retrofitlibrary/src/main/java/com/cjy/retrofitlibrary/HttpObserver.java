@@ -9,6 +9,7 @@ import com.cjy.retrofitlibrary.annotation.toast.ToastInfo;
 import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.List;
 
@@ -58,12 +59,18 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
      */
     private T convertModel(T tData) {
         T t = null;
+
+        if (tData instanceof LinkedTreeMap){
+            return tData;
+        }
+
         BaseModel mBaseModel = AnnotationUtils.getResponseModel(tData);
         int code = mBaseModel.getCode();
 
         if (code == mBaseModel.getCodeSuccess() && mBaseModel.isSuccess()) { //成功
             t = (T) mBaseModel.getData();
-            if (t == null || t instanceof String || t instanceof List) {
+            if (t == null || t instanceof String || t instanceof Integer ||
+                    t instanceof LinkedTreeMap || t instanceof Boolean || t instanceof List) {
                 t = tData;
             }
         } else if (code == mBaseModel.getCodeToken()) { //token过期，跳转登录页面重新登录

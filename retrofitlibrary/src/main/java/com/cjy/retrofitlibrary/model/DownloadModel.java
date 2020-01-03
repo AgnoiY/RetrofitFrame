@@ -8,7 +8,7 @@ import com.cjy.retrofitlibrary.annotation.download.Ignore;
 import com.cjy.retrofitlibrary.annotation.download.NotNull;
 import com.cjy.retrofitlibrary.annotation.download.PrimaryKey;
 import com.cjy.retrofitlibrary.annotation.download.Table;
-import com.cjy.retrofitlibrary.utils.AnnotationUtils;
+import com.cjy.retrofitlibrary.AnnotationUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -34,7 +34,7 @@ import static com.cjy.retrofitlibrary.Constants._ID;
  * @author yong
  */
 @Table(TABLENAME)
-public class DownloadModel<T> extends BaseResponseModel<T> implements Serializable {
+public class DownloadModel<T> extends BaseModel<T> implements Serializable {
 
     @PrimaryKey(AUTO_INCREMENT)
     @Column(_ID)

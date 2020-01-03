@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.cjy.retrofitlibrary.model.DownloadModel;
-import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 
 import java.util.ArrayList;

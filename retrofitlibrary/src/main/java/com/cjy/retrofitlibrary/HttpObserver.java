@@ -6,8 +6,6 @@ import android.text.TextUtils;
 
 import com.cjy.retrofitlibrary.annotation.toast.ToastFail;
 import com.cjy.retrofitlibrary.annotation.toast.ToastInfo;
-import com.cjy.retrofitlibrary.model.BaseModel;
-import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -64,7 +62,7 @@ public abstract class HttpObserver<T> extends BaseHttpObserver<T> {
             return tData;
         }
 
-        BaseModel mBaseModel = AnnotationUtils.getResponseModel(tData);
+        BaseResponseModel mBaseModel = AnnotationUtils.getResponseModel(tData);
         int code = mBaseModel.getCode();
 
         if (code == mBaseModel.getCodeSuccess() && mBaseModel.isSuccess()) { //成功

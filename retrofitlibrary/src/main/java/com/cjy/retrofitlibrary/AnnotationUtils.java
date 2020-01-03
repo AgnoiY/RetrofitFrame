@@ -1,9 +1,7 @@
-package com.cjy.retrofitlibrary.utils;
+package com.cjy.retrofitlibrary;
 
 import android.content.Context;
 
-import com.cjy.retrofitlibrary.ProgressDialogObserver;
-import com.cjy.retrofitlibrary.RetrofitHttp;
 import com.cjy.retrofitlibrary.annotation.CabcelbleParameter;
 import com.cjy.retrofitlibrary.annotation.Constructors;
 import com.cjy.retrofitlibrary.annotation.ContextParameter;
@@ -19,8 +17,8 @@ import com.cjy.retrofitlibrary.annotation.model.Message;
 import com.cjy.retrofitlibrary.annotation.model.ModelData;
 import com.cjy.retrofitlibrary.annotation.model.Success;
 import com.cjy.retrofitlibrary.dialog.ToastAutoDefine;
-import com.cjy.retrofitlibrary.model.BaseModel;
 import com.cjy.retrofitlibrary.model.DownloadModel;
+import com.cjy.retrofitlibrary.utils.LogUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
@@ -37,7 +35,7 @@ import static com.cjy.retrofitlibrary.Constants.TABLE;
 import static com.cjy.retrofitlibrary.Constants._ID;
 
 /**
- * <将对象转换成Map>
+ * <注解转换>
  * <p>
  * Data：2019/06/24
  *
@@ -139,9 +137,9 @@ public class AnnotationUtils {
      *
      * @return
      */
-    public static <T> BaseModel<T> getResponseModel(T t) {
+    public static <T> BaseResponseModel<T> getResponseModel(T t) {
         Class var = t.getClass();
-        BaseModel mBaseModel = new BaseModel();
+        BaseResponseModel mBaseModel = new BaseResponseModel();
 
         ModelData modelData = (ModelData) var.getAnnotation(ModelData.class);
         if (modelData != null) {

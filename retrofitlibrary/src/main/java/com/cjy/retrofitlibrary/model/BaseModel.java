@@ -1,11 +1,14 @@
 package com.cjy.retrofitlibrary.model;
 
-import java.util.List;
+import com.cjy.retrofitlibrary.annotation.model.Code;
+import com.cjy.retrofitlibrary.annotation.model.Data;
+import com.cjy.retrofitlibrary.annotation.model.Message;
+import com.cjy.retrofitlibrary.annotation.model.Success;
 
 /**
- * <下载实体类基类>
+ * <自定义下载实体类基类>
  * <p>
- * Data：2019/07/23
+ * Data：2018/12/18
  *
  * @author yong
  */
@@ -13,33 +16,43 @@ public class BaseModel<T> {
 
     /**
      * 数据对象/成功返回对象
+     * 自定义字段：添加注解@Data
      */
+    @Data
     private T data;
-    /**
-     * 状态码
-     */
-    private int code;
 
     /**
      * 状态码
+     * 自定义字段：添加注解@Code
+     * 状态码返回值(自定义值)value:　默认－200: 请求成功, 401: 登录Token过期
+     * 登录Token过期,login:　重新登录Activity
+     * loginTip:　重新登录提示语
      */
-    private int[] codes;
+    @Code
+    private int code;
+
     /**
      * 描述信息
+     * 自定义字段：添加注解@Message
      */
+    @Message
     private String msg;
+
     /**
-     * 请求状态
+     * 请求成功状态
+     * 自定义字段：添加注解@Success
      */
+    @Success
     private boolean isSuccess = true;
-    /**
-     * Token过期, 重新登录Activity
-     */
-    private Class loginClass;
-    /**
-     * Token过期, 重新登录Activity, 提示语
-     */
-    private String loginTip;
+
+    public T getData() {
+        return data;
+    }
+
+    public BaseModel<T> setData(T data) {
+        this.data = data;
+        return this;
+    }
 
     public int getCode() {
         return code;
@@ -47,37 +60,6 @@ public class BaseModel<T> {
 
     public BaseModel<T> setCode(int code) {
         this.code = code;
-        return this;
-    }
-
-    public int[] getCodes() {
-        return codes;
-    }
-
-    /**
-     * 请求成功状态码
-     *
-     * @return
-     */
-    public int getCodeSuccess() {
-        if (codes != null && codes.length > 0)
-            return codes[0];
-        return 200;
-    }
-
-    /**
-     * 请求Token过期状态码
-     *
-     * @return
-     */
-    public int getCodeToken() {
-        if (codes != null && codes.length > 1)
-            return codes[1];
-        return 401;
-    }
-
-    public BaseModel<T> setCodes(int[] codes) {
-        this.codes = codes;
         return this;
     }
 
@@ -90,44 +72,12 @@ public class BaseModel<T> {
         return this;
     }
 
-    public T getData() {
-        if (data instanceof List && ((List<T>) data).isEmpty()) {
-            return null;
-        }
-        return data;
-    }
-
-    public BaseModel<T> setData(T data) {
-        this.data = data;
-        return this;
-    }
-
     public boolean isSuccess() {
         return isSuccess;
     }
 
     public BaseModel<T> setSuccess(boolean success) {
         isSuccess = success;
-        return this;
-    }
-
-    public Class getLoginClass() {
-        return loginClass;
-    }
-
-    public BaseModel<T> setLoginClass(Class loginClass) {
-        if (loginClass == Object.class)
-            loginClass = null;
-        this.loginClass = loginClass;
-        return this;
-    }
-
-    public String getLoginTip() {
-        return loginTip;
-    }
-
-    public BaseModel<T> setLoginTip(String loginTip) {
-        this.loginTip = loginTip;
         return this;
     }
 }

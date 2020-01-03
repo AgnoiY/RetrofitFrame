@@ -4,7 +4,6 @@ import android.app.Application;
 import android.support.annotation.StringRes;
 
 import com.cjy.retrofitlibrary.annotation.toast.ToastCancel;
-import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 import com.cjy.retrofitlibrary.utils.LogUtils;
 
 /**

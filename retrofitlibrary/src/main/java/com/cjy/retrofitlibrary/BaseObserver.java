@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogClose;
 import com.cjy.retrofitlibrary.annotation.loadingdialog.DialogShow;
 import com.cjy.retrofitlibrary.dialog.LoadingDialog;
-import com.cjy.retrofitlibrary.utils.AnnotationUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

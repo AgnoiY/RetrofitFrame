@@ -68,7 +68,6 @@ public final class LoadingDialog extends Dialog {
 
     @DialogShow
     public void showDialog() {
-
         if (!isShowing()) {
             show();
             new Handler().postDelayed(() -> {

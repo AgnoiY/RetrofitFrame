@@ -1,7 +1,7 @@
 package com.cjy.retrofitframe;
 
 
-import com.cjy.retrofitlibrary.model.BaseResponseModel;
+import com.cjy.retrofitlibrary.model.BaseModel;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author yong
  */
-public class ListModel extends BaseResponseModel<List<ListModel>> {
+public class ListModel extends BaseModel<List<ListModel>> {
     /**
      * matchedCount : 0
      * arriveDate : 2019.05.15-2019.05.25
